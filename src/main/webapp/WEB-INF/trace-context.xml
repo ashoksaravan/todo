@@ -12,13 +12,13 @@
 	<!-- For parsing classes with @Aspect annotation -->
 	<aop:aspectj-autoproxy/>
 
-	<bean id="customizableTraceInterceptor" class="com.mongo.aop.TraceInterceptor"
+	<bean id="customizableTraceInterceptor" class="com.todo.aop.TraceInterceptor"
 		p:enterMessage="Entering $[targetClassShortName].$[methodName]($[arguments])"
 		p:exitMessage="Leaving $[targetClassShortName].$[methodName](): $[returnValue]"/>
 
 	<aop:config>
-	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * org.krams.service..*(..))"/>
-	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * org.krams.controller..*(..))"/>
+	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * com.todo.service..*(..))"/>
+	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * com.todo.controller..*(..))"/>
 	</aop:config>
 
 </beans>

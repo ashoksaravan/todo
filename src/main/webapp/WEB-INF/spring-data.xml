@@ -22,7 +22,7 @@
 	<context:property-placeholder properties-ref="deployProperties" />
 
 	<!-- Activate Spring Data MongoDB repository support -->
-  	<mongo:repositories base-package="com.mongo.repository" />
+  	<mongo:repositories base-package="com.todo.repository" />
   	
   	<!-- MongoDB host -->
 	<mongo:mongo host="${mongo.host.name}" port="${mongo.host.port}"/>
