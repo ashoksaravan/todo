@@ -16,6 +16,8 @@ function loadTable() {
 			row += '<td>' + response.users[i].firstName + '</td>';
 			row += '<td>' + response.users[i].lastName + '</td>';
 			row += '<td>' + getRole(response.users[i].role.role) + '</td>';
+			row += '<td>' + response.users[i].userStatus + '</td>';
+			row += '<td>' + response.users[i].mailId + '</td>';
 			row += '</tr>';
 			$('#tableUsers').append(row);
 		}
@@ -32,7 +34,9 @@ function submitNewRecord() {
 		password : $('#newPassword').val(),
 		firstName : $('#newFirstName').val(),
 		lastName : $('#newLastName').val(),
-		role : $('#newRole').val()
+		role : $('#newRole').val(),
+		userstatus : $('#newStatus').val(),
+		mailId : $('#newMailId').val()
 	}, function(response) {
 		if (response != null) {
 			loadTable();

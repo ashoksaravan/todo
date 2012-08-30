@@ -1,62 +1,55 @@
-body {
-	font-family: Arial, sans-serif;
-	width: 500px;
-	margin: auto;
-}
-
-h1,hr {
-	margin: 0px;
-	padding: 0px;
-}
-
-#banner {
-	background: black;
-	padding: 5px;
-	color: white;
-	margin-top: 5px;
-}
-
-#controlBar {
-	padding-top: 3px;
-}
-
-table {
-	border: 1px solid;
+html {
+	height: 100%;
 	width: 100%;
-	border-collapse: collapse;
 }
 
-tr,td,th {
-	border: 1px solid;
-	text-align: left;
-	padding: 5px;
-}
-
-caption {
-	font-weight: bold;
-	text-align: left;
-}
-
-form {
-	margin-top: 30px;
+body {
+	height: 60%;
 	width: 70%;
+	padding: 100px 130px 150px 200px;
+/* 	background-image: url('background.png'); */
 }
 
 legend {
-	font-weight: bold;
+	font-size: 18px;
+	font-weight: 600;
+	font-family: fantasy;
 }
 
-form input {
-	float: right;
+form fieldset {
+	height: 70%;
+	width: 100%;
+	background-color: #2191c0;
+	border: ridge;
 }
 
-fieldset input,fieldset select {
-	margin-left: 10px;
-	float: none;
+div#taskmanager {
+	height: 180;
+	width: 170;
+	text-align: center;
+/* 	transform: rotate(350deg) perspective(600px) rotateY(35deg); */
+/* 	-moz-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
+/* 	-ms-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
+	border-radius:  9px 9px 9px 9px; 
 }
 
-fieldset label {
-	float: left;
-	width: 80px;
-	text-align: right;
+div#taskmanager_yellow {
+	height: 180;
+	width: 170;
+	text-align: center;
+/* 	transform: rotate(350deg) perspective(600px) rotateY(35deg); */
+/* 	-moz-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
+/* 	-ms-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
+	border-radius:  9px 9px 9px 9px; 
+}
+
+.submitId {
+	padding-left: 40px;
+}
+
+a {
+	font-family: fantasy;
+	text-decoration: underline;
+	font-style: italic;
+	font-size: medium;
 }

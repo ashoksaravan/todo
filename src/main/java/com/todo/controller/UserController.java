@@ -44,7 +44,8 @@ public class UserController {
 	public @ResponseBody
 	User create(@RequestParam String username, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName,
-			@RequestParam Integer role) {
+			@RequestParam Integer role, @RequestParam String userstatus,
+			@RequestParam String mailId) {
 
 		Role newRole = new Role();
 		newRole.setRole(role);
@@ -55,6 +56,8 @@ public class UserController {
 		newUser.setFirstName(firstName);
 		newUser.setLastName(lastName);
 		newUser.setRole(newRole);
+		newUser.setUserStatus(userstatus);
+		newUser.setMailId(mailId);
 
 		return service.create(newUser);
 	}
@@ -90,8 +93,12 @@ public class UserController {
 	public @ResponseBody
 	String login(@RequestParam String username, @RequestParam String password) {
 		User user = service.read(username);
-		if (password.equals(user.getPassword())) {
-			return "success";
+		if (user != null) {
+			if (password.equals(user.getPassword())) {
+				return "success";
+			} else {
+				return "login failed";
+			}
 		} else {
 			return "login failed";
 		}

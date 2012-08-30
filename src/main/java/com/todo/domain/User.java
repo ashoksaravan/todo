@@ -9,11 +9,13 @@ public class User {
 
 	@Id
 	private String id;
+	private String username;
 
 	private String firstName;
 	private String lastName;
+	private String userStatus;
+	private String mailId;
 
-	private String username;
 	private String password;
 	@DBRef
 	private Role role;
@@ -64,6 +66,22 @@ public class User {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public String getMailId() {
+		return mailId;
+	}
+
+	public void setMailId(String mailId) {
+		this.mailId = mailId;
+	}
+
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 
 }

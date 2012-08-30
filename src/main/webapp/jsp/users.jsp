@@ -84,6 +84,8 @@
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Role</th>
+				<th>Status</th>
+				<th>MailId</th>
 			</tr>
 		</thead>
 	</table>
@@ -100,10 +102,13 @@
 				<legend>Create New Record</legend>
 				<label for='newUsername'>Username</label><input type='text'
 					id='newUsername' /><br /> <label for='newPassword'>Password</label><input
-					type='password' id='newPassword' /><br /> <label for='newFirstName'>First
-					Name</label><input type='text' id='newFirstName' /><br /> <label
-					for='newLastName'>Last Name</label><input type='text'
-					id='newLastName' /><br /> <label for='newRole'>Role</label> <select
+					type='password' id='newPassword' /><br /> <label
+					for='newFirstName'>First Name</label><input type='text'
+					id='newFirstName' /><br /> <label for='newLastName'>Last
+					Name</label><input type='text' id='newLastName' /><br /> <label
+					for='newStatus'>Status</label><input type='text' id='newStatus' /><br />
+				<label for='newMailId'>MailId</label><input type='text'
+					id='newMailId' /><br /> <label for='newRole'>Role</label> <select
 					id='newRole'>
 					<option value='1'>Admin</option>
 					<option value='2' selected='selected'>Regular</option>
@@ -118,11 +123,11 @@
 		<form>
 			<fieldset>
 				<legend>Edit Record</legend>
-				<input type='hidden' id='editUsername' /> <label for='editFirstName'>First
-					Name</label><input type='text' id='editFirstName' /><br /> <label
-					for='editLastName'>Last Name</label><input type='text'
-					id='editLastName' /><br /> <label for='editRole'>Role</label> <select
-					id='editRole'>
+				<input type='hidden' id='editUsername' /> <label
+					for='editFirstName'>First Name</label><input type='text'
+					id='editFirstName' /><br /> <label for='editLastName'>Last
+					Name</label><input type='text' id='editLastName' /><br /> <label
+					for='editRole'>Role</label> <select id='editRole'>
 					<option value='1'>Admin</option>
 					<option value='2' selected='selected'>Regular</option>
 				</select>

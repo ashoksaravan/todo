@@ -30,25 +30,29 @@ public class InitMongoService {
 		userRole.setId(UUID.randomUUID().toString());
 		userRole.setRole(2);
 
-		User john = new User();
-		john.setId(UUID.randomUUID().toString());
-		john.setFirstName("John");
-		john.setLastName("Smith");
-		john.setPassword("21232f297a57a5a743894a0e4a801fc3");
-		john.setRole(adminRole);
-		john.setUsername("john");
+		User user = new User();
+		user.setId(UUID.randomUUID().toString());
+		user.setFirstName("Vinodkumar");
+		user.setLastName("Arunachalam");
+		user.setPassword("vinod");
+		user.setRole(adminRole);
+		user.setUsername("vinod");
+		user.setMailId("vinod@gmail.com");
+		user.setUserStatus("ACTIVE");
 
-		User jane = new User();
-		jane.setId(UUID.randomUUID().toString());
-		jane.setFirstName("Jane");
-		jane.setLastName("Adams");
-		jane.setPassword("ee11cbb19052e40b07aac0ca060c23ee");
-		jane.setRole(userRole);
-		jane.setUsername("jane");
+		User user1 = new User();
+		user1.setId(UUID.randomUUID().toString());
+		user1.setFirstName("Ashok");
+		user1.setLastName("Mani");
+		user1.setPassword("ashok");
+		user1.setRole(userRole);
+		user1.setUsername("ashok");
+		user1.setMailId("ashok@gmail.com");
+		user1.setUserStatus("ACTIVE");
 
 		// Insert to db
-		mongoTemplate.insert(john, "user");
-		mongoTemplate.insert(jane, "user");
+		mongoTemplate.insert(user, "user");
+		mongoTemplate.insert(user1, "user");
 		mongoTemplate.insert(adminRole, "role");
 		mongoTemplate.insert(userRole, "role");
 	}
