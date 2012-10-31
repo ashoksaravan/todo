@@ -9,10 +9,13 @@
 <head>
 <link rel='stylesheet' type='text/css' media='screen'
 	href='<c:url value="/resources/css/style.css"/>' />
+<link rel='stylesheet' type='text/css' media='screen'
+	href='<c:url value="/resources/css/login-box.css"/>' />
 <script type='text/javascript'
 	src='<c:url value="/resources/js/jquery-1.8.0.min.js"/>'></script>
 <script type='text/javascript'
 	src='<c:url value="/resources/js/custom.js"/>'></script>
+	
 
 <title>User Records</title>
 
@@ -97,26 +100,31 @@
 	</div>
 
 	<div id='newForm'>
-		<form>
+		<form style="width: 80%">
 			<fieldset>
 				<legend>Create New Record</legend>
-				<label for='newUsername'>Username</label><input type='text'
-					id='newUsername' /><br /> <label for='newPassword'>Password</label><input
-					type='password' id='newPassword' /><br /> <label
-					for='newFirstName'>First Name</label><input type='text'
-					id='newFirstName' /><br /> <label for='newLastName'>Last
-					Name</label><input type='text' id='newLastName' /><br /> <label
-					for='newStatus'>Status</label><input type='text' id='newStatus' /><br />
-				<label for='newMailId'>MailId</label><input type='text'
-					id='newMailId' /><br /> <label for='newRole'>Role</label> <select
+				<div id="record-box-name">UserName:</div>
+				<div id="record-box-field" style="margin-top: 20px;">
+					<input type='text' id='newUsername' class="form-login" />
+				</div><br/><br/><br/><br/><br/><br/><br/><br/>
+				<div id="record-box-password">Password:</div>
+				<div id="record-box-password_field" style="margin-top: 10px;">
+					<input type='password' id='newPassword'  class="form-login" />
+				</div>
+				<label for='newFirstName'>First Name</label> <input type='text'
+					id='newFirstName' /> <br /> <label for='newLastName'>Last
+					Name</label> <input type='text' id='newLastName' /> <br /> <label
+					for='newStatus'>Status</label> <input type='text' id='newStatus' />
+				<br /> <label for='newMailId'>MailId</label> <input type='text'
+					id='newMailId' /> <br /> <label for='newRole'>Role</label> <select
 					id='newRole'>
 					<option value='1'>Admin</option>
 					<option value='2' selected='selected'>Regular</option>
 				</select>
 			</fieldset>
-			<input type='button' value='Close' id='closeNewForm' /> <input
-				type='submit' value='Submit' />
 		</form>
+		<input type='button' value='Close' id='closeNewForm' /> <input
+			type='submit' value='Submit' />
 	</div>
 
 	<div id='editForm'>

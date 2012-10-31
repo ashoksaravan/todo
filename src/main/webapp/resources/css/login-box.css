@@ -101,3 +101,8 @@ button {
 	font: bold 16px "Calibri", Arial;
 	border-radius:  9px 9px 9px 9px; 
 }
+
+.container{
+	background-image: url('images/background.png');
+	position: relative;
+}

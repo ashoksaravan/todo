@@ -37,19 +37,19 @@
 			Task Manager for Developers <br /> <br />
 			<div id="login-box-name" style="margin-top: 20px;">UserName:</div>
 			<div id="login-box-field" style="margin-top: 20px;">
-				<input name="q" class="form-login" title="Username" value=""
+				<input name="q" class="form-login" title="Username" value="" onchange="loginValidation()"
 					id="login-box-usrName" size="30" maxlength="2048" />
 			</div>
 			<div id="login-box-name">Password:</div>
 			<div id="login-box-field">
-				<input name="q" type="password" class="form-login" title="Password"
+				<input name="q" type="password" class="form-login" title="Password" onchange="loginValidation()"
 					id="login-box-password" value="" size="30" maxlength="2048" />
 			</div>
 			<span class="login-box-options"><input type="checkbox"
 				name="1" value="1"> Remember Me <a href="#"
 					id="forget-password" class="forgot-password-window"
-					style="margin-left: 30px;">Forgot password?</a></span> <br /> <br /> <a
-				onclick="submitAction()" href="#"><img
+					style="margin-left: 30px;">Forgot password?</a></span> <br /> <br /> <a id="submitId"
+				onclick="submitAction()" href="#"><img id="submitIdImg" disabled="disabled"
 				src="resources/css/images/login-btn.png" width="103" height="42"
 				align="middle" /></a>
 		</div>

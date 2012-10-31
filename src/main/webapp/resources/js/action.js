@@ -15,23 +15,15 @@ function submitAction() {
 			alert('Login Failed');
 		}
 	});
+}
 
-	// usrName = document.getElementById('login-box-usrName').value;
-	// password = document.getElementById('login-box-password').value;
-	// if (usrName != '' && password != '') {
-	// window.location.href = 'jsp/taskmanager.jsp'
-	// } else {
-	// if (usrName == '' && password == '') {
-	// alert('Enter the username and password');
-	// } else {
-	// if (usrName == '') {
-	// alert('Enter the username');
-	// }
-	// if (password == '') {
-	// alert('Enter the password');
-	// }
-	// }
-	// }
+function loginValidation() {
+	var usrName = document.getElementById('login-box-usrName').value;
+	var password = document.getElementById('login-box-password').value;
+	if (usrName == '' && password == '') {
+	} else {
+	}
+
 }
 
 function forgotAction() {
@@ -58,4 +50,86 @@ function changePasswordAction() {
 		document.getElementById('confirm-password').value = '';
 		alert('Successfully Changed');
 	}
+}
+
+// Function which runs on page load
+$(document).ready(function() {
+
+	// Refresh notes button click event
+	$('#refreshNotes').click(function() {
+		refreshNotes();
+	});
+
+	$('#highlight').click(function() {
+		var title = $(this).find('input[id^="title"]').val();
+		var description = $(this).find('input[id^="description"]').val();
+
+		if (title != undefined && description != undefined) {
+			createSingleNotes(title, description);
+		}
+	});
+});
+
+/**
+ * Click event function to start the creation of the task sticky notes Get each
+ * of the rows in the task list and create a sticky note for each of them
+ */
+function refreshNotes() {
+	var tableRows = $('#newTasks tr');
+
+	$('.sticky_notes li').remove();
+
+	$.each(tableRows, function(i) {
+		var title = $(this).find('input[id^="title"]').val();
+		var description = $(this).find('input[id^="description"]').val();
+
+		if (title != undefined && description != undefined) {
+			createNotes(title, description);
+		}
+	});
+}
+
+/**
+ * Creates the sticky notes and gives it a random colour.
+ */
+function createNotes(title, description) {
+	var header = '<h5>' + title + '</h5>';
+	var desc = '<p>' + description + '</p>';
+
+	var colours = new Array();
+	colours[0] = 'green';
+	colours[1] = 'blue';
+	colours[2] = 'yellow';
+	colours[3] = 'red';
+	colours[4] = 'purple';
+	colours[5] = 'orange';
+
+	$('.sticky_notes').append(
+			'<li class="' + colours[randomFromTo(0, (colours.length - 1))]
+					+ '">' + header + description + '</li>');
+}
+
+/**
+ * Get a random number between 2 numbers
+ * 
+ * @return Randon Number
+ */
+function randomFromTo(from, to) {
+	return Math.floor(Math.random() * (to - from + 1) + from);
+}
+
+function createSingleNotes(title, desc1) {
+	var header = '<h5>' + title + '</h5>';
+	var desc = '<p>' + desc1 + '</p>';
+
+	var colours = new Array();
+	colours[0] = 'green';
+	colours[1] = 'blue';
+	colours[2] = 'yellow';
+	colours[3] = 'red';
+	colours[4] = 'purple';
+	colours[5] = 'orange';
+	$('.single_sticky_notes').append(
+			'<li class="' + colours[randomFromTo(0, (colours.length - 1))]
+					+ '">' + header + desc1 + '</li>');
 }
