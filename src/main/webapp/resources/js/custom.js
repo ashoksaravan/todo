@@ -90,7 +90,7 @@ function login() {
 		password : $('#password').val()
 	}, function(response) {
 		if (response == 'success') {
-			window.open('/mongo/users', '_self');
+			window.open('/todo/users', '_self');
 		} else {
 			alert('Failure! An error has occurred!');
 		}

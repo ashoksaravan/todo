@@ -25,7 +25,7 @@
 		});
 	});
 	$(function(){
-		urlHolder.login = '${loginUrl}'
+		urlHolder.login = '${loginUrl}';
 	});
 </script>
 </head>

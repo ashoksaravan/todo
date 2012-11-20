@@ -1,5 +1,7 @@
 package com.todo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,16 +11,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.todo.domain.Role;
+import com.todo.domain.Task;
 import com.todo.domain.User;
+import com.todo.dto.TaskListDTO;
 import com.todo.dto.UserListDTO;
+import com.todo.service.TaskService;
 import com.todo.service.UserService;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
+	static String  name = new String();
 	@Autowired
 	private UserService service;
+	@Autowired
+	private TaskService taskService;
 
 	@RequestMapping
 	public String getUsersPage() {
@@ -95,12 +103,20 @@ public class UserController {
 		User user = service.read(username);
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
-				return "success";
+				return user.getUsername();
 			} else {
 				return "login failed";
 			}
 		} else {
 			return "login failed";
 		}
+	}
+	
+	@RequestMapping(value = "/task", method = RequestMethod.POST)
+	public @ResponseBody
+	TaskListDTO task(@RequestParam String username) {
+		TaskListDTO taskListDTO = new TaskListDTO();
+		taskListDTO.setTasks(taskService.readAll(username));
+		return taskListDTO;
 	}
 }

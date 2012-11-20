@@ -32,5 +32,5 @@
   			c:mongo-ref="mongo" c:databaseName="${mongo.db.name}"/>
 	
 	<!-- Service for initializing MongoDB with sample data using MongoTemplate -->
-	<bean id="initMongoService" class="com.todo.service.InitMongoService" init-method="init"/>	
+<!-- 	<bean id="initMongoService" class="com.todo.service.InitMongoService" init-method="init"/>	 -->
 </beans>

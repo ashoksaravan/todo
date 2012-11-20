@@ -19,6 +19,16 @@ public class User {
 	private String password;
 	@DBRef
 	private Role role;
+	@DBRef
+	private Task task;
+
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
+	}
 
 	public String getId() {
 		return id;

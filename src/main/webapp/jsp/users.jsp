@@ -4,6 +4,7 @@
 <c:url value="/users/create" var="addUrl" />
 <c:url value="/users/update" var="editUrl" />
 <c:url value="/users/delete" var="deleteUrl" />
+<c:url value="/users/task" var="taskUrl" />
 
 <html>
 <head>
@@ -26,6 +27,7 @@
 		urlHolder.add = '${addUrl}';
 		urlHolder.edit = '${editUrl}';
 		urlHolder.del = '${deleteUrl}';
+		urlHolder.task = '${taskUrl}';
 		loadTable();
 
 		$('#newBtn').click(function() {
