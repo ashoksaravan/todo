@@ -105,18 +105,18 @@
 		<form style="width: 80%">
 			<fieldset>
 				<legend>Create New Record</legend>
-				<div id="record-box-name">UserName:</div>
-				<div id="record-box-field" style="margin-top: 20px;">
-					<input type='text' id='newUsername' class="form-login" />
-				</div><br/><br/><br/><br/><br/><br/><br/><br/>
-				<div id="record-box-password">Password:</div>
-				<div id="record-box-password_field" style="margin-top: 10px;">
-					<input type='password' id='newPassword'  class="form-login" />
-				</div>
+				<label for='newUsername'>UserName</label>
+					<input type='text' id='newUsername' /><br/>
+					<label for='newPassword'>Password</label>
+					<input type='password' id='newPassword'/><br/>
 				<label for='newFirstName'>First Name</label> <input type='text'
 					id='newFirstName' /> <br /> <label for='newLastName'>Last
 					Name</label> <input type='text' id='newLastName' /> <br /> <label
-					for='newStatus'>Status</label> <input type='text' id='newStatus' />
+					for='newStatus'>Status</label> <select
+					id='newRole'>
+					<option value='1'>Inactive</option>
+					<option value='2' selected='selected'>Active</option>
+				</select>
 				<br /> <label for='newMailId'>MailId</label> <input type='text'
 					id='newMailId' /> <br /> <label for='newRole'>Role</label> <select
 					id='newRole'>

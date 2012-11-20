@@ -5,12 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Login Box Task Manager</title>
-<script type="text/javascript" src="../resources/js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="../resources/js/jquery-ui-1.8.23.custom.min.js"></script>
-<link href="../resources/css/jquery-ui-1.8.23.custom.css" rel="stylesheet"
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.8.23.custom.min.js"></script>
+<link href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.8.23.custom.css" rel="stylesheet"
 	type="text/css" />
-<link href="../resources/css/login-box.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="../resources/js/action.js"></script>
+<link href="<%=request.getContextPath()%>/resources/css/login-box.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/action.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#forget-password-box').dialog({
@@ -50,7 +50,7 @@
 					id="forget-password" class="forgot-password-window"
 					style="margin-left: 30px;">Forgot password?</a></span> <br /> <br /> <a id="submitId"
 				onclick="submitAction()" href="#"><img id="submitIdImg" disabled="disabled"
-				src="../resources/css/images/login-btn.png" width="103" height="42"
+				src="<%=request.getContextPath()%>/resources/css/images/login-btn.png" width="103" height="42"
 				align="middle" /></a>
 		</div>
 		<div id="forget-password-box" title="Forgot Password">
