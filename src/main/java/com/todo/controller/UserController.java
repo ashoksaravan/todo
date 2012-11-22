@@ -119,4 +119,16 @@ public class UserController {
 		taskListDTO.setTasks(taskService.readAll(username));
 		return taskListDTO;
 	}
+	
+	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
+	public @ResponseBody
+	Boolean changepwd(@RequestParam String username,
+			@RequestParam String oldpass, @RequestParam String confirmpass) {
+
+		User existingUser = new User();
+		existingUser.setUsername(username);
+		existingUser.setPassword(confirmpass);
+
+		return service.updatePwd(existingUser);
+	}
 }

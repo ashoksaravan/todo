@@ -71,4 +71,15 @@ public class UserService {
 		userRepository.delete(existingUser);
 		return true;
 	}
+	
+	public Boolean updatePwd(User user) {
+		User existingUser = userRepository.findByUsername(user.getUsername());
+		if (existingUser == null) {
+			return false;
+		}
+		existingUser.setPassword(user.getPassword());
+		userRepository.save(existingUser);
+		return true;
+		
+	}
 }

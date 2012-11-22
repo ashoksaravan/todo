@@ -10,11 +10,11 @@
 
 #change-login-box{
 	width:333px;
-	height: 352px;
-	padding: 58px 76px 0 76px;
+	height: 250px;
+	padding: 38px 76px 0 50px;
 	color: #ebebeb;
 	font: 12px Arial, Helvetica, sans-serif;
-	background: url(images/login-box-backg.png) no-repeat left top;
+/* 	background: url(images/login-box-backg.png) no-repeat left top; */
 }
 
 #login-box img {
@@ -101,8 +101,26 @@ button {
 	font: bold 16px "Calibri", Arial;
 	border-radius:  9px 9px 9px 9px; 
 }
+.pwd-box-name{
+	float: left;
+	display:inline;
+	width:150px;
+	text-align: left;
+/* 	padding: 0 2px 0 0; */
+	margin:0 0 7px 0;
+	color: black;
+}
 
-/* .container{ */
-/* 	position: relative; */
-/* 	border-radius:  9px 9px 9px 9px;  */
-/* } */
+.pwd-box-field {
+	padding-bottom : 5px;
+	margin:0 0 7px 0;
+	color: black;
+	background-color: white;
+}
+
+.pwd_form-login  {
+	width: 205px;
+	padding: 10px 4px 6px 3px;
+	border: 1px solid #0d2c52;
+	font-size: 16px;
+}
