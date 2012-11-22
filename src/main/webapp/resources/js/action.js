@@ -125,9 +125,10 @@ function createNotes(task) {
 		break;
 	}
 	//need to change
+	var tname = task.taskname.replace(/ /g, '&nbsp;') ;
 	var tdesc = task.taskdesc.replace(/ /g, '&nbsp;') ;
 	$('.single_sticky_notes').append(
-			'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+task.taskname+'",taskid:"'
+			'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
 			+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
 			+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
 					+ '</li>');
@@ -135,6 +136,8 @@ function createNotes(task) {
 
 function editTask(task) {
 	resetTaskWindow();
+	$('#addEditHeading').text("Edit Task");
+	$('#task-id').val(task.taskid);
 	$('#task-name').val(task.taskname);
 	$('#task-desc').val(task.taskdesc);
 	$('#priority option').eq(task.priorityindex).attr('selected', 'selected');
@@ -151,14 +154,28 @@ function resetChangePwdForm() {
 	document.getElementById('confirm-password').value = '';
 }
 
-function resetTaskWindow(){
-	 $('#task-name').val('');
-	 $('#task-desc').val('');
-	 $('#priority option').eq(0).attr('selected', 'selected');
-	 $('#status option').eq(0).attr('selected', 'selected');
-	 $('#task-assigned').val('');
+function resetTaskWindow() {
+	$('#addEditHeading').text("Add Task");
+	$('#task-id').val('')
+	$('#task-name').val('');
+	$('#task-desc').val('');
+	$('#priority option').eq(0).attr('selected', 'selected');
+	$('#status option').eq(0).attr('selected', 'selected');
+	$('#task-assigned').val('');
 }
 
 function submitNewTask(){
-	
+//	alert($('#task-id').val()+'-'+$('#task-name').val()+'-'+$('#task-desc').val()+'-'+$('select#priority option:selected').val()+'-'+$('select#status option:selected').val()+'-'+$('#task-assigned').val())
+	$.post(urlHolder.addtask, {
+		taskid : $('#task-id').val(),
+		taskname : $('#task-name').val(),
+		taskdesc : $('#task-desc').val(),
+		priority : $('select#priority option:selected').val(),
+		taskstatus : $('select#status option:selected').val(),
+		username : $('#task-assigned').val()
+	}, function(response) {
+		if (response) {
+			window.location.href="/todo/jsp/taskmanager.jsp?valnm=" + response;
+		}
+	});
 }

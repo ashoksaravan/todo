@@ -9,4 +9,6 @@ import com.todo.domain.Task;
 public interface TaskRepository extends MongoRepository<Task, String> {
 
 	List<Task> findTaskByUsername(String username);
+	
+	Task findTaskByTaskid(String taskid);
 }

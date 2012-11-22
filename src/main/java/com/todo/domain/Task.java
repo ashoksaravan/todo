@@ -7,10 +7,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Task {
 	
 	@Id
-	private String id;
+	private String taskid;
 	
 	private String username;
-	private Integer taskid;
+	
 	private String taskname;
 	private String taskstatus;
 	private String taskdesc;
@@ -21,12 +21,6 @@ public class Task {
 	}
 	public void setPriority(String priority) {
 		this.priority = priority;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
 	}
 	
 	public String getTaskdesc() {
@@ -41,10 +35,10 @@ public class Task {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public Integer getTaskid() {
+	public String getTaskid() {
 		return taskid;
 	}
-	public void setTaskid(Integer taskid) {
+	public void setTaskid(String taskid) {
 		this.taskid = taskid;
 	}
 	public String getTaskname() {

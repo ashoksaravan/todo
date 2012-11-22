@@ -2,6 +2,7 @@
 <%@ page import="java.util.*"%>
 <c:url value="/users/task" var="taskUrl" />
 <c:url value="/users/changepwd" var="changepwdUrl" />
+<c:url value="/users/addtask" var="addtaskUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -34,6 +35,7 @@
 	$(function(){
 		urlHolder.task = '${taskUrl}';
 		urlHolder.changepwd = '${changepwdUrl}';
+		urlHolder.addtask = '${addtaskUrl}';
 	});
 	$(function(){
 		$(".changeBtn").click(function() {
@@ -134,7 +136,7 @@
 	</div>
 
 	<div id="addNewTask" hidden="hidden">
-		<h4 align="left">Add Task</h4>
+		<h4 align="left" id="addEditHeading">Add Task</h4>
 		<table>
 			<tr>
 				<td class="pwd-box-name">Task Name:</td>
@@ -175,10 +177,11 @@
 			</tr>
 		</table>
 		<div>
+			<a hidden="hidden" id='task-id'></a>
 			<br /> <br />
 		</div>
 		<div align="center">
-			<button id="submitBtn" class="submitBtn" style="color: white;" onclick="">Submit</button>
+			<button id="submitBtn" class="submitBtn" style="color: white;" onclick="submitNewTask()">Submit</button>
 		</div>
 	</div>
 </body>

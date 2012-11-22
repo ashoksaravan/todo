@@ -1,7 +1,5 @@
 package com.todo.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -130,5 +128,23 @@ public class UserController {
 		existingUser.setPassword(confirmpass);
 
 		return service.updatePwd(existingUser);
+	}
+	
+	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
+	public @ResponseBody
+	String addEditTask(@RequestParam String taskid,
+			@RequestParam String taskname, @RequestParam String taskdesc,
+			@RequestParam String priority, @RequestParam String taskstatus,
+			@RequestParam String username) {
+
+		Task task = new Task();
+		task.setTaskid(taskid);
+		task.setTaskname(taskname);
+		task.setTaskdesc(taskdesc);
+		task.setPriority(priority);
+		task.setTaskstatus(taskstatus);
+		task.setUsername(username);
+		Task newTask = taskService.addEditTask(task);
+		return newTask.getUsername();
 	}
 }
