@@ -35,13 +35,12 @@ function submitNewRecord() {
 		firstName : $('#newFirstName').val(),
 		lastName : $('#newLastName').val(),
 		role : $('#newRole').val(),
-		userstatus : $('#newStatus').val(),
-		mailId : $('#newMailId').val()
+		status : $('#newStatus').val(),
+		mailID : $('#newMailId').val()
 	}, function(response) {
 		if (response != null) {
 			loadTable();
 			toggleForms('hide');
-			;
 			toggleCrudButtons('show');
 			alert('Success! Record has been added.');
 		} else {

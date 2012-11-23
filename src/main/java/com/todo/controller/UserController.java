@@ -21,10 +21,10 @@ import com.todo.service.UserService;
 
 @Controller
 @RequestMapping("/users")
-@SessionAttributes({"user"})
+@SessionAttributes({ "user" })
 public class UserController {
 
-	static String  name = new String();
+	static String name = new String();
 	@Autowired
 	private UserService service;
 	@Autowired
@@ -54,8 +54,7 @@ public class UserController {
 	public @ResponseBody
 	User create(@RequestParam String username, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName,
-			@RequestParam Integer role, @RequestParam String userstatus,
-			@RequestParam String mailId) {
+			@RequestParam Integer role, @RequestParam String status, @RequestParam String mailID) {
 
 		Role newRole = new Role();
 		newRole.setRole(role);
@@ -66,8 +65,8 @@ public class UserController {
 		newUser.setFirstName(firstName);
 		newUser.setLastName(lastName);
 		newUser.setRole(newRole);
-		newUser.setUserStatus(userstatus);
-		newUser.setMailId(mailId);
+		newUser.setUserStatus(status);
+		newUser.setMailId(mailID);
 
 		return service.create(newUser);
 	}
@@ -101,7 +100,8 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody
-	String login(@RequestParam String username, @RequestParam String password, ModelMap map) {
+	String login(@RequestParam String username, @RequestParam String password,
+			ModelMap map) {
 		User user = service.read(username);
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
@@ -114,7 +114,7 @@ public class UserController {
 			return "login failed";
 		}
 	}
-	
+
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
 	public @ResponseBody
 	TaskListDTO task(@ModelAttribute User user) {
@@ -122,7 +122,7 @@ public class UserController {
 		taskListDTO.setTasks(taskService.readAll(user.getUsername()));
 		return taskListDTO;
 	}
-	
+
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean changepwd(@RequestParam String username,
@@ -134,7 +134,7 @@ public class UserController {
 
 		return service.updatePwd(existingUser);
 	}
-	
+
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
 	String addEditTask(@RequestParam String taskid,

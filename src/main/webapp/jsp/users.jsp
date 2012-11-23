@@ -16,7 +16,7 @@
 	src='<c:url value="/resources/js/jquery-1.8.0.min.js"/>'></script>
 <script type='text/javascript'
 	src='<c:url value="/resources/js/custom.js"/>'></script>
-	
+
 <link rel="icon" type="image/gif"
 	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
 <title>User Records</title>
@@ -106,28 +106,48 @@
 		<form style="width: 80%">
 			<fieldset>
 				<legend>Create New Record</legend>
-				<label for='newUsername'>UserName</label>
-					<input type='text' id='newUsername' /><br/>
-					<label for='newPassword'>Password</label>
-					<input type='password' id='newPassword'/><br/>
-				<label for='newFirstName'>First Name</label> <input type='text'
-					id='newFirstName' /> <br /> <label for='newLastName'>Last
-					Name</label> <input type='text' id='newLastName' /> <br /> <label
-					for='newStatus'>Status</label> <select
-					id='newRole'>
+				<label for='newUsername'>UserName</label> 
+				<input type='text' id='newUsername' />
+				
+				<br/> 
+				
+				<label for='newPassword'>Password</label>
+				<input type='password' id='newPassword' />
+				
+				<br/> 
+
+				<label for='newFirstName'>First Name</label> 
+				<input type='text' id='newFirstName' /> 
+				
+				<br/> 
+				
+				<label for='newLastName'>Last Name</label> 
+				<input type='text' id='newLastName' /> 
+				
+				<br /> 
+				
+				<label for='newStatus'>Status</label> 
+				<select id='newStatus'>
 					<option value='1'>Inactive</option>
 					<option value='2' selected='selected'>Active</option>
-				</select>
-				<br /> <label for='newMailId'>MailId</label> <input type='text'
-					id='newMailId' /> <br /> <label for='newRole'>Role</label> <select
-					id='newRole'>
+				</select> 
+				
+				<br/> 
+				
+				<label for='newMailId'>MailId</label> 
+				<input type='text' id='newMailId' /> 
+				
+				<br /> 
+				
+				<label for='newRole'>Role</label> 
+				<select id='newRole'>
 					<option value='1'>Admin</option>
 					<option value='2' selected='selected'>Regular</option>
 				</select>
 			</fieldset>
+			<input type='button' value='Close' id='closeNewForm' /> <input
+				type='submit' value='Submit' />
 		</form>
-		<input type='button' value='Close' id='closeNewForm' /> <input
-			type='submit' value='Submit' />
 	</div>
 
 	<div id='editForm'>
