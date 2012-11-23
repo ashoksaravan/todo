@@ -1,5 +1,7 @@
 package com.todo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -104,6 +106,8 @@ public class UserController {
 		User user = service.read(username);
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
+				List<User> users = service.readAll();
+				map.addAttribute(users);
 				map.addAttribute(user);
 				return true;
 			} else {
