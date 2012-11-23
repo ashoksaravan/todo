@@ -81,7 +81,8 @@
 				<td width="44%">
 					<h5 align="left">
 						Welcome! <a href="#" class="userroles"><c:out
-								value="${user.username}" /></a>
+								value="${user.firstName}" />, <c:out
+								value="${user.lastName}" /></a>
 					</h5>
 				</td>
 				<td width="33%">
