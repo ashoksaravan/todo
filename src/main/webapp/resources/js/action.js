@@ -13,7 +13,7 @@ function submitAction() {
 			document.getElementById('login-box-password').value = '';
 			alert('Login Failed');
 		} else {
-			window.location.href="/todo/jsp/taskmanager.jsp?valnm=" + response;
+			window.location.href="/todo/jsp/taskmanager.jsp";
 		}
 	});
 }
@@ -81,7 +81,7 @@ function createAddNotes() {
 function createNotes(task) {
 	var refClass = 'refClass'
 	var header = '<h5>' + task.taskname + '</h5>';
-	var desc = '<p>' + task.taskdesc + '</p>';
+	var desc = '<p style="text-overflow:ellipsis; overflow:hidden;">' + task.taskdesc + '</p>';
 	var taskdesc = task.taskdesc;
 	var color = null;
 	switch (task.priority) {
@@ -114,11 +114,14 @@ function createNotes(task) {
 	case "CANCEL":
 		task.statusindex = 1;
 		break;
-	case "DEV":
+	case "COMPLETE":
 		task.statusindex = 2;
 		break;
-	case "HOLD":
+	case "DEV":
 		task.statusindex = 3;
+		break;
+	case "HOLD":
+		task.statusindex = 4;
 		break;
 	default:
 		task.statusindex = 0;
@@ -130,7 +133,7 @@ function createNotes(task) {
 	$('.single_sticky_notes').append(
 			'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
 			+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
-			+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
+			+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
 					+ '</li>');
 }
 
@@ -140,6 +143,7 @@ function editTask(task) {
 	$('#task-id').val(task.taskid);
 	$('#task-name').val(task.taskname);
 	$('#task-desc').val(task.taskdesc);
+	$('#created-user').val(task.createduser);
 	$('#priority option').eq(task.priorityindex).attr('selected', 'selected');
 	$('#status option').eq(task.statusindex).attr('selected', 'selected');
 	$('#task-assigned').val(task.username);
@@ -159,23 +163,24 @@ function resetTaskWindow() {
 	$('#task-id').val('')
 	$('#task-name').val('');
 	$('#task-desc').val('');
+	$('#created-user').val(document.getElementById('task-created-user').value);
 	$('#priority option').eq(0).attr('selected', 'selected');
 	$('#status option').eq(0).attr('selected', 'selected');
 	$('#task-assigned').val('');
 }
 
 function submitNewTask(){
-//	alert($('#task-id').val()+'-'+$('#task-name').val()+'-'+$('#task-desc').val()+'-'+$('select#priority option:selected').val()+'-'+$('select#status option:selected').val()+'-'+$('#task-assigned').val())
 	$.post(urlHolder.addtask, {
 		taskid : $('#task-id').val(),
 		taskname : $('#task-name').val(),
 		taskdesc : $('#task-desc').val(),
 		priority : $('select#priority option:selected').val(),
 		taskstatus : $('select#status option:selected').val(),
-		username : $('#task-assigned').val()
+		username : $('#task-assigned').val(),
+		createduser : $('#created-user').val()
 	}, function(response) {
 		if (response) {
-			window.location.href="/todo/jsp/taskmanager.jsp?valnm=" + response;
+			window.location.href="/todo/jsp/taskmanager.jsp";
 		}
 	});
 }

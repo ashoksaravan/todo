@@ -2,11 +2,14 @@ package com.todo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.todo.domain.Role;
 import com.todo.domain.Task;
@@ -18,6 +21,7 @@ import com.todo.service.UserService;
 
 @Controller
 @RequestMapping("/users")
+@SessionAttributes({"user"})
 public class UserController {
 
 	static String  name = new String();
@@ -97,10 +101,11 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody
-	String login(@RequestParam String username, @RequestParam String password) {
+	String login(@RequestParam String username, @RequestParam String password, ModelMap map) {
 		User user = service.read(username);
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
+				map.addAttribute(user);
 				return user.getUsername();
 			} else {
 				return "login failed";
@@ -112,9 +117,9 @@ public class UserController {
 	
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
 	public @ResponseBody
-	TaskListDTO task(@RequestParam String username) {
+	TaskListDTO task(@ModelAttribute User user) {
 		TaskListDTO taskListDTO = new TaskListDTO();
-		taskListDTO.setTasks(taskService.readAll(username));
+		taskListDTO.setTasks(taskService.readAll(user.getUsername()));
 		return taskListDTO;
 	}
 	
@@ -135,7 +140,7 @@ public class UserController {
 	String addEditTask(@RequestParam String taskid,
 			@RequestParam String taskname, @RequestParam String taskdesc,
 			@RequestParam String priority, @RequestParam String taskstatus,
-			@RequestParam String username) {
+			@RequestParam String username, @RequestParam String createduser) {
 
 		Task task = new Task();
 		task.setTaskid(taskid);
@@ -144,6 +149,7 @@ public class UserController {
 		task.setPriority(priority);
 		task.setTaskstatus(taskstatus);
 		task.setUsername(username);
+		task.setCreateduser(createduser);
 		Task newTask = taskService.addEditTask(task);
 		return newTask.getUsername();
 	}

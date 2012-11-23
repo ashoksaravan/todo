@@ -32,6 +32,7 @@ public class TaskService {
 			existingTask.setPriority(task.getPriority());
 			existingTask.setTaskstatus(task.getTaskstatus());
 			existingTask.setUsername(task.getUsername());
+			existingTask.setCreateduser(task.getCreateduser());
 			taskRepository.save(existingTask);
 		}
 		return existingTask;

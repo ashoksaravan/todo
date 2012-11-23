@@ -1,3 +1,4 @@
+<%@page import="com.todo.domain.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <c:url value="/users/task" var="taskUrl" />
@@ -40,31 +41,27 @@
 	$(function(){
 		$(".changeBtn").click(function() {
 			if(changePasswordAction()){
-				var usrname = '<%=request.getParameter("valnm")%>'
 				$.post(urlHolder.changepwd, {
-					username : usrname,
+					username : '${user.username}',
 					oldpass : $('#old-password').val(),
 					confirmpass : $('#confirm-password').val()
 				}, function(response) {
-					if(response){
+					if (response) {
 						alert('Successfully Changed');
 						resetChangePwdForm();
 					}
 				});
-			}else{
+			} else {
 				resetChangePwdForm();
 			}
 		});
-		$(".userroles").click(function(){
+		$(".userroles").click(function() {
 			window.location = "/todo/jsp/users.jsp";
 		});
 	});
-	
-	window.onload = function(){
-		var displayName = '<%=request.getParameter("valnm")%>'
-		$.post(urlHolder.task, {
-			username : displayName,
-		}, function(response) {
+
+	window.onload = function() {
+		$.post(urlHolder.task, function(response) {
 			if (response != null) {
 				createAddNotes();
 				for ( var i = 0; i < response.tasks.length; i++) {
@@ -75,23 +72,20 @@
 	}
 </script>
 </head>
-<body>
-	<div style="padding-top: 2em;">
-		<table>
-			<tr>
-				<td>
-					<h6>Welcome!</h6>
-				</td>
-				<td>
-					<h5 style="text-decoration: underline;" id="usrname">
-						<a href="#" class="userroles"><%=request.getParameter("valnm")%></a>
+<body style="width: 90%">
+	<div style="padding-top: 2em; width: 100%; padding-left: 8em;">
+		<table style="width: 100%; " >
+			<tr style="color: navy;">
+				<td width="44%">
+					<h5 align="left">
+						Welcome! <a href="#" class="userroles"><c:out
+								value="${user.username}" /></a>
 					</h5>
 				</td>
-				<td>
-					<h5 style="padding-left: 20em;" align="center">Task ToDo</h5>
+				<td width="33%">
+					<h5>Task ToDo</h5>
 				</td>
-				<td style="padding-left: 25em;"><h5
-						style="text-decoration: underline;">
+				<td width="23%"><h5>
 						<a href="#change-password-box" class="change-password-window"
 							id="changePassword" style="margin-left: 30px;">Change
 							password</a>
@@ -99,7 +93,7 @@
 			</tr>
 		</table>
 	</div>
-	<div align="center">
+	<div align="center" style="width: 100%; padding-left: 5em">
 		<ul class="single_sticky_notes" id="single_sticky_notes">
 		</ul>
 	</div>
@@ -152,8 +146,15 @@
 						title="Please enter the task description" maxlength="2048"></textarea></td>
 			</tr>
 			<tr>
+				<td class="pwd-box-name">Created User:</td>
+				<td class="pwd-box-field"><input id="created-user" disabled="disabled"
+						name="created-user" class="pwd_form-login" value="${user.username}"
+						maxlength="2048"/></td>
+			</tr>
+			<tr>
 				<td class="pwd-box-name" id="priority">Priority:</td>
-				<td><select id='priority' name="priority" class="pwd_form-login">
+				<td><select id='priority' name="priority"
+					class="pwd_form-login">
 						<option value='L' selected="selected">Low</option>
 						<option value='M'>Medium</option>
 						<option value='H'>High</option>
@@ -165,6 +166,7 @@
 				<td><select id='status' name="status" class="pwd_form-login">
 						<option value='NEW' selected="selected">New</option>
 						<option value='CANCEL'>Cancelled</option>
+						<option value='COMPLETE'>Completed</option>
 						<option value='DEV'>Development</option>
 						<option value='HOLD'>Hold</option>
 				</select></td>
@@ -177,11 +179,12 @@
 			</tr>
 		</table>
 		<div>
-			<a hidden="hidden" id='task-id'></a>
-			<br /> <br />
+			<a hidden="hidden" id='task-id'></a> <br /> <br />
+			<input type="text" id="task-created-user" value="${user.username}" hidden="hidden"/>
 		</div>
 		<div align="center">
-			<button id="submitBtn" class="submitBtn" style="color: white;" onclick="submitNewTask()">Submit</button>
+			<button id="submitBtn" class="submitBtn" style="color: white;"
+				onclick="submitNewTask()">Submit</button>
 		</div>
 	</div>
 </body>

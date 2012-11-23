@@ -15,7 +15,14 @@ public class Task {
 	private String taskstatus;
 	private String taskdesc;
 	private String priority;
+	private String createduser;
 	
+	public String getCreateduser() {
+		return createduser;
+	}
+	public void setCreateduser(String createduser) {
+		this.createduser = createduser;
+	}
 	public String getPriority() {
 		return priority;
 	}
