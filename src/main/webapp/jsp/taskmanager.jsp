@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <c:url value="/users/task" var="taskUrl" />
 <c:url value="/users/changepwd" var="changepwdUrl" />
+<c:url value="/users/checkpwd" var="checkpwdUrl" />
 <c:url value="/users/addtask" var="addtaskUrl" />
 <html>
 <head>
@@ -35,17 +36,18 @@
 		$(".change-password-window").fancybox();
 		$('.refClass').fancybox();
 	});
-	$(function(){
+	$(function() {
 		urlHolder.task = '${taskUrl}';
 		urlHolder.changepwd = '${changepwdUrl}';
 		urlHolder.addtask = '${addtaskUrl}';
+		urlHolder.checkpwd = '${checkpwdUrl}';
 	});
-	$(function(){
+	
+	$(function() {
 		$(".changeBtn").click(function() {
-			if(changePasswordAction()){
+			if (changePasswordAction()) {
 				$.post(urlHolder.changepwd, {
 					username : '${user.username}',
-					oldpass : $('#old-password').val(),
 					confirmpass : $('#confirm-password').val()
 				}, function(response) {
 					if (response) {
@@ -53,13 +55,39 @@
 						resetChangePwdForm();
 					}
 				});
-			} else {
-				resetChangePwdForm();
 			}
 		});
 		$(".userroles").click(function() {
 			window.location = "/todo/jsp/users.jsp";
 		});
+
+		$("#old-password").focusout(function() {
+			$.post(urlHolder.checkpwd, {
+				username : '${user.username}',
+				pwd : $('#old-password').val()
+			}, function(response) {
+				if (response) {
+					$("#old-password").removeClass("error");
+				} else {
+					$("#old-password").addClass("error");
+				}
+			});
+		});
+		$("#new-password").focusout(function() {
+			if ($('#old-password').val() == $('#new-password').val()) {
+				$("#new-password").addClass("error");
+			} else {
+				$("#new-password").removeClass("error");
+			}
+		});
+		$("#confirm-password").focusout(function() {
+			if ($('#new-password').val() == $('#confirm-password').val()) {
+				$("#confirm-password").removeClass("error");
+			} else {
+				$("#confirm-password").addClass("error");
+			}
+		});
+
 	});
 
 	window.onload = function() {
@@ -90,7 +118,7 @@
 				</td>
 				<td width="23%"><h5>
 						<a href="#change-password-box" class="change-password-window"
-							id="changePassword" style="margin-left: 30px;">Change
+							id="changePassword" style="margin-left: 30px;" onclick="resetChangePwdForm();">Change
 							password</a>
 					</h5></td>
 			</tr>

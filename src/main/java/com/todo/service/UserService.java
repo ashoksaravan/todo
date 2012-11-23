@@ -82,4 +82,12 @@ public class UserService {
 		return true;
 		
 	}
+	
+	public Boolean checkPwd(User user) {
+		User existingUser = userRepository.findByUsername(user.getUsername());
+		if (existingUser.getPassword().equals(user.getPassword())) {
+			return true;
+		}
+		return false;
+	}
 }

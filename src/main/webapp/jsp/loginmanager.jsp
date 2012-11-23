@@ -35,6 +35,12 @@
 	$(function() {
 		urlHolder.login = '${loginUrl}';
 	});
+	$(function(){
+		$('#forget-password').click(function(){
+			$('#forgot-login-box-usrName').val('');
+			$("#forgot-login-box-usrName").removeClass("error");
+		});
+	});
 </script>
 </head>
 
@@ -55,6 +61,7 @@
 					onchange="loginValidation()" id="login-box-password" value=""
 					size="30" maxlength="2048" />
 			</div>
+			<div style="color: red; font-weight: bold;" hidden="hidden" id="loginvalidation">Login Failed</div>
 			<span class="login-box-options"><input type="checkbox"
 				name="1" value="1"> Remember Me <a
 					href="#forget-password-box" id="forget-password"

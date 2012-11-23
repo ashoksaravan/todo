@@ -2,22 +2,28 @@ var urlHolder = new Object();
 var name = new String();
 var displayName = new Object();
 
+/**
+ * Login the user.
+ */
 function submitAction() {
 
 	$.post(urlHolder.login, {
 		username : $('#login-box-usrName').val(),
 		password : $('#login-box-password').val()
 	}, function(response) {
-		if (response == 'login failed') {
+		if (response) {
+			window.location.href="/todo/jsp/taskmanager.jsp";
+		} else {
 			document.getElementById('login-box-usrName').value = '';
 			document.getElementById('login-box-password').value = '';
-			alert('Login Failed');
-		} else {
-			window.location.href="/todo/jsp/taskmanager.jsp";
+			$('#loginvalidation').show();
 		}
 	});
 }
 
+/**
+ * Validation for Login Form.
+ */
 function loginValidation() {
 	var usrName = document.getElementById('login-box-usrName').value;
 	var password = document.getElementById('login-box-password').value;
@@ -27,33 +33,47 @@ function loginValidation() {
 
 }
 
+/**
+ * Validation for forgot Password.
+ */
 function forgotAction() {
-	name = document.getElementById('forgot-login-box-usrName').value;
-	if (name == '') {
-		window.alert("Please enter the Username. \n"
-				+ "Password will send to your mail.");
+	if ($('#forgot-login-box-usrName').val() == '') {
+		$("#forgot-login-box-usrName").addClass("error");
 	} else {
 		// Need to code for forgot password.
+		$("#forgot-login-box-usrName").removeClass("error");
 		document.getElementById('forgot-login-box-usrName').value = '';
 		window.alert("Shortly you will get a mail. \n")
 	}
 }
 
+/**
+ * Validation for Change Password Form.
+ */
 function changePasswordAction() {
-	var old_password = document.getElementById('old-password').value;
-	var new_password = document.getElementById('new-password').value;
-	var confirm_password = document.getElementById('confirm-password').value;
-	if (old_password == '' || new_password == '' || confirm_password == '') {
-		alert('Please enter the passwords to change');
+	if ($('#old-password').val() == '' || $('#new-password').val() == ''
+			|| $('#confirm-password').val() == '') {
+		if ($('#old-password').val() == '') {
+			$("#old-password").addClass("error");
+		}
+		if ($('#new-password').val() == '') {
+			$("#new-password").addClass("error");
+		}
+		if ($('#confirm-password').val() == '') {
+			$("#confirm-password").addClass("error");
+		}
 		return false;
 	} else {
-		if(old_password == new_password){
-			alert("Old and New Passwords should differ.");
+		if ($('#old-password').val() == $('#new-password').val()) {
+			$("#new-password").addClass("error");
 			return false;
-		}else if(new_password != confirm_password){
-			alert("New and Confirm Passwords should be same.");
+		} else if ($('#new-password').val() != $('#confirm-password').val()) {
+			$("#confirm-password").addClass("error");
 			return false;
-		}else{
+		} else {
+			$("#old-password").removeClass("error");
+			$("#new-password").removeClass("error");
+			$("#confirm-password").removeClass("error");
 			return true;
 		}
 	}
@@ -137,6 +157,9 @@ function createNotes(task) {
 					+ '</li>');
 }
 
+/**
+ * Edit the Task.
+ */
 function editTask(task) {
 	resetTaskWindow();
 	$('#addEditHeading').text("Edit Task");
@@ -150,14 +173,20 @@ function editTask(task) {
 }
 
 /**
- * Reset the Change Password Form
+ * Reset the Change Password Form.
  */
 function resetChangePwdForm() {
 	document.getElementById('old-password').value = '';
 	document.getElementById('new-password').value = '';
 	document.getElementById('confirm-password').value = '';
+	$("#old-password").removeClass("error");
+	$("#new-password").removeClass("error");
+	$("#confirm-password").removeClass("error");
 }
 
+/**
+ * Reset the Task Form.
+ */
 function resetTaskWindow() {
 	$('#addEditHeading').text("Add Task");
 	$('#task-id').val('')
@@ -169,6 +198,9 @@ function resetTaskWindow() {
 	$('#task-assigned').val('');
 }
 
+/**
+ * Add Task and Edit Task.
+ */
 function submitNewTask(){
 	$.post(urlHolder.addtask, {
 		taskid : $('#task-id').val(),

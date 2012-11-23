@@ -100,18 +100,17 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody
-	String login(@RequestParam String username, @RequestParam String password,
-			ModelMap map) {
+	Boolean login(@RequestParam String username, @RequestParam String password, ModelMap map) {
 		User user = service.read(username);
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
 				map.addAttribute(user);
-				return user.getUsername();
+				return true;
 			} else {
-				return "login failed";
+				return false;
 			}
 		} else {
-			return "login failed";
+			return false;
 		}
 	}
 
@@ -126,7 +125,7 @@ public class UserController {
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean changepwd(@RequestParam String username,
-			@RequestParam String oldpass, @RequestParam String confirmpass) {
+			@RequestParam String confirmpass) {
 
 		User existingUser = new User();
 		existingUser.setUsername(username);
@@ -134,6 +133,20 @@ public class UserController {
 
 		return service.updatePwd(existingUser);
 	}
+
+	
+	@RequestMapping(value = "/checkpwd", method = RequestMethod.POST)
+	public @ResponseBody
+	Boolean checkpwd(@RequestParam String username,
+			@RequestParam String pwd) {
+
+		User existingUser = new User();
+		existingUser.setUsername(username);
+		existingUser.setPassword(pwd);
+
+		return service.checkPwd(existingUser);
+	}
+	
 
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
