@@ -7,6 +7,8 @@
 <html>
 <head>
 <title>Task Manager</title>
+<link rel="icon" type="image/gif"
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript"

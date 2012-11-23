@@ -6,6 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Login Page</title>
 <title>Login Box Task Manager</title>
+
+<link rel="icon" type="image/gif"
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
+
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
 <script type="text/javascript"

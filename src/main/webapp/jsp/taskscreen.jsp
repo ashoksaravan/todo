@@ -10,6 +10,8 @@
 <link href="../resources/css/jquery-ui-1.8.23.custom.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../resources/js/action.js"></script>
+<link rel="icon" type="image/gif"
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
 </head>
 <body>
 	<div class="taskContainer">

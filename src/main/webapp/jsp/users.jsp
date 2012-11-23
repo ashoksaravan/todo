@@ -17,7 +17,8 @@
 <script type='text/javascript'
 	src='<c:url value="/resources/js/custom.js"/>'></script>
 	
-
+<link rel="icon" type="image/gif"
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
 <title>User Records</title>
 
 <script type='text/javascript'>
