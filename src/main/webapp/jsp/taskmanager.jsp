@@ -5,6 +5,7 @@
 <c:url value="/users/changepwd" var="changepwdUrl" />
 <c:url value="/users/checkpwd" var="checkpwdUrl" />
 <c:url value="/users/addtask" var="addtaskUrl" />
+<c:url value="/users/records" var="recordsUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -31,18 +32,37 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript">
-
-	$(document).ready(function() {
-		$(".change-password-window").fancybox();
-		$('.refClass').fancybox();
-	});
 	$(function() {
 		urlHolder.task = '${taskUrl}';
 		urlHolder.changepwd = '${changepwdUrl}';
 		urlHolder.addtask = '${addtaskUrl}';
 		urlHolder.checkpwd = '${checkpwdUrl}';
+		urlHolder.records = '${recordsUrl}';
 	});
-	
+
+	var availableTags = [];
+	$(document).ready(function() {
+		$(".change-password-window").fancybox();
+		$('.refClass').fancybox();
+
+		$.post(urlHolder.records, function(response) {
+			if (response != null) {
+				for ( var i = 0; i < response.users.length; i++) {
+					var obj = {
+						id : i,
+						label : response.users[i].firstName + ',' + response.users[i].lastName,
+						value : response.users[i].username
+					};
+					availableTags.push(obj);
+				}
+				$("#task-assigned").autocomplete({
+					source : availableTags,
+					autoFocus: true,
+				});
+			}
+		});
+	});
+
 	$(function() {
 		$(".changeBtn").click(function() {
 			if (changePasswordAction()) {
@@ -87,7 +107,6 @@
 				$("#confirm-password").addClass("error");
 			}
 		});
-
 	});
 
 	window.onload = function() {
@@ -100,17 +119,17 @@
 			}
 		});
 	}
+	
 </script>
 </head>
 <body style="width: 90%">
 	<div style="padding-top: 2em; width: 100%; padding-left: 8em;">
-		<table style="width: 100%; " >
+		<table style="width: 100%;">
 			<tr style="color: navy;">
 				<td width="44%">
 					<h5 align="left">
 						Welcome! <a href="#" class="userroles"><c:out
-								value="${user.firstName}" />, <c:out
-								value="${user.lastName}" /></a>
+								value="${user.firstName}" />, <c:out value="${user.lastName}" /></a>
 					</h5>
 				</td>
 				<td width="33%">
@@ -118,8 +137,8 @@
 				</td>
 				<td width="23%"><h5>
 						<a href="#change-password-box" class="change-password-window"
-							id="changePassword" style="margin-left: 30px;" onclick="resetChangePwdForm();">Change
-							password</a>
+							id="changePassword" style="margin-left: 30px;"
+							onclick="resetChangePwdForm();">Change password</a>
 					</h5></td>
 			</tr>
 		</table>
@@ -178,9 +197,9 @@
 			</tr>
 			<tr>
 				<td class="pwd-box-name">Created User:</td>
-				<td class="pwd-box-field"><input id="created-user" disabled="disabled"
-						name="created-user" class="pwd_form-login" value="${user.username}"
-						maxlength="2048"/></td>
+				<td class="pwd-box-field"><input id="created-user"
+					disabled="disabled" name="created-user" class="pwd_form-login"
+					value="${user.username}" maxlength="2048" /></td>
 			</tr>
 			<tr>
 				<td class="pwd-box-name" id="priority">Priority:</td>
@@ -204,14 +223,15 @@
 			</tr>
 			<tr>
 				<td class="pwd-box-name">Assigned To:</td>
-				<td class="pwd-box-field"><input name="task-assigned"
-					type="text" class="pwd_form-login" id="task-assigned" value=""
+				<td class="pwd-box-field"><input name="task-assigned" 
+					class="pwd_form-login" id="task-assigned"
 					size="30" maxlength="2048" /></td>
 			</tr>
 		</table>
 		<div>
-			<a hidden="hidden" id='task-id'></a> <br /> <br />
-			<input type="text" id="task-created-user" value="${user.username}" hidden="hidden"/>
+			<a hidden="hidden" id='task-id'></a> <br /> <br /> <input
+				type="text" id="task-created-user" value="${user.username}"
+				hidden="hidden" />
 		</div>
 		<div align="center">
 			<button id="submitBtn" class="submitBtn" style="color: white;"

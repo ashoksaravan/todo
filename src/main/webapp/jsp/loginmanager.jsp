@@ -8,7 +8,7 @@
 <title>Login Box Task Manager</title>
 
 <link rel="icon" type="image/gif"
-	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif"/>
 
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
@@ -47,7 +47,7 @@
 <body>
 	<div align="center" style="width: 100%; height: 100%; padding-top: 10%">
 		<div id="login-box">
-			<H2>Login</H2>
+			<h2>Login</h2>
 			Task Manager for Developers <br /> <br />
 			<div id="login-box-name" style="margin-top: 20px;">UserName:</div>
 			<div id="login-box-field" style="margin-top: 20px;">
@@ -61,7 +61,8 @@
 					onchange="loginValidation()" id="login-box-password" value=""
 					size="30" maxlength="2048" />
 			</div>
-			<div style="color: red; font-weight: bold;" hidden="hidden" id="loginvalidation">Login Failed</div>
+			<div style="color: red; font-weight: bold;" hidden="hidden"
+				id="loginvalidation">Login Failed</div>
 			<span class="login-box-options"><input type="checkbox"
 				name="1" value="1"> Remember Me <a
 					href="#forget-password-box" id="forget-password"
@@ -86,5 +87,7 @@
 				<button id="forgotBtn" style="color: white;"
 					onclick="forgotAction()">Change</button>
 			</div>
-		</div></body>
+		</div>
+	</div>
+</body>
 </html>
