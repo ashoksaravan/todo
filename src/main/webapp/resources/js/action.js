@@ -22,28 +22,24 @@ function submitAction() {
 }
 
 /**
- * Validation for Login Form.
- */
-function loginValidation() {
-	var usrName = document.getElementById('login-box-usrName').value;
-	var password = document.getElementById('login-box-password').value;
-	if (usrName == '' && password == '') {
-	} else {
-	}
-
-}
-
-/**
  * Validation for forgot Password.
  */
 function forgotAction() {
 	if ($('#forgot-login-box-usrName').val() == '') {
 		$("#forgot-login-box-usrName").addClass("error");
 	} else {
-		// Need to code for forgot password.
-		$("#forgot-login-box-usrName").removeClass("error");
-		document.getElementById('forgot-login-box-usrName').value = '';
-		window.alert("Shortly you will get a mail. \n")
+		$.post(urlHolder.forgotpwd, {
+			username : $('#forgot-login-box-usrName').val()
+		}, function(response) {
+			if (response) {
+				$("#forgot-login-box-usrName").removeClass("error");
+				document.getElementById('forgot-login-box-usrName').value = '';
+				alert("Shortly you will get a mail. \n")
+			}else{
+				alert("Enter the valid username. \n")
+			}
+			parent.$.fancybox.close();
+		});
 	}
 }
 

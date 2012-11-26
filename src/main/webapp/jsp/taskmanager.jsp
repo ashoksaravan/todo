@@ -74,6 +74,7 @@
 						alert('Successfully Changed');
 						resetChangePwdForm();
 					}
+					parent.$.fancybox.close();
 				});
 			}
 		});

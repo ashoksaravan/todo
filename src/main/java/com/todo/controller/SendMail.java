@@ -16,7 +16,7 @@ public class SendMail {
 	/**
 	 * FROM.
 	 */
-	private final static String FROM = "todo-noreply@ebix.com";
+	private final static String FROM = "Todo_Do_Not_Reply@ebix.com";
 
 	/**
 	 * HOST.

@@ -28,6 +28,8 @@ import com.todo.service.UserService;
 public class UserController {
 
 	static String name = new String();
+	
+	static String password = new String();
 	@Autowired
 	private UserService service;
 	@Autowired
@@ -176,5 +178,29 @@ public class UserController {
 		SendMail sms = new SendMail();
 		sms.Sendmail("A Task has been assigned to you:\n" +"Task Description:>>"+ taskdesc+"\nTask Priority:"+ priority+"\nTask Status:"+ taskstatus, ar, taskname);
 		return newTask.getUsername();
+	}
+	
+	@RequestMapping(value = "/forgotpwd", method = RequestMethod.POST)
+	public @ResponseBody
+	Boolean forgotpwd(@RequestParam String username) {
+
+		User user = new User();
+		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
+		password = randomPassword.getAlphaNumeric(10);
+		user = service.read(username);
+		if(user == null){
+			return false;
+		}else{
+			ArrayList<String> ar = new ArrayList<String>();
+			ar.add(user.getMailId());
+			user.setPassword(password);
+			if (service.updatePwd(user) == true) {
+				SendMail sms = new SendMail();
+				sms.Sendmail("Random Password for user " + username + " is "
+						+ password, ar, "Change Password");
+				return true;
+			}
+		}
+		return false;
 	}
 }
