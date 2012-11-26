@@ -1,5 +1,8 @@
 package com.todo.controller;
 
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -164,6 +167,14 @@ public class UserController {
 		task.setUsername(username);
 		task.setCreateduser(createduser);
 		Task newTask = taskService.addEditTask(task);
+		User user = new User();
+		user.setUsername(username);
+		user = service.read(user);
+		ArrayList<String> ar = new ArrayList<String>();
+		ar.add(user.getMailId());
+
+		SendMail sms = new SendMail();
+		sms.Sendmail("A Task has been assigned to you:\n" +"Task Description:>>"+ taskdesc+"\nTask Priority:"+ priority+"\nTask Status:"+ taskstatus, ar, taskname);
 		return newTask.getUsername();
 	}
 }
