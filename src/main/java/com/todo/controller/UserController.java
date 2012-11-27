@@ -1,6 +1,7 @@
 package com.todo.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,8 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private TaskService taskService;
+	
+	HashMap< String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 	
 	private static String NEW = "NEW";
 	private static String CANCEL = "CANCEL";
@@ -161,7 +164,8 @@ public class UserController {
 	String addEditTask(@RequestParam String taskid,
 			@RequestParam String taskname, @RequestParam String taskdesc,
 			@RequestParam String priority, @RequestParam String taskstatus,
-			@RequestParam String username, @RequestParam String createduser) {
+			@RequestParam String username, @RequestParam String createduser,
+			@RequestParam String cclist) {
 		
 		String subject = new String();
 		String desc = new String();
@@ -173,18 +177,28 @@ public class UserController {
 		task.setTaskstatus(taskstatus);
 		task.setUsername(username);
 		task.setCreateduser(createduser);
+		task.setCclist(cclist);
 		Task newTask = taskService.addEditTask(task);
 		User user = new User();
 		user.setUsername(username);
 		user = service.read(user);
+		ArrayList<String> toArrList = new ArrayList<String>();
+		toArrList.add(user.getMailId());
+		map.put("TO", toArrList);
 		User author = new User();
 		author.setUsername(createduser);
 		author = service.read(author);
-		ArrayList<String> ar = new ArrayList<String>();
-		ar.add(user.getMailId());
-		if(!ar.contains(author.getMailId())){
-			ar.add(author.getMailId());
+		ArrayList<String> ccArrList = new ArrayList<String>();
+		ccArrList.add(author.getMailId());
+		String[] strings = cclist.split(",");
+		for (String string : strings) {
+			User ccUser = new User();
+			ccUser.setUsername(string);
+			ccUser = service.read(ccUser);
+			ccArrList.add(ccUser.getMailId());
 		}
+		map.put("CC", ccArrList);
+		
 		subject = taskname+"\t\t Assigned to: "+username+ "\t\t Status: "+taskstatus;
 		if(taskstatus.equals(COMPLETED)){
 			desc = "The Task has been completed.";
@@ -197,10 +211,9 @@ public class UserController {
 		}else{
 			desc = "A Task has been assigned for development.";
 		}
-
 		SendMail sms = new SendMail();
 		sms.Sendmail(desc + "\n\n"
-				+ "Task Description : " + taskdesc , ar, subject);
+				+ "Task Description : " + taskdesc , map, subject);
 		return newTask.getUsername();
 	}
 
@@ -215,12 +228,13 @@ public class UserController {
 			password = randomPassword.getAlphaNumeric(10);
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add(user.getMailId());
+			map.put("TO", ar);
 			user.setPassword(password);
 			Boolean pwdUpdate = service.updatePwd(user);
 			if (pwdUpdate) {
 				SendMail sms = new SendMail();
 				sms.Sendmail("Password for user '" + username + "' is '"
-						+ password +"'.", ar, "Change Password");
+						+ password +"'.", map, "Change Password");
 				return true;
 			}
 		}

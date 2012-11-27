@@ -33,6 +33,7 @@ public class TaskService {
 			existingTask.setTaskstatus(task.getTaskstatus());
 			existingTask.setUsername(task.getUsername());
 			existingTask.setCreateduser(task.getCreateduser());
+			existingTask.setCclist(task.getCclist());
 			taskRepository.save(existingTask);
 		}
 		return existingTask;

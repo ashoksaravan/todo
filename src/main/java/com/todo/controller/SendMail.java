@@ -2,6 +2,7 @@ package com.todo.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -24,7 +25,7 @@ public class SendMail {
 	private final static String HOST = "192.168.32.9";
 	
 
-	public void Sendmail(String message, ArrayList<String> ar,
+	public void Sendmail(String message, HashMap<String, ArrayList<String>> map,
 			String subject) {
 
 		// Collect the necessary information to send a simple message
@@ -55,14 +56,21 @@ public class SendMail {
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(FROM));
 
-			InternetAddress[] addressTo = new InternetAddress[ar.size()];
-
+			InternetAddress[] addressTo = new InternetAddress[map.get("TO").size()];
+			InternetAddress[] addressCc = new InternetAddress[map.get("CC").size()];
+			ArrayList<String> toList = map.get("TO");
+			ArrayList<String> ccList = map.get("CC");
 			int i = 0;
-			for (String email : ar) {
+			for (String email : toList) {
 				addressTo[i++] = new InternetAddress(email);
+			}
+			int j = 0;
+			for (String email : ccList) {
+				addressCc[j++] = new InternetAddress(email);
 			}
 
 			msg.setRecipients(javax.mail.Message.RecipientType.TO, addressTo);
+			msg.setRecipients(javax.mail.Message.RecipientType.CC, addressCc);
 
 			msg.setSubject(subject);
 			msg.setSentDate(new Date());
@@ -80,9 +88,10 @@ public class SendMail {
 	public static void main(String args[]) {
 		ArrayList<String> ar = new ArrayList<String>();
 		ar.add("arjun.mani@ebix.com");
-
+		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		map.put("TO", ar);
 		SendMail sms = new SendMail();
-		sms.Sendmail("Task ToDo", ar, "Task 'TODO'");
+		sms.Sendmail("Task ToDo", map, "Task 'TODO'");
 	}
 
 }

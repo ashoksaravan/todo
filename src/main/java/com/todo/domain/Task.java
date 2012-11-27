@@ -16,7 +16,14 @@ public class Task {
 	private String taskdesc;
 	private String priority;
 	private String createduser;
+	private String cclist;
 	
+	public String getCclist() {
+		return cclist;
+	}
+	public void setCclist(String cclist) {
+		this.cclist = cclist;
+	}
 	public String getCreateduser() {
 		return createduser;
 	}

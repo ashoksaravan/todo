@@ -153,7 +153,7 @@ function createNotes(task) {
 		$('.single_sticky_notes').append(
 				'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
 				+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
-				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
+				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'",cclist:"'+task.cclist+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
 						+ '</li>');
 	}
 }
@@ -171,6 +171,7 @@ function editTask(task) {
 	$('#priority option').eq(task.priorityindex).attr('selected', 'selected');
 	$('#status option').eq(task.statusindex).attr('selected', 'selected');
 	$('#task-assigned').val(task.username);
+	$('#cc-list').val(task.cclist);
 }
 
 /**
@@ -197,6 +198,7 @@ function resetTaskWindow() {
 	$('#priority option').eq(0).attr('selected', 'selected');
 	$('#status option').eq(0).attr('selected', 'selected');
 	$('#task-assigned').val('');
+	$('#cc-list').val('');
 	$("#task-name").removeClass("error");
 	$("#task-desc").removeClass("error");
 	$("#task-assigned").removeClass("error");
@@ -214,7 +216,8 @@ function submitNewTask(){
 			priority : $('select#priority option:selected').val(),
 			taskstatus : $('select#status option:selected').val(),
 			username : $('#task-assigned').val(),
-			createduser : $('#created-user').val()
+			createduser : $('#created-user').val(),
+			cclist : $('#cc-list').val()
 		}, function(response) {
 			if (response) {
 				window.location.href = "/todo/jsp/taskmanager.jsp";

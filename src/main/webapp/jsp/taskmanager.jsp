@@ -43,29 +43,67 @@
 	});
 
 	var availableTags = [];
-	$(document).ready(
-			function() {
-				$(".change-password-window").fancybox();
-				$('.refClass').fancybox();
+	$(document).ready(function() {
+		$(".change-password-window").fancybox();
+		$('.refClass').fancybox();
 
-				$.post(urlHolder.records, function(response) {
-					if (response != null) {
-						for ( var i = 0; i < response.users.length; i++) {
-							var obj = {
-								id : i,
-								label : response.users[i].firstName + ','
-										+ response.users[i].lastName,
-								value : response.users[i].username
-							};
-							availableTags.push(obj);
-						}
-						$("#task-assigned").autocomplete({
-							source : availableTags,
-							autoFocus : true,
-						});
-					}
+		$.post(urlHolder.records, function(response) {
+			if (response != null) {
+				for ( var i = 0; i < response.users.length; i++) {
+					var obj = {
+						id : i,
+						label : response.users[i].firstName + ','
+								+ response.users[i].lastName,
+						value : response.users[i].username
+					};
+					availableTags.push(obj);
+				}
+				$("#task-assigned").autocomplete({
+					source : availableTags,
+					autoFocus : true
 				});
-			});
+				
+				$( "#cc-list" )
+	            // don't navigate away from the field on tab when selecting an item
+	            .bind( "keydown", function( event ) {
+	                if ( event.keyCode === $.ui.keyCode.TAB &&
+	                        $( this ).data( "autocomplete" ).menu.active ) {
+	                    event.preventDefault();
+	                }
+	            })
+	            .autocomplete({
+	                minLength: 0,
+	                source: function( request, response ) {
+	                    // delegate back to autocomplete, but extract the last term
+	                    response( $.ui.autocomplete.filter(
+	                        availableTags, extractLast( request.term ) ) );
+	                },
+	                focus: function() {
+	                    // prevent value inserted on focus
+	                    return false;
+	                },
+	                select: function( event, ui ) {
+	                    var terms = split( this.value );
+	                    // remove the current input
+	                    terms.pop();
+	                    // add the selected item
+	                    terms.push( ui.item.value );
+	                    // add placeholder to get the comma-and-space at the end
+	                    terms.push( "" );
+	                    this.value = terms.join( "," );
+	                    return false;
+	                }
+	            });
+			}
+		});
+	});
+	
+	function split( val ) {
+        return val.split( /,\s*/ );
+    }
+    function extractLast( term ) {
+        return split( term ).pop();
+    }
 
 	$(function() {
 		$(".changeBtn").click(function() {
@@ -256,6 +294,12 @@
 				<td class="pwd-box-name">Assigned To:</td>
 				<td class="pwd-box-field"><input name="task-assigned"
 					class="pwd_form-login" id="task-assigned" size="30"
+					maxlength="2048" /></td>
+			</tr>
+			<tr>
+				<td class="pwd-box-name">CC List:</td>
+				<td class="pwd-box-field"><input name="cc-list"
+					class="pwd_form-login" id="cc-list" size="30"
 					maxlength="2048" /></td>
 			</tr>
 		</table>
