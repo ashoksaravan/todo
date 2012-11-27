@@ -83,90 +83,91 @@
 
 	<table id='tableUsers'>
 		<caption></caption>
-		<thead>
+		<thead id='tableHead'>
 			<tr>
 				<th></th>
 				<th>Username</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Role</th>
-				<th>Status</th>
 				<th>MailId</th>
 			</tr>
 		</thead>
 	</table>
 
 	<div id='controlBar'>
-		<input type='button' value='New' id='newBtn' /> <input type='button'
-			value='Delete' id='deleteBtn' /> <input type='button' value='Edit'
+<!-- 		<input type='button' value='New' id='newBtn' />  -->
+		<input type='button' value='Delete' id='deleteBtn' /> <input type='button' value='Edit'
 			id='editBtn' /> <input type='button' value='Reload' id='reloadBtn' />
 	</div>
 
-	<div id='newForm'>
-		<form style="width: 80%">
+		<form id='newForm' class="newEditForm">
 			<fieldset>
 				<legend>Create New Record</legend>
+				
+				 <div class="fieldgroup">
 				<label for='newUsername'>UserName</label> 
 				<input type='text' id='newUsername' />
+				</div>
 				
-				<br/> 
-				
+				 <div class="fieldgroup">
 				<label for='newPassword'>Password</label>
 				<input type='password' id='newPassword' />
+				</div> 
 				
-				<br/> 
-
+				 <div class="fieldgroup">
 				<label for='newFirstName'>First Name</label> 
 				<input type='text' id='newFirstName' /> 
+				</div> 
 				
-				<br/> 
-				
+				 <div class="fieldgroup">
 				<label for='newLastName'>Last Name</label> 
 				<input type='text' id='newLastName' /> 
+				</div>
 				
-				<br /> 
-				
-				<label for='newStatus'>Status</label> 
-				<select id='newStatus'>
-					<option value='1'>Inactive</option>
-					<option value='2' selected='selected'>Active</option>
-				</select> 
-				
-				<br/> 
-				
+				 <div class="fieldgroup">
 				<label for='newMailId'>MailId</label> 
 				<input type='text' id='newMailId' /> 
+				</div> 
 				
-				<br /> 
-				
+				 <div class="fieldgroup">
 				<label for='newRole'>Role</label> 
 				<select id='newRole'>
 					<option value='1'>Admin</option>
 					<option value='2' selected='selected'>Regular</option>
 				</select>
+				</div>
 			</fieldset>
 			<input type='button' value='Close' id='closeNewForm' /> <input
 				type='submit' value='Submit' />
 		</form>
-	</div>
 
-	<div id='editForm'>
-		<form>
+	
+		<form id='editForm' class="newEditForm">
 			<fieldset>
 				<legend>Edit Record</legend>
-				<input type='hidden' id='editUsername' /> <label
-					for='editFirstName'>First Name</label><input type='text'
-					id='editFirstName' /><br /> <label for='editLastName'>Last
-					Name</label><input type='text' id='editLastName' /><br /> <label
-					for='editRole'>Role</label> <select id='editRole'>
+				 <div class="fieldgroup">
+				<input type='hidden' id='editUsername' /> 
+				</div>
+				 <div class="fieldgroup">
+				<label for='editFirstName'>First Name</label>
+				<input type='text' id='editFirstName' />
+				</div>
+				 <div class="fieldgroup">
+				<label for='editLastName'>Last Name</label>
+				<input type='text' id='editLastName' />
+				</div>
+				 <div class="fieldgroup"> 
+				<label	for='editRole'>Role</label> 
+				<select id='editRole'>
 					<option value='1'>Admin</option>
 					<option value='2' selected='selected'>Regular</option>
 				</select>
+				</div>
 			</fieldset>
 			<input type='button' value='Close' id='closeEditForm' /> <input
 				type='submit' value='Submit' />
 		</form>
-	</div>
-
+	
 </body>
 </html>
