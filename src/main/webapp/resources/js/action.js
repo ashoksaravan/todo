@@ -197,25 +197,30 @@ function resetTaskWindow() {
 	$('#priority option').eq(0).attr('selected', 'selected');
 	$('#status option').eq(0).attr('selected', 'selected');
 	$('#task-assigned').val('');
+	$("#task-name").removeClass("error");
+	$("#task-desc").removeClass("error");
+	$("#task-assigned").removeClass("error");
 }
 
 /**
  * Add Task and Edit Task.
  */
 function submitNewTask(){
-	$.post(urlHolder.addtask, {
-		taskid : $('#task-id').val(),
-		taskname : $('#task-name').val(),
-		taskdesc : $('#task-desc').val(),
-		priority : $('select#priority option:selected').val(),
-		taskstatus : $('select#status option:selected').val(),
-		username : $('#task-assigned').val(),
-		createduser : $('#created-user').val()
-	}, function(response) {
-		if (response) {
-			window.location.href="/todo/jsp/taskmanager.jsp";
-		}
-	});
+	if (taskValidation()) {
+		$.post(urlHolder.addtask, {
+			taskid : $('#task-id').val(),
+			taskname : $('#task-name').val(),
+			taskdesc : $('#task-desc').val(),
+			priority : $('select#priority option:selected').val(),
+			taskstatus : $('select#status option:selected').val(),
+			username : $('#task-assigned').val(),
+			createduser : $('#created-user').val()
+		}, function(response) {
+			if (response) {
+				window.location.href = "/todo/jsp/taskmanager.jsp";
+			}
+		});
+	}
 }
 
 $(function() {
@@ -238,3 +243,21 @@ $(function() {
     });
 });
 
+function taskValidation(){
+	$("#task-name").removeClass("error");
+	$("#task-desc").removeClass("error");
+	$("#task-assigned").removeClass("error");
+	if($('#task-name').val() == '' || $('#task-desc').val() == '' || $('#task-assigned').val() == ''){
+		if ($('#task-name').val() == '') {
+			$("#task-name").addClass("error");
+		}
+		if ($('#task-desc').val() == '') {
+			$("#task-desc").addClass("error");
+		}
+		if ($('#task-assigned').val() == '') {
+			$("#task-assigned").addClass("error");
+		}
+		return false;
+	}
+	return true;
+}

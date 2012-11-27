@@ -185,7 +185,7 @@ public class UserController {
 		if(!ar.contains(author.getMailId())){
 			ar.add(author.getMailId());
 		}
-		subject = taskname+"\tAssigned to: "+username+ "\tStatus: "+taskstatus;
+		subject = taskname+"\t\t Assigned to: "+username+ "\t\t Status: "+taskstatus;
 		if(taskstatus.equals(COMPLETED)){
 			desc = "The Task has been completed.";
 		}else if(taskstatus.equals(HOLD)){
