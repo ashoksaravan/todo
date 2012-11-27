@@ -143,14 +143,17 @@ function createNotes(task) {
 		task.statusindex = 0;
 		break;
 	}
-	//need to change
+	// need to change
 	var tname = task.taskname.replace(/ /g, '&nbsp;') ;
 	var tdesc = task.taskdesc.replace(/ /g, '&nbsp;') ;
-	$('.single_sticky_notes').append(
-			'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
-			+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
-			+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
-					+ '</li>');
+	if(task.taskstatus != 'COMPLETE')
+	{
+		$('.single_sticky_notes').append(
+				'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
+				+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
+				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
+						+ '</li>');
+	}
 }
 
 /**
@@ -212,3 +215,24 @@ function submitNewTask(){
 		}
 	});
 }
+
+$(function() {
+    var button = $('#loginButton');
+    var box = $('#loginBox');
+    var form = $('#loginForm');
+    button.removeAttr('href');
+    button.mouseup(function(login) {
+        box.toggle();
+        button.toggleClass('active');
+    });
+    form.mouseup(function() { 
+        return false;
+    });
+    $(this).mouseup(function(login) {
+        if(!($(login.target).parent('#loginButton').length > 0)) {
+            button.removeClass('active');
+            box.hide();
+        }
+    });
+});
+

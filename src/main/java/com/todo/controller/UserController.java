@@ -1,6 +1,5 @@
 package com.todo.controller;
 
-
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ import com.todo.service.UserService;
 public class UserController {
 
 	static String name = new String();
-	
+
 	static String password = new String();
 	@Autowired
 	private UserService service;
@@ -59,7 +58,8 @@ public class UserController {
 	public @ResponseBody
 	User create(@RequestParam String username, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName,
-			@RequestParam Integer role, @RequestParam String status, @RequestParam String mailID) {
+			@RequestParam Integer role, @RequestParam String status,
+			@RequestParam String mailID) {
 
 		Role newRole = new Role();
 		newRole.setRole(role);
@@ -105,7 +105,8 @@ public class UserController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody
-	Boolean login(@RequestParam String username, @RequestParam String password, ModelMap map) {
+	Boolean login(@RequestParam String username, @RequestParam String password,
+			ModelMap map) {
 		User user = service.read(username);
 		if (user != null) {
 			if (password.equals(user.getPassword())) {
@@ -139,11 +140,9 @@ public class UserController {
 		return service.updatePwd(existingUser);
 	}
 
-	
 	@RequestMapping(value = "/checkpwd", method = RequestMethod.POST)
 	public @ResponseBody
-	Boolean checkpwd(@RequestParam String username,
-			@RequestParam String pwd) {
+	Boolean checkpwd(@RequestParam String username, @RequestParam String pwd) {
 
 		User existingUser = new User();
 		existingUser.setUsername(username);
@@ -151,7 +150,6 @@ public class UserController {
 
 		return service.checkPwd(existingUser);
 	}
-	
 
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
@@ -176,10 +174,12 @@ public class UserController {
 		ar.add(user.getMailId());
 
 		SendMail sms = new SendMail();
-		sms.Sendmail("A Task has been assigned to you:\n" +"Task Description:>>"+ taskdesc+"\nTask Priority:"+ priority+"\nTask Status:"+ taskstatus, ar, taskname);
+		sms.Sendmail("A Task has been assigned to you:\n"
+				+ "Task Description:>>" + taskdesc + "\nTask Priority:"
+				+ priority + "\nTask Status:" + taskstatus, ar, taskname);
 		return newTask.getUsername();
 	}
-	
+
 	@RequestMapping(value = "/forgotpwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean forgotpwd(@RequestParam String username) {
@@ -188,9 +188,9 @@ public class UserController {
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
 		password = randomPassword.getAlphaNumeric(10);
 		user = service.read(username);
-		if(user == null){
+		if (user == null) {
 			return false;
-		}else{
+		} else {
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add(user.getMailId());
 			user.setPassword(password);

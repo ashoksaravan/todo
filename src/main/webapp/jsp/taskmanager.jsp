@@ -29,6 +29,8 @@
 <link
 	href="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.css"
 	rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/resources/css/modal-style.css"
+	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript">
@@ -41,27 +43,29 @@
 	});
 
 	var availableTags = [];
-	$(document).ready(function() {
-		$(".change-password-window").fancybox();
-		$('.refClass').fancybox();
+	$(document).ready(
+			function() {
+				$(".change-password-window").fancybox();
+				$('.refClass').fancybox();
 
-		$.post(urlHolder.records, function(response) {
-			if (response != null) {
-				for ( var i = 0; i < response.users.length; i++) {
-					var obj = {
-						id : i,
-						label : response.users[i].firstName + ',' + response.users[i].lastName,
-						value : response.users[i].username
-					};
-					availableTags.push(obj);
-				}
-				$("#task-assigned").autocomplete({
-					source : availableTags,
-					autoFocus: true,
+				$.post(urlHolder.records, function(response) {
+					if (response != null) {
+						for ( var i = 0; i < response.users.length; i++) {
+							var obj = {
+								id : i,
+								label : response.users[i].firstName + ','
+										+ response.users[i].lastName,
+								value : response.users[i].username
+							};
+							availableTags.push(obj);
+						}
+						$("#task-assigned").autocomplete({
+							source : availableTags,
+							autoFocus : true,
+						});
+					}
 				});
-			}
-		});
-	});
+			});
 
 	$(function() {
 		$(".changeBtn").click(function() {
@@ -120,31 +124,57 @@
 			}
 		});
 	}
-	
+
+	function showlayer(layer) {
+		var myLayer = document.getElementById(layer);
+		if (myLayer.style.display == "none" || myLayer.style.display == "") {
+			myLayer.style.display = "block";
+		} else {
+			myLayer.style.display = "none";
+		}
+	}
 </script>
 </head>
-<body style="width: 90%">
-	<div style="padding-top: 2em; width: 100%; padding-left: 8em;">
-		<table style="width: 100%;">
-			<tr style="color: navy;">
-				<td width="44%">
-					<h5 align="left">
-						Welcome! <a href="#" class="userroles"><c:out
-								value="${user.firstName}" />, <c:out value="${user.lastName}" /></a>
-					</h5>
-				</td>
-				<td width="33%">
-					<h5>Task ToDo</h5>
-				</td>
-				<td width="23%"><h5>
-						<a href="#change-password-box" class="change-password-window"
-							id="changePassword" style="margin-left: 30px;"
-							onclick="resetChangePwdForm();">Change password</a>
-					</h5></td>
-			</tr>
+<body>
+	<div style="width: 100%;">
+		<table style="width: 100%" border="1">
+			<tr>
+				<td
+					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px"><img
+					src="<%=request.getContextPath()%>/resources/images/ebix_logo.jpg"
+					width="140" height="55" /></td>
+				<td align="right"
+					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px; padding-top: 1%; padding-left: 0px;">
+					<div id="container">
+						<!-- Login Starts Here -->
+						<div id="loginContainer">
+							<a href="#" id="loginButton"><span>${user.firstName},
+									${user.lastName}</span></a>
+							<div style="clear: both"></div>
+							<div id="loginBox">
+								<form id="loginForm">
+									<fieldset id="body">
+										<fieldset>
+											<label
+												style="font-size: 14px; text-align: left; font-weight: bold;">${user.firstName}</label>
+										</fieldset>
+										<fieldset>
+											<label style="text-align: left;">${user.mailId}</label>
+										</fieldset>
+										<a href="#" class="userroles">Profile</a> <input type="submit" id="login"
+											value="Sign out" />
+									</fieldset>
+									<span><a href="#change-password-box"
+										class="change-password-window" id="changePassword"
+										style="margin-left: 30px;" onclick="resetChangePwdForm();">Change
+											password</a></span>
+								</form>
+							</div>
+						</div>
+					</div>
 		</table>
 	</div>
-	<div align="center" style="width: 100%; padding-left: 5em">
+	<div align="center" style="width: 100%; padding-left: 5%">
 		<ul class="single_sticky_notes" id="single_sticky_notes">
 		</ul>
 	</div>
@@ -224,9 +254,9 @@
 			</tr>
 			<tr>
 				<td class="pwd-box-name">Assigned To:</td>
-				<td class="pwd-box-field"><input name="task-assigned" 
-					class="pwd_form-login" id="task-assigned"
-					size="30" maxlength="2048" /></td>
+				<td class="pwd-box-field"><input name="task-assigned"
+					class="pwd_form-login" id="task-assigned" size="30"
+					maxlength="2048" /></td>
 			</tr>
 		</table>
 		<div>
