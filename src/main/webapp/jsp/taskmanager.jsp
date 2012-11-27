@@ -247,7 +247,7 @@
 				<td><select id='status' name="status" class="pwd_form-login">
 						<option value='NEW' selected="selected">New</option>
 						<option value='CANCEL'>Cancelled</option>
-						<option value='COMPLETE'>Completed</option>
+						<option value='COMPLETED'>Completed</option>
 						<option value='DEV'>Development</option>
 						<option value='HOLD'>Hold</option>
 				</select></td>

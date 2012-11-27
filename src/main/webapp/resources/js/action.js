@@ -31,7 +31,9 @@ function forgotAction() {
 		$.post(urlHolder.forgotpwd, {
 			username : $('#forgot-login-box-usrName').val()
 		}, function(response) {
+			alert(response)
 			if (response) {
+				alert('hi');
 				$("#forgot-login-box-usrName").removeClass("error");
 				document.getElementById('forgot-login-box-usrName').value = '';
 				alert("Shortly you will get a mail. \n")
@@ -130,7 +132,7 @@ function createNotes(task) {
 	case "CANCEL":
 		task.statusindex = 1;
 		break;
-	case "COMPLETE":
+	case "COMPLETED":
 		task.statusindex = 2;
 		break;
 	case "DEV":

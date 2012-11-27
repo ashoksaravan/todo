@@ -63,7 +63,7 @@
 					id="login-box-password" value=""
 					size="30" maxlength="2048" />
 			</div>
-			<div style="color: red; font-weight: bold;" hidden="hidden"
+			<div style="color: #D69999; font-weight: bold; font-size: 15px" hidden="hidden"
 				id="loginvalidation">Login Failed</div>
 			<span class="login-box-options"><input type="checkbox"
 				name="1" value="1"> Remember Me <a

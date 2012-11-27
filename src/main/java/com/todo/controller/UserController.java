@@ -33,6 +33,11 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private TaskService taskService;
+	
+	private static String NEW = "NEW";
+	private static String CANCEL = "CANCEL";
+	private static String HOLD = "HOLD";
+	private static String COMPLETED = "COMPLETED";
 
 	@RequestMapping
 	public String getUsersPage() {
@@ -157,7 +162,9 @@ public class UserController {
 			@RequestParam String taskname, @RequestParam String taskdesc,
 			@RequestParam String priority, @RequestParam String taskstatus,
 			@RequestParam String username, @RequestParam String createduser) {
-
+		
+		String subject = new String();
+		String desc = new String();
 		Task task = new Task();
 		task.setTaskid(taskid);
 		task.setTaskname(taskname);
@@ -170,13 +177,30 @@ public class UserController {
 		User user = new User();
 		user.setUsername(username);
 		user = service.read(user);
+		User author = new User();
+		author.setUsername(createduser);
+		author = service.read(author);
 		ArrayList<String> ar = new ArrayList<String>();
 		ar.add(user.getMailId());
+		if(!ar.contains(author.getMailId())){
+			ar.add(author.getMailId());
+		}
+		subject = taskname+"\tAssigned to: "+username+ "\tStatus: "+taskstatus;
+		if(taskstatus.equals(COMPLETED)){
+			desc = "The Task has been completed.";
+		}else if(taskstatus.equals(HOLD)){
+			desc = "The Task is hold.";
+		}else if(taskstatus.equals(CANCEL)){
+			desc = "The Task has been cancelled.";
+		}else if(taskstatus.equals(NEW)){
+			desc = "A New Task has been assigned.";
+		}else{
+			desc = "A Task has been assigned for development.";
+		}
 
 		SendMail sms = new SendMail();
-		sms.Sendmail("A Task has been assigned to you:\n"
-				+ "Task Description:>>" + taskdesc + "\nTask Priority:"
-				+ priority + "\nTask Status:" + taskstatus, ar, taskname);
+		sms.Sendmail(desc + "\n\n"
+				+ "Task Description : " + taskdesc , ar, subject);
 		return newTask.getUsername();
 	}
 
@@ -186,18 +210,17 @@ public class UserController {
 
 		User user = new User();
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
-		password = randomPassword.getAlphaNumeric(10);
 		user = service.read(username);
-		if (user == null) {
-			return false;
-		} else {
+		if (user != null) {
+			password = randomPassword.getAlphaNumeric(10);
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add(user.getMailId());
 			user.setPassword(password);
-			if (service.updatePwd(user) == true) {
+			Boolean pwdUpdate = service.updatePwd(user);
+			if (pwdUpdate) {
 				SendMail sms = new SendMail();
-				sms.Sendmail("Random Password for user " + username + " is "
-						+ password, ar, "Change Password");
+				sms.Sendmail("Password for user '" + username + "' is '"
+						+ password +"'.", ar, "Change Password");
 				return true;
 			}
 		}
