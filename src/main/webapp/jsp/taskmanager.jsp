@@ -174,7 +174,7 @@
 					</div>
 		</table>
 	</div>
-	<div align="center" style="width: 100%; padding-left: 5%">
+	<div align="center" style="width: 100%; ">
 		<ul class="single_sticky_notes" id="single_sticky_notes">
 		</ul>
 	</div>
