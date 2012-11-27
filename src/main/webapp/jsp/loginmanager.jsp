@@ -9,7 +9,7 @@
 <title>Login Box Task Manager</title>
 
 <link rel="icon" type="image/gif"
-	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif"/>
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif" />
 
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
@@ -37,8 +37,8 @@
 		urlHolder.login = '${loginUrl}';
 		urlHolder.forgotpwd = '${forgotpwdUrl}';
 	});
-	$(function(){
-		$('#forget-password').click(function(){
+	$(function() {
+		$('#forget-password').click(function() {
 			$('#forgot-login-box-usrName').val('');
 			$("#forgot-login-box-usrName").removeClass("error");
 		});
@@ -49,31 +49,32 @@
 <body>
 	<div align="center" style="width: 100%; height: 100%; padding-top: 10%">
 		<div id="login-box">
-			<h2>Login</h2>
-			Task Manager for Developers <br /> <br />
-			<div id="login-box-name" style="margin-top: 20px;">UserName:</div>
-			<div id="login-box-field" style="margin-top: 20px;">
-				<input name="q" class="form-login" title="Username" value=""
-					id="login-box-usrName" size="30"
-					maxlength="2048" />
-			</div>
-			<div id="login-box-name">Password:</div>
-			<div id="login-box-field">
-				<input name="q" type="password" class="form-login" title="Password"
-					id="login-box-password" value=""
-					size="30" maxlength="2048" />
-			</div>
-			<div style="color: #D69999; font-weight: bold; font-size: 15px" hidden="hidden"
-				id="loginvalidation">Login Failed</div>
-			<span class="login-box-options"><input type="checkbox"
-				name="1" value="1"> Remember Me <a
-					href="#forget-password-box" id="forget-password"
-					class="forgot-password-window" style="margin-left: 30px;">Forgot
-						password?</a></span> <br /> <br /> <a id="submitId"
-				onclick="submitAction()" href="#"><img id="submitIdImg"
-				disabled="disabled"
-				src="<%=request.getContextPath()%>/resources/css/images/login-btn.png"
-				width="103" height="42" align="middle" /></a>
+			<form action="j_spring_security_check" method="post">
+				<h2>Login</h2>
+				Task Manager for Developers <br /> <br />
+
+				<div id="login-box-name" style="margin-top: 20px;">UserName:</div>
+				<div id="login-box-field" style="margin-top: 20px;">
+					<input id="j_username" class="form-login" title="Username" value=""
+						name="j_username" size="30" maxlength="50" type="text" />
+				</div>
+
+				<div id="login-box-name">Password:</div>
+				<div id="login-box-field">
+					<input id="j_password" class="form-login" title="Password"
+						name="j_password" size="30" maxlength="50" type="password" />
+				</div>
+
+				<div style="color: #D69999; font-weight: bold; font-size: 15px"
+					hidden="hidden" id="loginvalidation">Login Failed</div>
+				<span class="login-box-options"><input type="checkbox"
+					name="1" value="1"> Remember Me <a
+						href="#forget-password-box" id="forget-password"
+						class="forgot-password-window" style="margin-left: 30px;">Forgot
+							password?</a></span> <br /> <br /> <input type="image"
+					src="<%=request.getContextPath()%>/resources/css/images/login-btn.png"
+					alt="Login">
+			</form>
 		</div>
 		<div id="forget-password-box" class="forget-password-box"
 			hidden="hidden">

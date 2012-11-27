@@ -2,7 +2,25 @@
 <web-app id="WebApp_ID" version="2.4"
 	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>Spring Data MongoDB Tutorial</display-name>
+	<display-name>TODO Manager</display-name>
+
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+		/WEB-INF/spring-security.xml
+		/WEB-INF/applicationContext.xml
+		</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -17,23 +35,4 @@
 		<servlet-name>spring</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-
-	<welcome-file-list>
-		<welcome-file>/jsp/loginmanager.jsp</welcome-file>
-	</welcome-file-list>
-
-	<filter>
-		<filter-name>ToDoFilter</filter-name>
-		<filter-class>com.todo.filter.ToDoFilter</filter-class>
-		<init-param>
-			<param-name>avoid-urls</param-name>
-			<param-value>/jsp/loginmanager.jsp,/users/login,/resources/</param-value>
-		</init-param>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>ToDoFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
 </web-app>

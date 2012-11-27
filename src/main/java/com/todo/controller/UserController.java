@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,9 +33,9 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private TaskService taskService;
-	
-	HashMap< String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-	
+
+	private HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+
 	private static String NEW = "NEW";
 	private static String CANCEL = "CANCEL";
 	private static String HOLD = "HOLD";
@@ -111,28 +110,12 @@ public class UserController {
 		return service.delete(existingUser);
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody
-	Boolean login(@RequestParam String username, @RequestParam String password,
-			ModelMap map) {
-		User user = service.read(username);
-		if (user != null) {
-			if (password.equals(user.getPassword())) {
-				map.addAttribute(user);
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
 	public @ResponseBody
-	TaskListDTO task(@ModelAttribute User user) {
+	TaskListDTO task() {
 		TaskListDTO taskListDTO = new TaskListDTO();
-		taskListDTO.setTasks(taskService.readAll(user.getUsername()));
+		taskListDTO.setTasks(taskService.readAll(SecurityContextHolder
+				.getContext().getAuthentication().getName()));
 		return taskListDTO;
 	}
 
@@ -166,7 +149,7 @@ public class UserController {
 			@RequestParam String priority, @RequestParam String taskstatus,
 			@RequestParam String username, @RequestParam String createduser,
 			@RequestParam String cclist) {
-		
+
 		String subject = new String();
 		String desc = new String();
 		Task task = new Task();
@@ -198,22 +181,23 @@ public class UserController {
 			ccArrList.add(ccUser.getMailId());
 		}
 		map.put("CC", ccArrList);
-		
-		subject = taskname+"\t\t Assigned to: "+username+ "\t\t Status: "+taskstatus;
-		if(taskstatus.equals(COMPLETED)){
+
+		subject = taskname + "\t\t Assigned to: " + username + "\t\t Status: "
+				+ taskstatus;
+		if (taskstatus.equals(COMPLETED)) {
 			desc = "The Task has been completed.";
-		}else if(taskstatus.equals(HOLD)){
+		} else if (taskstatus.equals(HOLD)) {
 			desc = "The Task is hold.";
-		}else if(taskstatus.equals(CANCEL)){
+		} else if (taskstatus.equals(CANCEL)) {
 			desc = "The Task has been cancelled.";
-		}else if(taskstatus.equals(NEW)){
+		} else if (taskstatus.equals(NEW)) {
 			desc = "A New Task has been assigned.";
-		}else{
+		} else {
 			desc = "A Task has been assigned for development.";
 		}
 		SendMail sms = new SendMail();
-		sms.Sendmail(desc + "\n\n"
-				+ "Task Description : " + taskdesc , map, subject);
+		sms.Sendmail(desc + "\n\n" + "Task Description : " + taskdesc, map,
+				subject);
 		return newTask.getUsername();
 	}
 
@@ -234,10 +218,11 @@ public class UserController {
 			if (pwdUpdate) {
 				SendMail sms = new SendMail();
 				sms.Sendmail("Password for user '" + username + "' is '"
-						+ password +"'.", map, "Change Password");
+						+ password + "'.", map, "Change Password");
 				return true;
 			}
 		}
 		return false;
 	}
+
 }

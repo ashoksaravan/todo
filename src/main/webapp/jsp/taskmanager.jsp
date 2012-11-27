@@ -180,7 +180,7 @@
 				<td
 					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px"><img
 					src="<%=request.getContextPath()%>/resources/images/ebix_logo.jpg"
-					width="140" height="55" /></td>
+					width="120" height="55" /></td>
 				<td align="right"
 					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px; padding-top: 1%; padding-left: 0px;">
 					<div id="container">
@@ -190,7 +190,7 @@
 									${user.lastName}</span></a>
 							<div style="clear: both"></div>
 							<div id="loginBox">
-								<form id="loginForm">
+								<form id="loginForm" action="logout">
 									<fieldset id="body">
 										<fieldset>
 											<label

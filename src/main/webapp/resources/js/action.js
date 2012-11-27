@@ -83,7 +83,7 @@ function changePasswordAction() {
 function createAddNotes() {
 	var add = '<h5>'+'Add Task'+'</h5>';
 	var refClass = 'refClass'
-	var addBtn = '<img src='+ '../resources/css/images/add.png '+ '/>';
+	var addBtn = '<img src='+ 'resources/css/images/add.png '+ '/>';
 	var idBtn = 'createAddBtn';
 	var classBtn = 'createAddBtn';
 	var title = 'Please click the add symbol'
