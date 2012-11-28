@@ -31,6 +31,10 @@ public class UserController {
 	private UserService service;
 	@Autowired
 	private TaskService taskService;
+	@Autowired
+	ForgotPasswordCmd forgotPasswordCmd;
+	@Autowired
+	AddEditTaskCmd addEditTaskCmd;
 	
 	@RequestMapping
 	public String getUsersPage() {
@@ -135,14 +139,12 @@ public class UserController {
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean addEditTask(@RequestBody Task addEditTask) {
-		AddEditTaskCmd addEditTaskCmd = new AddEditTaskCmd();
 		return addEditTaskCmd.addEditTask(addEditTask);
 	}
 
 	@RequestMapping(value = "/forgotpwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean forgotpwd(@RequestParam String username) {
-		ForgotPasswordCmd forgotPasswordCmd = new ForgotPasswordCmd();
 		return forgotPasswordCmd.forgotPassword(username);
 	}
 
