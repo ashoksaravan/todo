@@ -1,8 +1,5 @@
 package com.todo.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.todo.command.AddEditTaskCmd;
+import com.todo.command.ForgotPasswordCmd;
 import com.todo.domain.Role;
 import com.todo.domain.Task;
 import com.todo.domain.User;
@@ -28,19 +27,11 @@ public class UserController {
 
 	static String name = new String();
 
-	static String password = new String();
 	@Autowired
 	private UserService service;
 	@Autowired
 	private TaskService taskService;
-
-	private HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-
-	private static String NEW = "NEW";
-	private static String CANCEL = "CANCEL";
-	private static String HOLD = "HOLD";
-	private static String COMPLETED = "COMPLETED";
-
+	
 	@RequestMapping
 	public String getUsersPage() {
 		return "users";
@@ -65,7 +56,7 @@ public class UserController {
 	public @ResponseBody
 	User create(@RequestParam String username, @RequestParam String password,
 			@RequestParam String firstName, @RequestParam String lastName,
-			@RequestParam Integer role, @RequestParam String status,
+			@RequestParam Integer role,
 			@RequestParam String mailID) {
 
 		Role newRole = new Role();
@@ -77,7 +68,6 @@ public class UserController {
 		newUser.setFirstName(firstName);
 		newUser.setLastName(lastName);
 		newUser.setRole(newRole);
-		newUser.setUserStatus(status);
 		newUser.setMailId(mailID);
 
 		return service.create(newUser);
@@ -141,88 +131,19 @@ public class UserController {
 
 		return service.checkPwd(existingUser);
 	}
-
+	
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
-	String addEditTask(@RequestParam String taskid,
-			@RequestParam String taskname, @RequestParam String taskdesc,
-			@RequestParam String priority, @RequestParam String taskstatus,
-			@RequestParam String username, @RequestParam String createduser,
-			@RequestParam String cclist) {
-
-		String subject = new String();
-		String desc = new String();
-		Task task = new Task();
-		task.setTaskid(taskid);
-		task.setTaskname(taskname);
-		task.setTaskdesc(taskdesc);
-		task.setPriority(priority);
-		task.setTaskstatus(taskstatus);
-		task.setUsername(username);
-		task.setCreateduser(createduser);
-		task.setCclist(cclist);
-		Task newTask = taskService.addEditTask(task);
-		User user = new User();
-		user.setUsername(username);
-		user = service.read(user);
-		ArrayList<String> toArrList = new ArrayList<String>();
-		toArrList.add(user.getMailId());
-		map.put("TO", toArrList);
-		User author = new User();
-		author.setUsername(createduser);
-		author = service.read(author);
-		ArrayList<String> ccArrList = new ArrayList<String>();
-		ccArrList.add(author.getMailId());
-		String[] strings = cclist.split(",");
-		for (String string : strings) {
-			User ccUser = new User();
-			ccUser.setUsername(string);
-			ccUser = service.read(ccUser);
-			ccArrList.add(ccUser.getMailId());
-		}
-		map.put("CC", ccArrList);
-
-		subject = taskname + "\t\t Assigned to: " + username + "\t\t Status: "
-				+ taskstatus;
-		if (taskstatus.equals(COMPLETED)) {
-			desc = "The Task has been completed.";
-		} else if (taskstatus.equals(HOLD)) {
-			desc = "The Task is hold.";
-		} else if (taskstatus.equals(CANCEL)) {
-			desc = "The Task has been cancelled.";
-		} else if (taskstatus.equals(NEW)) {
-			desc = "A New Task has been assigned.";
-		} else {
-			desc = "A Task has been assigned for development.";
-		}
-		SendMail sms = new SendMail();
-		sms.Sendmail(desc + "\n\n" + "Task Description : " + taskdesc, map,
-				subject);
-		return newTask.getUsername();
+	Boolean addEditTask(@RequestBody Task addEditTask) {
+		AddEditTaskCmd addEditTaskCmd = new AddEditTaskCmd();
+		return addEditTaskCmd.addEditTask(addEditTask);
 	}
 
 	@RequestMapping(value = "/forgotpwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean forgotpwd(@RequestParam String username) {
-
-		User user = new User();
-		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
-		user = service.read(username);
-		if (user != null) {
-			password = randomPassword.getAlphaNumeric(10);
-			ArrayList<String> ar = new ArrayList<String>();
-			ar.add(user.getMailId());
-			map.put("TO", ar);
-			user.setPassword(password);
-			Boolean pwdUpdate = service.updatePwd(user);
-			if (pwdUpdate) {
-				SendMail sms = new SendMail();
-				sms.Sendmail("Password for user '" + username + "' is '"
-						+ password + "'.", map, "Change Password");
-				return true;
-			}
-		}
-		return false;
+		ForgotPasswordCmd forgotPasswordCmd = new ForgotPasswordCmd();
+		return forgotPasswordCmd.forgotPassword(username);
 	}
 
 }

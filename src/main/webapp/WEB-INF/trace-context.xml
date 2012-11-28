@@ -19,6 +19,7 @@
 	<aop:config>
 	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * com.todo.service..*(..))"/>
 	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * com.todo.controller..*(..))"/>
+	  <aop:advisor advice-ref="customizableTraceInterceptor" pointcut="execution(public * com.todo.command..*(..))"/>
 	</aop:config>
 
 </beans>

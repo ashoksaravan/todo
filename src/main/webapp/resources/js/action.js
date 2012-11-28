@@ -31,9 +31,7 @@ function forgotAction() {
 		$.post(urlHolder.forgotpwd, {
 			username : $('#forgot-login-box-usrName').val()
 		}, function(response) {
-			alert(response)
 			if (response) {
-				alert('hi');
 				$("#forgot-login-box-usrName").removeClass("error");
 				document.getElementById('forgot-login-box-usrName').value = '';
 				alert("Shortly you will get a mail. \n")
@@ -100,7 +98,6 @@ function createNotes(task) {
 	var refClass = 'refClass'
 	var header = '<h5>' + task.taskname + '</h5>';
 	var desc = '<p style="text-overflow:ellipsis; overflow:hidden;">' + task.taskdesc + '</p>';
-	var taskdesc = task.taskdesc;
 	var color = null;
 	switch (task.priority) {
 	case "L":
@@ -148,6 +145,9 @@ function createNotes(task) {
 	// need to change
 	var tname = task.taskname.replace(/ /g, '&nbsp;') ;
 	var tdesc = task.taskdesc.replace(/ /g, '&nbsp;') ;
+	if(task.cclist == null){
+		task.cclist = '';
+	}
 	if(task.taskstatus != 'COMPLETE')
 	{
 		$('.single_sticky_notes').append(
@@ -208,21 +208,29 @@ function resetTaskWindow() {
  * Add Task and Edit Task.
  */
 function submitNewTask(){
+	var addEditTask = {"taskid":$('#task-id').val(),"taskname":$('#task-name').val(),
+			"taskdesc":$('#task-desc').val(),"priority":$('select#priority option:selected').val(),
+			"taskstatus":$('select#status option:selected').val(),"username":$('#task-assigned').val(),
+			"createduser":$('#created-user').val(),"cclist" : $('#cc-list').val()
+			};
 	if (taskValidation()) {
-		$.post(urlHolder.addtask, {
-			taskid : $('#task-id').val(),
-			taskname : $('#task-name').val(),
-			taskdesc : $('#task-desc').val(),
-			priority : $('select#priority option:selected').val(),
-			taskstatus : $('select#status option:selected').val(),
-			username : $('#task-assigned').val(),
-			createduser : $('#created-user').val(),
-			cclist : $('#cc-list').val()
-		}, function(response) {
-			if (response) {
-				window.location.href = "/todo/jsp/taskmanager.jsp";
-			}
-		});
+		
+		$.ajax({
+            contentType : "application/json",
+            dataType : 'json',
+            type : "POST",
+            url : urlHolder.addtask,
+            data : JSON.stringify(addEditTask),
+
+            success : function(response) {
+            	if(response){
+            		window.location.href = "/todo/jsp/taskmanager.jsp";
+            	}
+            },
+            error : function(request, status, error) {
+                   alert('Error: ' + error); 
+            }
+        });
 	}
 }
 

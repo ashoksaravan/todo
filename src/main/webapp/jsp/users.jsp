@@ -96,7 +96,7 @@
 	</table>
 
 	<div id='controlBar'>
-<!-- 		<input type='button' value='New' id='newBtn' />  -->
+		<input type='button' value='New' id='newBtn' /> 
 		<input type='button' value='Delete' id='deleteBtn' /> <input type='button' value='Edit'
 			id='editBtn' /> <input type='button' value='Reload' id='reloadBtn' />
 	</div>

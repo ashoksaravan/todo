@@ -23,10 +23,9 @@ public class SendMail {
 	 * HOST.
 	 */
 	private final static String HOST = "192.168.32.9";
-	
 
-	public void Sendmail(String message, HashMap<String, ArrayList<String>> map,
-			String subject) {
+	public void Sendmail(String message,
+			HashMap<String, ArrayList<String>> map, String subject) {
 
 		// Collect the necessary information to send a simple message
 		// Make sure to replace the values for host, to, and from with
@@ -37,8 +36,6 @@ public class SendMail {
 		// from - whoever you want to be. Just remember that many smtp
 		// servers will validate the domain of the from address
 		// before allowing the mail to be sent.
-
-		
 
 		String messageText = message;
 		boolean sessionDebug = true;
@@ -55,22 +52,28 @@ public class SendMail {
 
 			Message msg = new MimeMessage(session);
 			msg.setFrom(new InternetAddress(FROM));
-
-			InternetAddress[] addressTo = new InternetAddress[map.get("TO").size()];
-			InternetAddress[] addressCc = new InternetAddress[map.get("CC").size()];
-			ArrayList<String> toList = map.get("TO");
-			ArrayList<String> ccList = map.get("CC");
-			int i = 0;
-			for (String email : toList) {
-				addressTo[i++] = new InternetAddress(email);
+			if (map.get("TO") != null && map.get("TO").size() > 0) {
+				InternetAddress[] addressTo = new InternetAddress[map.get("TO")
+						.size()];
+				ArrayList<String> toList = map.get("TO");
+				int i = 0;
+				for (String email : toList) {
+					addressTo[i++] = new InternetAddress(email);
+				}
+				msg.setRecipients(javax.mail.Message.RecipientType.TO,
+						addressTo);
 			}
-			int j = 0;
-			for (String email : ccList) {
-				addressCc[j++] = new InternetAddress(email);
+			if (map.get("CC") != null && map.get("CC").size() > 0) {
+				InternetAddress[] addressCc = new InternetAddress[map.get("CC")
+						.size()];
+				ArrayList<String> ccList = map.get("CC");
+				int j = 0;
+				for (String email : ccList) {
+					addressCc[j++] = new InternetAddress(email);
+				}
+				msg.setRecipients(javax.mail.Message.RecipientType.CC,
+						addressCc);
 			}
-
-			msg.setRecipients(javax.mail.Message.RecipientType.TO, addressTo);
-			msg.setRecipients(javax.mail.Message.RecipientType.CC, addressCc);
 
 			msg.setSubject(subject);
 			msg.setSentDate(new Date());
