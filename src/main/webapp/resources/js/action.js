@@ -96,6 +96,7 @@ function createAddNotes(ctx) {
  */
 function createNotes(task, ctx) {
 	var refClass = 'refClass'
+	var historyClass = 'historyClass';
 	var header = '<h5>' + task.taskname + '</h5>';
 	var desc = '<p style="text-overflow:ellipsis; overflow:hidden;">' + task.taskdesc + '</p>';
 	var color = null;
@@ -154,7 +155,8 @@ function createNotes(task, ctx) {
 				'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
 				+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
 				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'",cclist:"'+task.cclist+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
-						+ '</li>');
+						+'<div align=right>'+'<a href="#taskHistory" onclick=showTaskHistory({taskid:"'
+						+task.taskid+'"}) class='+historyClass+'><img src='+ '/resources/css/images/arrow.png'+ '/></a></div>'+'</li>');
 	}
 }
 
@@ -207,11 +209,12 @@ function resetTaskWindow() {
 /**
  * Add Task and Edit Task.
  */
-function submitNewTask(){
+function submitNewTask(editor){
+	alert(editor)
 	var addEditTask = {"taskid":$('#task-id').val(),"taskname":$('#task-name').val(),
 			"taskdesc":$('#task-desc').val(),"priority":$('select#priority option:selected').val(),
 			"taskstatus":$('select#status option:selected').val(),"username":$('#task-assigned').val(),
-			"createduser":$('#created-user').val(),"cclist" : $('#cc-list').val()
+			"createduser":$('#created-user').val(),"cclist" : $('#cc-list').val(),"editor" : $('#task-editor').val()
 			};
 	if (taskValidation()) {
 		
@@ -271,4 +274,10 @@ function taskValidation(){
 		return false;
 	}
 	return true;
+}
+
+function showTaskHistory(task){
+	var taskid = task.taskid;
+	alert(taskid)
+	window.location.href="/todo/jsp/taskscreen.jsp?task=" + taskid;
 }

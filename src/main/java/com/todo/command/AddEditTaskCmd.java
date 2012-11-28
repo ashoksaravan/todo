@@ -14,20 +14,20 @@ import com.todo.service.UserService;
 
 @Service
 public class AddEditTaskCmd {
-	
+
 	@Autowired
 	private UserService service;
 	@Autowired
 	private TaskService taskService;
-	
+
 	private HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 
 	private static String NEW = "NEW";
 	private static String CANCEL = "CANCEL";
 	private static String HOLD = "HOLD";
 	private static String COMPLETED = "COMPLETED";
-	
-	public Boolean addEditTask(Task addEditTask){
+
+	public Task addEditTask(Task addEditTask) {
 		String subject = new String();
 		String desc = new String();
 		Task task = new Task();
@@ -38,21 +38,27 @@ public class AddEditTaskCmd {
 		task.setTaskstatus(addEditTask.getTaskstatus());
 		task.setUsername(addEditTask.getUsername());
 		task.setCreateduser(addEditTask.getCreateduser());
-		if (addEditTask.getCclist() != null && addEditTask.getCclist().length() > 0) {
+		task.setEditor(addEditTask.getEditor());
+		if (addEditTask.getCclist() != null
+				&& addEditTask.getCclist().length() > 0) {
 			task.setCclist(addEditTask.getCclist());
 		}
 		Task newTask = taskService.addEditTask(task);
 		User user = new User();
 		user.setUsername(newTask.getUsername());
 		user = service.read(user);
-		ArrayList<String> toArrList = new ArrayList<String>();
-		toArrList.add(user.getMailId());
-		map.put("TO", toArrList);
+		if (user != null) {
+			ArrayList<String> toArrList = new ArrayList<String>();
+			toArrList.add(user.getMailId());
+			map.put("TO", toArrList);
+		}
 		User author = new User();
 		author.setUsername(newTask.getCreateduser());
 		author = service.read(author);
 		ArrayList<String> ccArrList = new ArrayList<String>();
-		ccArrList.add(author.getMailId());
+		if (author != null) {
+			ccArrList.add(author.getMailId());
+		}
 		if (newTask.getCclist() != null && newTask.getCclist().length() > 0) {
 			String[] strings = newTask.getCclist().split(",");
 			for (String string : strings) {
@@ -63,7 +69,8 @@ public class AddEditTaskCmd {
 			}
 			map.put("CC", ccArrList);
 		}
-		subject = newTask.getTaskname() + "\t\t Assigned to: " + newTask.getUsername() + "\t\t Status: "
+		subject = newTask.getTaskname() + "\t\t Assigned to: "
+				+ newTask.getUsername() + "\t\t Status: "
 				+ newTask.getTaskstatus();
 		if (newTask.getTaskstatus().equals(COMPLETED)) {
 			desc = "The Task has been completed.";
@@ -77,10 +84,11 @@ public class AddEditTaskCmd {
 			desc = "A Task has been assigned for development.";
 		}
 		SendMail sms = new SendMail();
-		sms.Sendmail(desc + "\n\n" + "Task Description : " + newTask.getTaskdesc(), map,
-				subject);
-		return true;
-		
+		sms.Sendmail(
+				desc + "\n\n" + "Task Description : " + newTask.getTaskdesc(),
+				map, subject);
+		return newTask;
+
 	}
 
 }

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.todo.domain.Task;
+import com.todo.domain.TaskHistory;
+import com.todo.repository.TaskHistoryRepository;
 import com.todo.repository.TaskRepository;
 
 @Service
@@ -14,6 +16,9 @@ public class TaskService {
 	
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private TaskHistoryRepository taskHistoryRepository;
 	
 	public List<Task> readAll(String username) {
 		return taskRepository.findTaskByUsername(username);
@@ -37,6 +42,10 @@ public class TaskService {
 			taskRepository.save(existingTask);
 		}
 		return existingTask;
+	}
+	
+	public List<TaskHistory> readTaskVersion(String taskid) {
+		return taskHistoryRepository.findTaskByTaskid(taskid);
 	}
 
 }

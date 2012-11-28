@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.todo.command.AddEditTaskCmd;
+import com.todo.command.EditTaskHistoryCmd;
 import com.todo.command.ForgotPasswordCmd;
 import com.todo.domain.Role;
 import com.todo.domain.Task;
 import com.todo.domain.User;
+import com.todo.dto.TaskHistoryListDTO;
 import com.todo.dto.TaskListDTO;
 import com.todo.dto.UserListDTO;
 import com.todo.service.TaskService;
@@ -35,6 +37,8 @@ public class UserController {
 	ForgotPasswordCmd forgotPasswordCmd;
 	@Autowired
 	AddEditTaskCmd addEditTaskCmd;
+	@Autowired
+	EditTaskHistoryCmd editTaskHistoryCmd;
 	
 	@RequestMapping
 	public String getUsersPage() {
@@ -139,13 +143,22 @@ public class UserController {
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean addEditTask(@RequestBody Task addEditTask) {
-		return addEditTaskCmd.addEditTask(addEditTask);
+		Task task = addEditTaskCmd.addEditTask(addEditTask);
+		return editTaskHistoryCmd.editTaskHistory(task);
 	}
 
 	@RequestMapping(value = "/forgotpwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean forgotpwd(@RequestParam String username) {
 		return forgotPasswordCmd.forgotPassword(username);
+	}
+	
+	@RequestMapping(value = "/history", method = RequestMethod.POST)
+	public @ResponseBody
+	TaskHistoryListDTO taskHistory(@RequestParam String taskid) {
+		TaskHistoryListDTO historyListDTO = new TaskHistoryListDTO();
+		historyListDTO.setTaskHistory(taskService.readTaskVersion(taskid));
+		return historyListDTO;
 	}
 
 }

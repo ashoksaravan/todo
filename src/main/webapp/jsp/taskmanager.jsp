@@ -41,6 +41,7 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.addtask = '${addtaskUrl}';
 		urlHolder.checkpwd = '${checkpwdUrl}';
 		urlHolder.records = '${recordsUrl}';
+		urlHolder.history = '${historyUrl}';
 	});
 
 	var availableTags = [];
@@ -179,7 +180,7 @@ var ctx = "${pageContext.request.contextPath}";
 		<table style="width: 100%" border="1">
 			<tr>
 				<td
-					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px"><img
+					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px;"><img
 					src="<%=request.getContextPath()%>/resources/images/ebix_logo.jpg"
 					width="120" height="55" /></td>
 				<td align="right"
@@ -307,6 +308,9 @@ var ctx = "${pageContext.request.contextPath}";
 		<div>
 			<a hidden="hidden" id='task-id'></a> <br /> <br /> <input
 				type="text" id="task-created-user" value="${user.username}"
+				hidden="hidden" />
+				<input
+				type="text" id="task-editor" value="${user.username}"
 				hidden="hidden" />
 		</div>
 		<div align="center">
