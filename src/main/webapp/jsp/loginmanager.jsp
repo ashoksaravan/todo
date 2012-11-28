@@ -67,8 +67,7 @@
 
 				<div style="color: #D69999; font-weight: bold; font-size: 15px"
 					id="loginvalidation">${message}</div>
-				<span class="login-box-options"><input type="checkbox"
-					name="1" value="1"> Remember Me <a
+				<span class="login-box-options"><input type='checkbox' name='_spring_security_remember_me'/> Remember Me <a
 						href="#forget-password-box" id="forget-password"
 						class="forgot-password-window" style="margin-left: 30px;">Forgot
 							password?</a></span> <br /> <br /> <input type="image"
