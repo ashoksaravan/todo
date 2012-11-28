@@ -78,10 +78,10 @@ function changePasswordAction() {
 /**
  * Creates the add sticky note.
  */
-function createAddNotes() {
+function createAddNotes(ctx) {
 	var add = '<h5>'+'Add Task'+'</h5>';
 	var refClass = 'refClass'
-	var addBtn = '<img src='+ 'resources/css/images/add.png '+ '/>';
+	var addBtn = '<img src='+ctx+'/resources/css/images/add.png '+ '/>';
 	var idBtn = 'createAddBtn';
 	var classBtn = 'createAddBtn';
 	var title = 'Please click the add symbol'
@@ -94,7 +94,7 @@ function createAddNotes() {
 /**
  * Creates the dynamic sticky notes.
  */
-function createNotes(task) {
+function createNotes(task, ctx) {
 	var refClass = 'refClass'
 	var header = '<h5>' + task.taskname + '</h5>';
 	var desc = '<p style="text-overflow:ellipsis; overflow:hidden;">' + task.taskdesc + '</p>';
@@ -148,7 +148,7 @@ function createNotes(task) {
 	if(task.cclist == null){
 		task.cclist = '';
 	}
-	if(task.taskstatus != 'COMPLETE')
+	if(task.taskstatus != 'COMPLETED')
 	{
 		$('.single_sticky_notes').append(
 				'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
