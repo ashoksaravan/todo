@@ -22,13 +22,12 @@ public class AccessController {
 	
 	@RequestMapping(value = "/login/failure")
  	public String loginFailure() {
-		String message = "Login Failure!";
+		String message = "The username or password you entered is incorrect";
 		return "redirect:/login?message="+message;
 	}
 	
 	@RequestMapping(value = "/logout/success")
  	public String logoutSuccess() {
-		String message = "Logout Success!";
-		return "redirect:/login?message="+message;
+		return "redirect:/login";
 	}
 }

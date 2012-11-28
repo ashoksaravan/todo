@@ -17,6 +17,7 @@
 		<intercept-url pattern="/login" access="permitAll"/>
 		<intercept-url pattern="/logout" access="permitAll"/>
 		<intercept-url pattern="/denied" access="hasRole('ROLE_USER')"/>
+		<intercept-url pattern="/jsp/*" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/user" access="hasRole('ROLE_USER')"/>
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
