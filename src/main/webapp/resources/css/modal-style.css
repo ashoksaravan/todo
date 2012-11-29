@@ -42,17 +42,12 @@ a {
 
 /* Login Button Text */
 #loginButton span { 
-/*     color:#445058;  */
+    color:white; 
 	font-size: 14px;
 	font-weight: bold;
-	text-shadow: 1px 1px #fff;
 	padding: 7px 29px 9px 10px;
-	background: url(images/loginArrow.png) no-repeat 100% 7px;
+	background: url(images/loginArrow.PNG) no-repeat 100% 7px;
 	display: block
-}
-
-#loginButton:hover {
-	background: url(images/buttonbgHover.png) repeat-x;
 }
 
 /* Login Box */

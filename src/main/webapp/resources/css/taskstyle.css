@@ -8,6 +8,9 @@
 	display: none;
 	width: 600px;
 }
+#header{
+	background: url(images/bar.PNG) ;
+}
 
 label {
 	margin-right: 12px;

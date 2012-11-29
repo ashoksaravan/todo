@@ -34,78 +34,101 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript">
-var ctx = "${pageContext.request.contextPath}";
 	$(function() {
 		urlHolder.task = '${taskUrl}';
 		urlHolder.changepwd = '${changepwdUrl}';
 		urlHolder.addtask = '${addtaskUrl}';
 		urlHolder.checkpwd = '${checkpwdUrl}';
 		urlHolder.records = '${recordsUrl}';
-		urlHolder.history = '${historyUrl}';
 	});
 
 	var availableTags = [];
-	$(document).ready(function() {
-		$(".change-password-window").fancybox();
-		$('.refClass').fancybox();
+	$(document)
+			.ready(
+					function() {
+						$(".change-password-window").fancybox();
+						$('.refClass').fancybox();
 
-		$.post(urlHolder.records, function(response) {
-			if (response != null) {
-				for ( var i = 0; i < response.users.length; i++) {
-					var obj = {
-						id : i,
-						label : response.users[i].firstName + ','
-								+ response.users[i].lastName,
-						value : response.users[i].username
-					};
-					availableTags.push(obj);
-				}
-				$("#task-assigned").autocomplete({
-					source : availableTags,
-					autoFocus : true
-				});
-				
-				$( "#cc-list" )
-	            // don't navigate away from the field on tab when selecting an item
-	            .bind( "keydown", function( event ) {
-	                if ( event.keyCode === $.ui.keyCode.TAB &&
-	                        $( this ).data( "autocomplete" ).menu.active ) {
-	                    event.preventDefault();
-	                }
-	            })
-	            .autocomplete({
-	                minLength: 0,
-	                source: function( request, response ) {
-	                    // delegate back to autocomplete, but extract the last term
-	                    response( $.ui.autocomplete.filter(
-	                        availableTags, extractLast( request.term ) ) );
-	                },
-	                focus: function() {
-	                    // prevent value inserted on focus
-	                    return false;
-	                },
-	                select: function( event, ui ) {
-	                    var terms = split( this.value );
-	                    // remove the current input
-	                    terms.pop();
-	                    // add the selected item
-	                    terms.push( ui.item.value );
-	                    // add placeholder to get the comma-and-space at the end
-	                    terms.push( "" );
-	                    this.value = terms.join( "," );
-	                    return false;
-	                }
-	            });
-			}
-		});
-	});
-	
-	function split( val ) {
-        return val.split( /,\s*/ );
-    }
-    function extractLast( term ) {
-        return split( term ).pop();
-    }
+						$
+								.post(
+										urlHolder.records,
+										function(response) {
+											if (response != null) {
+												for ( var i = 0; i < response.users.length; i++) {
+													var obj = {
+														id : i,
+														label : response.users[i].firstName
+																+ ','
+																+ response.users[i].lastName,
+														value : response.users[i].username
+													};
+													availableTags.push(obj);
+												}
+												$("#task-assigned")
+														.autocomplete(
+																{
+																	source : availableTags,
+																	autoFocus : true
+																});
+
+												$("#cc-list")
+														// don't navigate away from the field on tab when selecting an item
+														.bind(
+																"keydown",
+																function(event) {
+																	if (event.keyCode === $.ui.keyCode.TAB
+																			&& $(
+																					this)
+																					.data(
+																							"autocomplete").menu.active) {
+																		event
+																				.preventDefault();
+																	}
+																})
+														.autocomplete(
+																{
+																	minLength : 0,
+																	source : function(
+																			request,
+																			response) {
+																		// delegate back to autocomplete, but extract the last term
+																		response($.ui.autocomplete
+																				.filter(
+																						availableTags,
+																						extractLast(request.term)));
+																	},
+																	focus : function() {
+																		// prevent value inserted on focus
+																		return false;
+																	},
+																	select : function(
+																			event,
+																			ui) {
+																		var terms = split(this.value);
+																		// remove the current input
+																		terms
+																				.pop();
+																		// add the selected item
+																		terms
+																				.push(ui.item.value);
+																		// add placeholder to get the comma-and-space at the end
+																		terms
+																				.push("");
+																		this.value = terms
+																				.join(",");
+																		return false;
+																	}
+																});
+											}
+										});
+					});
+
+	function split(val) {
+		return val.split(/,\s*/);
+	}
+	function extractLast(term) {
+		return split(term).pop();
+	}
 
 	$(function() {
 		$(".changeBtn").click(function() {
@@ -157,99 +180,19 @@ var ctx = "${pageContext.request.contextPath}";
 	window.onload = function() {
 		$.post(urlHolder.task, function(response) {
 			if (response != null) {
-				createAddNotes(ctx);
+				createAddNotes();
 				for ( var i = 0; i < response.tasks.length; i++) {
-					createNotes(response.tasks[i], ctx)
+					createNotes(response.tasks[i])
 				}
 			}
 		});
 	}
 
-	function showlayer(layer) {
-		var myLayer = document.getElementById(layer);
-		if (myLayer.style.display == "none" || myLayer.style.display == "") {
-			myLayer.style.display = "block";
-		} else {
-			myLayer.style.display = "none";
-		}
-	}
 </script>
 </head>
 <body>
-	<div style="width: 100%;">
-		<table style="width: 100%" border="1">
-			<tr>
-				<td
-					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px;"><img
-					src="<%=request.getContextPath()%>/resources/images/ebix_logo.jpg"
-					width="120" height="55" /></td>
-				<td align="right"
-					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px; padding-top: 1%; padding-left: 0px;">
-					<div id="container">
-						<!-- Login Starts Here -->
-						<div id="loginContainer">
-							<a href="#" id="loginButton"><span>${user.firstName},
-									${user.lastName}</span></a>
-							<div style="clear: both"></div>
-							<div id="loginBox">
-								<form id="loginForm" action="logout">
-									<fieldset id="body">
-										<fieldset>
-											<label
-												style="font-size: 14px; text-align: left; font-weight: bold;">${user.firstName}</label>
-										</fieldset>
-										<fieldset>
-											<label style="text-align: left;">${user.mailId}</label>
-										</fieldset>
-										<a href="#" class="userroles">Profile</a> <input type="submit" id="login"
-											value="Sign out" />
-									</fieldset>
-									<span><a href="#change-password-box"
-										class="change-password-window" id="changePassword"
-										style="margin-left: 30px;" onclick="resetChangePwdForm();">Change
-											password</a></span>
-								</form>
-							</div>
-						</div>
-					</div>
-		</table>
-	</div>
-	<div align="center" style="width: 100%; ">
-		<ul class="single_sticky_notes" id="single_sticky_notes">
-		</ul>
-	</div>
-	<div id="change-password-box" hidden="hidden">
-		<h5>Change Password</h5>
-		<div id="change-login-box">
-			<table>
-				<tr>
-					<td class="pwd-box-name">Old Password:</td>
-					<td class="pwd-box-field"><input name="old-password"
-						type="password" class="pwd_form-login" id="old-password"
-						title="Old Password" value="" size="30" maxlength="2048" /></td>
-				</tr>
-				<tr>
-					<td class="pwd-box-name">New Password:</td>
-					<td class="pwd-box-field"><input name="new-password"
-						type="password" class="pwd_form-login" id="new-password"
-						title="New Password" value="" size="30" maxlength="2048" /></td>
-				</tr>
-				<tr>
-					<td class="pwd-box-name">Confirm Password:</td>
-					<td class="pwd-box-field"><input name="confirm-password"
-						type="password" class="pwd_form-login" id="confirm-password"
-						title="Confirm Password" value="" size="30" maxlength="2048" /></td>
-				</tr>
-			</table>
-			<div>
-				<br /> <br />
-			</div>
-			<div align="center">
-				<button id="changeBtn" class="changeBtn" style="color: white;">Change</button>
-			</div>
-		</div>
-	</div>
 
+	<jsp:include page='/jsp/header.jsp' />
 	<div id="addNewTask" hidden="hidden">
 		<h4 align="left" id="addEditHeading">Add Task</h4>
 		<table>
@@ -301,16 +244,12 @@ var ctx = "${pageContext.request.contextPath}";
 			<tr>
 				<td class="pwd-box-name">CC List:</td>
 				<td class="pwd-box-field"><input name="cc-list"
-					class="pwd_form-login" id="cc-list" size="30"
-					maxlength="2048" /></td>
+					class="pwd_form-login" id="cc-list" size="30" maxlength="2048" /></td>
 			</tr>
 		</table>
 		<div>
 			<a hidden="hidden" id='task-id'></a> <br /> <br /> <input
 				type="text" id="task-created-user" value="${user.username}"
-				hidden="hidden" />
-				<input
-				type="text" id="task-editor" value="${user.username}"
 				hidden="hidden" />
 		</div>
 		<div align="center">

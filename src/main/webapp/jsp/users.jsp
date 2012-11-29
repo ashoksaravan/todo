@@ -8,17 +8,34 @@
 
 <html>
 <head>
-<link rel='stylesheet' type='text/css' media='screen'
-	href='<c:url value="/resources/css/style.css"/>' />
-<link rel='stylesheet' type='text/css' media='screen'
-	href='<c:url value="/resources/css/login-box.css"/>' />
-<script type='text/javascript'
-	src='<c:url value="/resources/js/jquery-1.8.0.min.js"/>'></script>
-<script type='text/javascript'
-	src='<c:url value="/resources/js/custom.js"/>'></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.8.23.custom.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/resources/css/stickystyle.css"></link>
+<link
+	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.8.23.custom.css"
+	rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/resources/css/login-box.css"
+	rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/resources/css/taskstyle.css"
+	rel="stylesheet" type="text/css" />
 
-<link rel="icon" type="image/gif"
-	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
+
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/action.js"></script>
+	
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/custom.js"></script>
+<link
+	href="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.css"
+	rel="stylesheet" type="text/css" />
+<link href="<%=request.getContextPath()%>/resources/css/modal-style.css"
+	rel="stylesheet" type="text/css" />
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
+
 <title>User Records</title>
 
 <script type='text/javascript'>
@@ -78,33 +95,33 @@
 </head>
 
 <body>
-	<h1 id='banner'>Record System</h1>
-	<hr />
+<jsp:include page='/jsp/header.jsp'/>
 
-	<table id='tableUsers'>
-		<caption></caption>
-		<thead id='tableHead'>
-			<tr>
-				<th></th>
-				<th>Username</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Role</th>
-				<th>MailId</th>
-			</tr>
-		</thead>
-	</table>
+<!-- 	<h3 id='banner' style="height:30px">Record System</h3> -->
+	<div align="center">
+		<table id='tableUsers'>
+			<caption align="top"><b>Record System</b></caption>
+			<thead id='tableHead'>
+				<tr>
+					<th></th>
+					<th>Username</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Role</th>
+					<th>EmailId</th>
+				</tr>
+			</thead>
+		</table>
+			<div id='controlBar' style="width: 80%" align="left">
+			<input type='button' value='New' id='newBtn' /> 
+			<input type='button' value='Delete' id='deleteBtn' /> <input type='button' value='Edit'
+				id='editBtn' /> <input type='button' value='Reload' id='reloadBtn' />
+		</div>
+	
 
-	<div id='controlBar'>
-		<input type='button' value='New' id='newBtn' /> 
-		<input type='button' value='Delete' id='deleteBtn' /> <input type='button' value='Edit'
-			id='editBtn' /> <input type='button' value='Reload' id='reloadBtn' />
-	</div>
+	
 
 		<form id='newForm' class="newEditForm">
-			<fieldset>
-				<legend>Create New Record</legend>
-				
 				 <div class="fieldgroup">
 				<label for='newUsername'>UserName</label> 
 				<input type='text' id='newUsername' />
@@ -137,15 +154,16 @@
 					<option value='2' selected='selected'>Regular</option>
 				</select>
 				</div>
-			</fieldset>
-			<input type='button' value='Close' id='closeNewForm' /> <input
-				type='submit' value='Submit' />
+				
+				<div class="fieldgroup">
+				<input type='button' value='Close' id='closeNewForm' /> <input
+					type='submit' value='Submit' />
+				</div>
 		</form>
 
 	
 		<form id='editForm' class="newEditForm">
-			<fieldset>
-				<legend>Edit Record</legend>
+			
 				 <div class="fieldgroup">
 				<input type='hidden' id='editUsername' /> 
 				</div>
@@ -164,10 +182,11 @@
 					<option value='2' selected='selected'>Regular</option>
 				</select>
 				</div>
-			</fieldset>
+			
 			<input type='button' value='Close' id='closeEditForm' /> <input
 				type='submit' value='Submit' />
 		</form>
+		</div>
 	
 </body>
 </html>
