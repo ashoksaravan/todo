@@ -118,6 +118,7 @@
 			<input type='button' value='New' id='newBtn' /> 
 			<input type='button' value='Delete' id='deleteBtn' /> <input type='button' value='Edit'
 				id='editBtn' /> <input type='button' value='Reload' id='reloadBtn' />
+				<input type='button' value='Back to Tasks' id='backBtn' onclick="back('<%=request.getContextPath()%>')" />
 		</div>
 	
 

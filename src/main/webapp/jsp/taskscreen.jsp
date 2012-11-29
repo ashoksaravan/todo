@@ -60,10 +60,6 @@
 		});
 	}
 	
-
-	function back(){
-		window.location.href="<%=request.getContextPath()%>/jsp/taskmanager.jsp";
-	};
 </script>
 <body>
 <jsp:include page="/jsp/header.jsp"/>
@@ -81,7 +77,7 @@
 			<tr>
 				<td align="right">
 				<br>
-					<button onclick="back()" id="backBtn">
+					<button onclick="back('<%=request.getContextPath()%>')" id="backBtn">
 						<img
 							src="<%=request.getContextPath()%>/resources/css/images/arrow_left.png" />
 						Back to Tasks

@@ -280,3 +280,6 @@ function showTaskHistory(task){
 	var taskid = task.taskid;
 	window.location.href="/todo/jsp/taskscreen.jsp?task=" + taskid;
 }
+function back(ctx){
+	window.location.href=ctx+"/jsp/taskmanager.jsp";
+};
