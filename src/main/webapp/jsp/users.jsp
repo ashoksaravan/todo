@@ -21,6 +21,8 @@
 	rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/resources/css/taskstyle.css"
 	rel="stylesheet" type="text/css" />
+	<link href="<%=request.getContextPath()%>/resources/css/userstyle.css"
+	rel="stylesheet" type="text/css" />
 
 
 <script type="text/javascript"

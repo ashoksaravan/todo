@@ -34,6 +34,7 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
 <script type="text/javascript">
+var ctx = "${pageContext.request.contextPath}";
 	$(function() {
 		urlHolder.task = '${taskUrl}';
 		urlHolder.changepwd = '${changepwdUrl}';
@@ -180,14 +181,13 @@
 	window.onload = function() {
 		$.post(urlHolder.task, function(response) {
 			if (response != null) {
-				createAddNotes();
+				createAddNotes(ctx);
 				for ( var i = 0; i < response.tasks.length; i++) {
-					createNotes(response.tasks[i])
+					createNotes(response.tasks[i],ctx);
 				}
 			}
 		});
 	}
-
 </script>
 </head>
 <body>

@@ -88,7 +88,7 @@ $(function() {
 									${user.lastName}</span></a>
 							<div style="clear: both"></div>
 							<div id="loginBox">
-								<form id="loginForm" action="logout">
+								<form id="loginForm" action="${pageContext.request.contextPath}/logout">
 									<fieldset id="body">
 										<fieldset>
 											<label

@@ -1,80 +1,4 @@
-html {
-	height: 100%;
-	width: 100%;
-}
-
-body {
-	height: 60%;
-	width: 70%;
-	padding: 50px 120px 120px 120px;
-}
-
-legend {
-	font-size: 18px;
-	font-weight: 600;
-	font-family: fantasy;
-}
-
-form fieldset {
-	height: 70%;
-	width: 65%;
-	border: ridge;
-}
-
-div#taskmanager {
-	height: 180;
-	width: 170;
-	text-align: center;
-	/* 	transform: rotate(350deg) perspective(600px) rotateY(35deg); */
-	/* 	-moz-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
-	/* 	-ms-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
-	border-radius: 9px 9px 9px 9px;
-}
-
-div#taskmanager_yellow {
-	height: 180;
-	width: 170;
-	text-align: center;
-	/* 	transform: rotate(350deg) perspective(600px) rotateY(35deg); */
-	/* 	-moz-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
-	/* 	-ms-transform: rotate(350deg) perspective(600px) rotateY(35deg); */
-	border-radius: 9px 9px 9px 9px;
-}
-
-.submitId {
-	padding-left: 40px;
-}
-
-a {
-	font-family: fantasy;
-	text-decoration: underline;
-	font-style: italic;
-	font-size: medium;
-}
-
-
-#controlBar {
-	padding-top: 3px;
-}
-
-#record-box-name {
-	float: left;
-	display:inline;
-	width:80px;
-	text-align: right;
-	padding: 14px 10px 0 0;
-	margin:0 0 7px 0;
-}
-
-#record-box-field {
-	float: left;
-	display:inline;
-	width:230px;
-	margin:0;
-	margin:0 0 7px 0;
-}
-
-label {
+.newEditForm label {
   float:left;
   width:25%;
   margin-right:0.5em;
@@ -82,15 +6,6 @@ label {
   text-align:right;
   font-weight:bold;
   }
-fieldset {
-	font: 1em Georgia, "Times New Roman", Times, serif;
-	text-transform: none;
-	border: 2px solid #ddd;
-	margin:0 2px;
-	padding:.35em .625em .75em
-	border-radius: 10px;
-	border: 2px groove threedface;
-}
 .newEditForm {
     border: 1px solid #DFDCDC;
     border-radius: 15px 15px 15px 15px;
@@ -148,7 +63,6 @@ fieldset {
 	border-bottom: 1px solid #fff;
 	border-top: 1px solid #fff;
 }
-
 #tableUsers td:hover {
 	background-color: #fff;
 }
