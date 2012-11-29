@@ -98,7 +98,8 @@ function createNotes(task, ctx) {
 	var refClass = 'refClass'
 	var historyClass = 'historyClass';
 	var header = '<h5>' + task.taskname + '</h5>';
-	var desc = '<p style="text-overflow:ellipsis; overflow:hidden;">' + task.taskdesc + '</p>';
+	var desc = '<p style="text-overflow:ellipsis; overflow:hidden; height:50%">' + task.taskdesc + '</p>';
+	var div = '<div style="height:80%">'+header+desc+'</div>';
 	var color = null;
 	switch (task.priority) {
 	case "L":
@@ -154,9 +155,9 @@ function createNotes(task, ctx) {
 		$('.single_sticky_notes').append(
 				'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
 				+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
-				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'",cclist:"'+task.cclist+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + header + desc
+				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'",cclist:"'+task.cclist+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + div
 						+'<div align=right>'+'<a href="#taskHistory" onclick=showTaskHistory({taskid:"'
-						+task.taskid+'"}) class='+historyClass+'><img src='+ '/resources/css/images/arrow.png'+ '/></a></div>'+'</li>');
+						+task.taskid+'"}) class='+historyClass+'><img src='+ctx +'/resources/css/images/arrow.png'+ '/></a></div>'+'</li>');
 	}
 }
 
@@ -209,8 +210,7 @@ function resetTaskWindow() {
 /**
  * Add Task and Edit Task.
  */
-function submitNewTask(editor){
-	alert(editor)
+function submitNewTask(){
 	var addEditTask = {"taskid":$('#task-id').val(),"taskname":$('#task-name').val(),
 			"taskdesc":$('#task-desc').val(),"priority":$('select#priority option:selected').val(),
 			"taskstatus":$('select#status option:selected').val(),"username":$('#task-assigned').val(),
@@ -278,6 +278,5 @@ function taskValidation(){
 
 function showTaskHistory(task){
 	var taskid = task.taskid;
-	alert(taskid)
 	window.location.href="/todo/jsp/taskscreen.jsp?task=" + taskid;
 }

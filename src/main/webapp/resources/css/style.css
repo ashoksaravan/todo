@@ -157,3 +157,43 @@ fieldset {
 #tableUsers td:hover {
 	background-color: #fff;
 }
+
+p #historydesc{
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;
+	width: 100%;
+}
+
+#tableHistory {
+	border: 1px solid #e3e3e3;
+	background-color: #f2f2f2;
+    width: 100%;
+	border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+}
+#tableHistory td, #tableHistory th {
+	color: #333;
+}
+#tableHistory th {
+	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
+	font-size: 17px;
+	line-height: 20px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: left;
+	text-shadow: white 1px 1px 1px;
+}
+
+#tableHistory td {
+	line-height: 20px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	border-bottom: 1px solid #fff;
+	border-top: 1px solid #fff;
+}
+#tableHistory td:hover {
+	background-color: #fff;
+}
