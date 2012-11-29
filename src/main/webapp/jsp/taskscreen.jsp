@@ -14,7 +14,8 @@
 <link
 	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.8.23.custom.css"
 	rel="stylesheet" type="text/css" />
-
+<link href="<%=request.getContextPath()%>/resources/css/login-box.css"
+	rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/resources/css/taskstyle.css"
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
@@ -26,8 +27,6 @@
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
-<link href="<%=request.getContextPath()%>/resources/css/style.css"
-	rel="stylesheet" type="text/css" />
 
 </head>
 <script type="text/javascript">
@@ -44,8 +43,8 @@
 				for ( var i = response.taskHistory.length - 1; i >= 0; i--) {
 					var row = '<table id="tableHistory" class="tableHistory">';
 					row += '<tr style="width: 100%;">';
-					row += '<td style="width: 10%;"><h5 align="left">' +'Version# '+ response.taskHistory[i].version + '</h5></td>';
-					row += '<td style="width: 90%;"><h5 style="width: 100%;font-weight: normal;">' +' TaskName : ' +response.taskHistory[i].taskname+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+					row += '<td style="width: 12%;"><h5 align="left">' +'Version# '+ response.taskHistory[i].version + '</h5></td>';
+					row += '<td style="width: 88%;"><h5 style="width: 100%;font-weight: normal;">' +' TaskName : ' +response.taskHistory[i].taskname+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 					row += 'Assigned To : ' +response.taskHistory[i].username+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 					row += ' Editor : ' +response.taskHistory[i].editor+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 					row += ' Task Status : ' +response.taskHistory[i].taskstatus + '</h5></td></tr>';
@@ -68,14 +67,15 @@
 </script>
 <body>
 <jsp:include page="/jsp/header.jsp"/>
-	<div align="center">
-		<table style="width: 100%; height: 50%;">
-			<tr style="background-color: #6B6BB2;">
-				<td align="center"><h4 style="padding-top: 1%; color: #f2f2f2;">Task
+<div style="width: 100%; height: 50%;" align="center" >
+	<div style="width: 80%;">
+		<table style="width: 100%; height: 100%;">
+			<tr>
+				<td align="center"><h4 style="color: #f2f2f2; background-color: #6B6BB2; padding-top: 1%">Task
 						History</h4></td>
 			</tr>
 			<tr>
-				<td><br>
+				<td>
 					<div id="taskHistoryContainer" style="width: 100%;"></div></td>
 			</tr>
 			<tr>
@@ -89,6 +89,7 @@
 				</td>
 			</tr>
 		</table>
+	</div>
 	</div>
 </body>
 </html>

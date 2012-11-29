@@ -86,13 +86,21 @@
 	margin: 0 0 7px 0;
 }
 
-button {
+button#changeBtn {
 	background-color: #1e4f8a;
 	width: 90px;
 	height:35px;
 	font: bold 16px "Calibri", Arial;
 	border-radius:  9px 9px 9px 9px; 
 }
+button#submitBtn {
+	background-color: #1e4f8a;
+	width: 90px;
+	height:35px;
+	font: bold 16px "Calibri", Arial;
+	border-radius:  9px 9px 9px 9px; 
+}
+
 
 #forgotBtn {
 	background-color: #1e4f8a;
