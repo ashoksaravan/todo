@@ -15,7 +15,7 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/denied" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/jsp/*" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/jsp/*" access="isAuthenticated()" />
 		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/user" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
@@ -27,7 +27,7 @@
 
 		<logout invalidate-session="true" logout-success-url="/logout/success"
 			logout-url="/logout" />
-		<remember-me key="slowpoison" />
+		<remember-me key="slowpoison" user-service-ref="customUserDetailsService" use-secure-cookie="false"/>
 	</http>
 
 
