@@ -6,8 +6,22 @@
   text-align:right;
   font-weight:bold;
   }
+  .profileEditForm label {
+	  float:left;
+	  width:30%;
+	  margin-right:0.5em;
+	  padding-top:0.2em;
+	  text-align:left;
+	  font-weight:bold;
+ 
+  }
+  .userprofileInpt input {
+	  
+	  font-weight:bold;
+ 
+  }
 .newEditForm {
-    border: 1px solid #DFDCDC;
+    border: 1px solid black;
     border-radius: 15px 15px 15px 15px;
     display: inline-block;
     margin-bottom: 30px;
@@ -16,9 +30,24 @@
     padding: 25px 50px 10px;
     width: 350px;
     font: 12px Arial, Helvetica, sans-serif;
+    
+}
+.profileEditForm
+{
+    display: inline-block;
+    margin-bottom: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+    padding: 25px 50px 10px;
+    width: 350px;
+    font: 12px Arial, Helvetica, sans-serif;
+}
+.profileEditForm .fieldgroup {
+    display: inline-block;
+    padding: 8px 10px;
+    width: 340px;
 }
 .newEditForm .fieldgroup {
-    background: url("form-divider.gif") repeat-x scroll left top transparent;
     display: inline-block;
     padding: 8px 10px;
     width: 340px;

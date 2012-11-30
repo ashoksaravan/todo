@@ -33,7 +33,7 @@ $(function() {
 		}
 	});
 	$(".userroles").click(function() {
-		window.location = "/todo/jsp/users.jsp";
+		window.location = "/todo/jsp/userprofile.jsp";
 	});
 
 	$("#old-password").focusout(function() {

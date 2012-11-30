@@ -55,7 +55,8 @@ public class UserService {
 		// We must save both separately since there is no cascading feature
 		// in Spring Data MongoDB (for now)
 		roleRepository.save(existingUser.getRole());
-		return userRepository.save(existingUser);
+		userRepository.save(existingUser);
+		return existingUser;
 	}
 
 	public Boolean delete(User user) {

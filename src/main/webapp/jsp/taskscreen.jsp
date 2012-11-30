@@ -67,7 +67,7 @@
 	<div style="width: 80%;">
 		<table style="width: 100%; height: 100%;">
 			<tr>
-				<td align="center"><h4 style="color: #f2f2f2; background-color: #6B6BB2; padding-top: 1%">Task
+				<td align="center"><h4 style="color: black; padding-top: 1%">Task
 						History</h4></td>
 			</tr>
 			<tr>

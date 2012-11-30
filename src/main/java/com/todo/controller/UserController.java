@@ -3,6 +3,7 @@ package com.todo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,8 +84,9 @@ public class UserController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	User update(@RequestParam String username, @RequestParam String firstName,
-			@RequestParam String lastName, @RequestParam Integer role) {
+	User update(ModelMap map, @RequestParam String username, @RequestParam String firstName,
+			@RequestParam String lastName, @RequestParam Integer role, 
+			@RequestParam String mailId) {
 
 		Role existingRole = new Role();
 		existingRole.setRole(role);
@@ -93,9 +95,17 @@ public class UserController {
 		existingUser.setUsername(username);
 		existingUser.setFirstName(firstName);
 		existingUser.setLastName(lastName);
+		existingUser.setMailId(mailId);
 		existingUser.setRole(existingRole);
+		
+		service.update(existingUser);
 
-		return service.update(existingUser);
+		if(SecurityContextHolder
+				.getContext().getAuthentication().getName().equals(existingUser.getUsername())){
+			map.addAttribute("user", existingUser);
+		}
+
+		return existingUser;
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
