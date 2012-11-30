@@ -17,7 +17,7 @@ public class AccessController {
 	
 	@RequestMapping(value = "/denied")
  	public String denied() {
-		return "access/denied";
+		return "denied";
 	}
 	
 	@RequestMapping(value = "/login/failure")

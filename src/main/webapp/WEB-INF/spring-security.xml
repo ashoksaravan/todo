@@ -15,10 +15,10 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/logout" access="permitAll" />
 		<intercept-url pattern="/denied" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/jsp/admin/*" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/jsp/*" access="isAuthenticated()" />
 		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/user" access="hasRole('ROLE_USER')" />
-		<intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
 
 		<form-login login-page="/login" authentication-failure-url="/login/failure" authentication-success-handler-ref="todoAuthenticationSuccessHandler"
 			default-target-url="/" />

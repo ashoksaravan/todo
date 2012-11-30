@@ -95,3 +95,11 @@
 #tableUsers td:hover {
 	background-color: #fff;
 }
+#banner {
+	display: block;
+}
+
+.message {
+	color: red;
+	text-align: center;	
+}

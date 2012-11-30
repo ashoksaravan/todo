@@ -1,6 +1,8 @@
 <%@page import="com.todo.domain.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <c:url value="/users/changepwd" var="changepwdUrl" />
 <c:url value="/users/checkpwd" var="checkpwdUrl" />
@@ -9,62 +11,65 @@
 <head>
 
 <script type="text/javascript">
-$(function() {
-	urlHolder.changepwd = '${changepwdUrl}';
-	urlHolder.checkpwd = '${checkpwdUrl}';
-	urlHolder.records = '${recordsUrl}';
-});
-
-$(function() {
-	$(".change-password-window").fancybox();
-	$('.refClass').fancybox();
-	$(".changeBtn").click(function() {
-		if (changePasswordAction()) {
-			$.post(urlHolder.changepwd, {
-				username : '${user.username}',
-				confirmpass : $('#confirm-password').val()
-			}, function(response) {
-				if (response) {
-					alert('Successfully Changed');
-					resetChangePwdForm();
-				}
-				parent.$.fancybox.close();
-			});
-		}
-	});
-	$(".userroles").click(function() {
-		window.location = "/todo/jsp/userprofile.jsp";
+	$(function() {
+		urlHolder.changepwd = '${changepwdUrl}';
+		urlHolder.checkpwd = '${checkpwdUrl}';
+		urlHolder.records = '${recordsUrl}';
 	});
 
-	$("#old-password").focusout(function() {
-		$.post(urlHolder.checkpwd, {
-			username : '${user.username}',
-			pwd : $('#old-password').val()
-		}, function(response) {
-			if (response) {
-				$("#old-password").removeClass("error");
-			} else {
-				$("#old-password").addClass("error");
+	$(function() {
+		$(".change-password-window").fancybox();
+		$('.refClass').fancybox();
+		$(".changeBtn").click(function() {
+			if (changePasswordAction()) {
+				$.post(urlHolder.changepwd, {
+					username : '${user.username}',
+					confirmpass : $('#confirm-password').val()
+				}, function(response) {
+					if (response) {
+						alert('Successfully Changed');
+						resetChangePwdForm();
+					}
+					parent.$.fancybox.close();
+				});
 			}
 		});
-	});
-	$("#new-password").focusout(function() {
-		if ($('#old-password').val() == $('#new-password').val()) {
-			$("#new-password").addClass("error");
-		} else {
-			$("#new-password").removeClass("error");
-		}
-	});
-	$("#confirm-password").focusout(function() {
-		if ($('#new-password').val() == $('#confirm-password').val()) {
-			$("#confirm-password").removeClass("error");
-		} else {
-			$("#confirm-password").addClass("error");
-		}
-	});
+		$(".userroles").click(function() {
+			window.location = "/todo/jsp/userprofile.jsp";
+		});
 	
-});
+		$(".admin").click(function() {
+			window.location = "/todo/jsp/admin/users.jsp";
+		});
 
+		$("#old-password").focusout(function() {
+			$.post(urlHolder.checkpwd, {
+				username : '${user.username}',
+				pwd : $('#old-password').val()
+			}, function(response) {
+				if (response) {
+					$("#old-password").removeClass("error");
+				} else {
+					$("#old-password").addClass("error");
+				}
+			});
+		});
+		$("#new-password").focusout(function() {
+			if ($('#old-password').val() == $('#new-password').val()) {
+				$("#new-password").addClass("error");
+			} else {
+				$("#new-password").removeClass("error");
+			}
+		});
+		$("#confirm-password").focusout(function() {
+			if ($('#new-password').val() == $('#confirm-password').val()) {
+				$("#confirm-password").removeClass("error");
+			} else {
+				$("#confirm-password").addClass("error");
+			}
+		});
+
+	});
 </script>
 </head>
 <body>
@@ -88,17 +93,23 @@ $(function() {
 									${user.lastName}</span></a>
 							<div style="clear: both"></div>
 							<div id="loginBox">
-								<form id="loginForm" action="${pageContext.request.contextPath}/logout">
+								<form id="loginForm"
+									action="${pageContext.request.contextPath}/logout">
 									<fieldset id="body">
 										<fieldset>
 											<label
-												style="font-size: 14px; text-align: left; font-weight: bold;">${user.firstName}</label>
+												style="font-size: 14px; text-align: left; font-weight: bold;">${user.firstName}&nbsp;<a
+												href="#" class="userroles" style="font-size: 10;">Edit
+													Profile</a>
+											</label>
 										</fieldset>
 										<fieldset>
 											<label style="text-align: left;">${user.mailId}</label>
 										</fieldset>
-										<a href="#" class="userroles">Profile</a> <input type="submit"
-											id="login" value="Sign out" />
+										<sec:authorize access="hasRole('ROLE_ADMIN')">
+											<a href="#" class="admin">Administration</a>
+										</sec:authorize>
+										<input type="submit" id="login" value="Sign out" />
 									</fieldset>
 									<span><a href="#change-password-box"
 										class="change-password-window" id="changePassword"
