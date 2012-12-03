@@ -280,6 +280,64 @@ function showTaskHistory(task){
 	var taskid = task.taskid;
 	window.location.href="/todo/jsp/taskscreen.jsp?task=" + taskid;
 }
+
 function back(ctx){
 	window.location.href=ctx+"/jsp/taskmanager.jsp";
 };
+
+
+function searchTask(){
+	
+	if($('#search-task-name').val() == ''&&
+			$('select#search-priority option:selected').val() == 'SELECT' &&
+			$('select#search-status option:selected').val() == 'SELECT' &&
+			$('#search-task-assigned').val() == ''){
+		$("#searchCriteria").show();
+	}else{
+		if($('select#search-priority option:selected').val() == 'SELECT'){
+			$('select#search-priority option:selected').val('');
+		}
+		if($('select#search-status option:selected').val() == 'SELECT'){
+			$('select#search-status option:selected').val('');
+		}
+				
+		var searchTask = {"taskname":$('#search-task-name').val(),
+			"priority":$('select#search-priority option:selected').val(),
+			"taskstatus":$('select#search-status option:selected').val(),
+			"username":$('#search-task-assigned').val()};
+		$.ajax({
+	        contentType : "application/json",
+	        dataType : 'json',
+	        type : "POST",
+	        url : urlHolder.search,
+	        data : JSON.stringify(searchTask),
+	
+	        success : function(response) {
+	        	$('.single_sticky_notes li').remove();
+	        	if(response.length > 0){
+	        		for ( var i = 0; i < response.length; i++) {
+						createNotes(response[i],'/todo');
+					}
+	        	}else{
+	        		$("#noresult").show();
+	        	}
+	        },
+	        error : function(request, status, error) {
+	               alert('Error: ' + error); 
+	        }
+	    });
+		parent.$.fancybox.close();
+	}
+}
+
+function refreshTask(){
+	window.location.href="/todo/jsp/taskmanager.jsp";
+}
+
+function resetSearchWindow(){
+	$('#search-task-name').val('');
+	$('#search-priority option').eq(0).attr('selected', 'selected');
+	$('#search-status option').eq(0).attr('selected', 'selected');
+	$('#search-task-assigned').val('');
+	$("#searchCriteria").hide();
+}

@@ -6,6 +6,7 @@
 <c:url value="/users/checkpwd" var="checkpwdUrl" />
 <c:url value="/users/addtask" var="addtaskUrl" />
 <c:url value="/users/records" var="recordsUrl" />
+<c:url value="/users/search" var="searchUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -41,14 +42,16 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.addtask = '${addtaskUrl}';
 		urlHolder.checkpwd = '${checkpwdUrl}';
 		urlHolder.records = '${recordsUrl}';
+		urlHolder.search = '${searchUrl}';
 	});
-
+	
 	var availableTags = [];
 	$(document)
 			.ready(
 					function() {
 						$(".change-password-window").fancybox();
 						$('.refClass').fancybox();
+						$('#searchQuery').fancybox();
 
 						$
 								.post(
@@ -71,6 +74,13 @@ var ctx = "${pageContext.request.contextPath}";
 																	source : availableTags,
 																	autoFocus : true
 																});
+												$("#search-task-assigned")
+												.autocomplete(
+														{
+															source : availableTags,
+															autoFocus : true,
+															selectFirst: true
+														});
 
 												$("#cc-list")
 														// don't navigate away from the field on tab when selecting an item
@@ -193,6 +203,11 @@ var ctx = "${pageContext.request.contextPath}";
 <body>
 
 	<jsp:include page='/jsp/header.jsp' />
+	<div align="right" style="width: 100%">
+		<a href="#searchTask" id="searchQuery" style="width: 10%; padding-right: 3%" onclick="resetSearchWindow();">Search</a>
+		<a href="#" id="refreshQuery" onclick="refreshTask()" style="width: 10%;">Home</a>
+	</div>
+	<div><h5 style="color: red;" align="center" hidden="hidden" id="noresult" style="width: 80%">No search results found.</h5></div>
 	<div id="addNewTask" hidden="hidden">
 		<h4 align="left" id="addEditHeading">Add Task</h4>
 		<table>
@@ -251,10 +266,62 @@ var ctx = "${pageContext.request.contextPath}";
 			<a hidden="hidden" id='task-id'></a> <br /> <br /> <input
 				type="text" id="task-created-user" value="${user.username}"
 				hidden="hidden" />
+				<input
+				type="text" id="task-editor" value="${user.username}"
+				hidden="hidden" />
 		</div>
 		<div align="center">
 			<button id="submitBtn" class="submitBtn" style="color: white;"
 				onclick="submitNewTask()">Submit</button>
+		</div>
+	</div>
+	<div id="searchTask" hidden="hidden">
+		<h4 align="left" id="addEditHeading">Search Task</h4>
+		<table>
+			<tr>
+				<td class="pwd-box-name">Task Name:</td>
+				<td class="pwd-box-field"><input name="search-task-name"
+					type="text" class="pwd_form-login" id="search-task-name"
+					title="Please enter the task name" value="" size="30"
+					maxlength="2048" /></td>
+			</tr>
+			<tr>
+				<td class="pwd-box-name" id="priority">Priority:</td>
+				<td><select id='search-priority' name="search-priority"
+					class="pwd_form-login">
+						<option value='SELECT' selected="selected">-Select-</option>
+						<option value='L'>Low</option>
+						<option value='M'>Medium</option>
+						<option value='H'>High</option>
+						<option value='HS'>Highest</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td class="pwd-box-name" id="status">Task Status:</td>
+				<td><select id='search-status' name="search-status"
+					class="pwd_form-login">
+						<option value='SELECT' selected="selected">-Select-</option>
+						<option value='NEW'>New</option>
+						<option value='CANCEL'>Cancelled</option>
+						<option value='COMPLETED'>Completed</option>
+						<option value='DEV'>Development</option>
+						<option value='HOLD'>Hold</option>
+				</select></td>
+			</tr>
+			<tr>
+				<td class="pwd-box-name">Assigned To:</td>
+				<td class="pwd-box-field"><input name="search-task-assigned"
+					class="pwd_form-login" id="search-task-assigned" size="30"
+					maxlength="2048" /></td>
+			</tr>
+			<tr>
+				<td colspan="2"><h6 hidden="hidden" style="color: red;"
+						id="searchCriteria">Please enter atleast one search criteria</h6></td>
+			</tr>
+		</table>
+		<div align="center">
+			<button id="searchBtn" class="searchBtn" style="color: white;"
+				onclick="searchTask()">Search</button>
 		</div>
 	</div>
 </body>

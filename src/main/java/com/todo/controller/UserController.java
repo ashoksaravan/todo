@@ -1,5 +1,7 @@
 package com.todo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -169,6 +171,12 @@ public class UserController {
 		TaskHistoryListDTO historyListDTO = new TaskHistoryListDTO();
 		historyListDTO.setTaskHistory(taskService.readTaskVersion(taskid));
 		return historyListDTO;
+	}
+	
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public @ResponseBody
+	List<Task> searchTask(@RequestBody Task searchTask) {
+		return taskService.search(searchTask);
 	}
 
 }

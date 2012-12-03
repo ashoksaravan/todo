@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.todo.domain.Task;
@@ -19,6 +22,9 @@ public class TaskService {
 	
 	@Autowired
 	private TaskHistoryRepository taskHistoryRepository;
+
+	 @Autowired
+	 private MongoTemplate mongoTemplate;
 	
 	public List<Task> readAll(String username) {
 		return taskRepository.findTaskByUsername(username);
@@ -47,5 +53,42 @@ public class TaskService {
 	public List<TaskHistory> readTaskVersion(String taskid) {
 		return taskHistoryRepository.findTaskByTaskid(taskid);
 	}
-
+	
+	public List<Task> search(Task task) {
+		Criteria criteria = null;
+		if (task.getTaskname() != null
+				&& task.getTaskname().trim().length() > 0) {
+			criteria = Criteria.where("taskname").is(task.getTaskname());
+		}
+		if (task.getPriority() != null
+				&& task.getPriority().trim().length() > 0 && criteria != null) {
+			criteria = criteria.and("priority").is(task.getPriority());
+		} else {
+			if (task.getPriority() != null
+					&& task.getPriority().trim().length() > 0) {
+				criteria = Criteria.where("priority").is(task.getPriority());
+			}
+		}
+		if (task.getTaskstatus() != null
+				&& task.getTaskstatus().trim().length() > 0 && criteria != null) {
+			criteria = criteria.and("taskstatus").is(task.getTaskstatus());
+		} else {
+			if (task.getTaskstatus() != null
+					&& task.getTaskstatus().trim().length() > 0) {
+				criteria = Criteria.where("taskstatus")
+						.is(task.getTaskstatus());
+			}
+		}
+		if (task.getUsername() != null
+				&& task.getUsername().trim().length() > 0 && criteria != null) {
+			criteria = criteria.and("username").is(task.getUsername());
+		} else {
+			if (task.getUsername() != null
+					&& task.getUsername().trim().length() > 0) {
+				criteria = Criteria.where("username").is(task.getUsername());
+			}
+		}
+		List<Task> list = mongoTemplate.find(new Query(criteria), Task.class);
+		return list;
+	}
 }
