@@ -30,7 +30,11 @@ public class TodoAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 		User user = service.read(authentication.getName());
 		HttpSession session = request.getSession();
 		session.setAttribute("user", user);
-		target.onAuthenticationSuccess(request, response, authentication);
+		if(user.getReqNewPwd()){
+			response.sendRedirect(request.getContextPath()+"/jsp/changepassword.jsp");
+		} else {
+			target.onAuthenticationSuccess(request, response, authentication);
+		}
 	}
 
 	public void proceed(HttpServletRequest request, HttpServletResponse response, Authentication auth)

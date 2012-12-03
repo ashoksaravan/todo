@@ -30,4 +30,10 @@ public class AccessController {
  	public String logoutSuccess() {
 		return "redirect:/login";
 	}
+
+	@RequestMapping(value = "/requestNewPwd")
+	public String changePassword(@RequestParam String oldpwd, @RequestParam String newPwd, @RequestParam String confirmPwd){
+		System.out.println(oldpwd + newPwd + confirmPwd);
+		return "taskmanager";
+	}
 }

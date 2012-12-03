@@ -84,7 +84,7 @@ public class AddEditTaskCmd {
 			desc = "A Task has been assigned for development.";
 		}
 		SendMail sms = new SendMail();
-		sms.Sendmail(
+		sms.sendMail(
 				desc + "\n\n" + "Task Description : " + newTask.getTaskdesc(),
 				map, subject);
 		return newTask;

@@ -76,10 +76,13 @@ public class UserService {
 		return true;
 	}
 
-	public Boolean updatePwd(User user) {
+	public Boolean updatePwd(User user, boolean fromForgotPwd) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
 		if (existingUser == null) {
 			return false;
+		}
+		if(fromForgotPwd){
+			existingUser.setReqNewPwd(Boolean.TRUE);
 		}
 		existingUser.setPassword(passwordEncoder(user.getPassword(), user.getUsername()));
 		userRepository.save(existingUser);

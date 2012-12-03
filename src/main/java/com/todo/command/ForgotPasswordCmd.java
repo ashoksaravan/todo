@@ -13,15 +13,15 @@ import com.todo.service.UserService;
 
 @Service
 public class ForgotPasswordCmd {
-	
+
 	@Autowired
 	private UserService service;
-	
+
 	static String password = new String();
-	
+
 	private HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-	
-	public Boolean forgotPassword(String username){
+
+	public Boolean forgotPassword(String username) {
 		map = new HashMap<String, ArrayList<String>>();
 		User user = new User();
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
@@ -32,11 +32,10 @@ public class ForgotPasswordCmd {
 			ar.add(user.getMailId());
 			map.put("TO", ar);
 			user.setPassword(password);
-			Boolean pwdUpdate = service.updatePwd(user);
+			Boolean pwdUpdate = service.updatePwd(user, true);
 			if (pwdUpdate) {
 				SendMail sms = new SendMail();
-				sms.Sendmail("Password for user '" + username + "' is '"
-						+ password + "'.", map, "Change Password");
+				sms.sendMail("Password for user '" + username + "' is '" + password + "'.", map, "Change Password");
 				return true;
 			}
 		}

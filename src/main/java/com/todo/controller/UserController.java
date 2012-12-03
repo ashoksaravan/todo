@@ -30,16 +30,18 @@ import com.todo.service.UserService;
 @SessionAttributes({ "user" })
 public class UserController {
 
-	static String name = new String();
-
 	@Autowired
 	private UserService service;
+
 	@Autowired
 	private TaskService taskService;
+
 	@Autowired
 	ForgotPasswordCmd forgotPasswordCmd;
+
 	@Autowired
 	AddEditTaskCmd addEditTaskCmd;
+
 	@Autowired
 	EditTaskHistoryCmd editTaskHistoryCmd;
 	
@@ -99,6 +101,7 @@ public class UserController {
 		existingUser.setLastName(lastName);
 		existingUser.setMailId(mailId);
 		existingUser.setRole(existingRole);
+		existingUser.setReqNewPwd(Boolean.FALSE);
 		
 		service.update(existingUser);
 
@@ -138,7 +141,7 @@ public class UserController {
 		existingUser.setUsername(username);
 		existingUser.setPassword(confirmpass);
 
-		return service.updatePwd(existingUser);
+		return service.updatePwd(existingUser, false);
 	}
 
 	@RequestMapping(value = "/checkpwd", method = RequestMethod.POST)
