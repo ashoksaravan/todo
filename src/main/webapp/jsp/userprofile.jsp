@@ -66,6 +66,9 @@ $(function() {
 			event.preventDefault();
 			saveUserProfile('${user.username}', '${user.role.role}');
 		});
+		$('#cnclProfile').click(function(event) {
+			window.location = "/todo/jsp/userprofile.jsp";
+		});
 		
 	});
 		

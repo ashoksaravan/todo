@@ -80,7 +80,7 @@
 
 		$('#editForm').submit(function(event) {
 			event.preventDefault();
-			submitUpdateRecord();
+			submitUpdateRecord('${user.mailId}');
 		});
 
 		$('#closeNewForm').click(function() {

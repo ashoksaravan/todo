@@ -63,12 +63,13 @@ function submitDeleteRecord() {
 	});
 }
 
-function submitUpdateRecord() {
+function submitUpdateRecord(mailId) {
 	$.post(urlHolder.edit, {
 		username : $('#editUsername').val(),
 		firstName : $('#editFirstName').val(),
 		lastName : $('#editLastName').val(),
-		role : $('#editRole').val()
+		role : $('#editRole').val(),
+		mailId : mailId
 	}, function(response) {
 		if (response != null) {
 			loadTable();
