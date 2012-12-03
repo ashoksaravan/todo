@@ -20,19 +20,24 @@
 		<intercept-url pattern="/" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/user" access="hasRole('ROLE_USER')" />
 
-		<form-login login-page="/login" authentication-failure-url="/login/failure" authentication-success-handler-ref="todoAuthenticationSuccessHandler"
+		<form-login login-page="/login" authentication-failure-url="/login/failure"
+			authentication-success-handler-ref="todoAuthenticationSuccessHandler"
 			default-target-url="/" />
 
 		<access-denied-handler error-page="/denied" />
 
 		<logout invalidate-session="true" logout-success-url="/logout/success"
 			logout-url="/logout" />
-		<remember-me key="slowpoison" user-service-ref="customUserDetailsService" use-secure-cookie="false"/>
+		<remember-me key="slowpoison" user-service-ref="customUserDetailsService"
+			use-secure-cookie="false" />
 	</http>
 
 
 	<authentication-manager>
 		<authentication-provider user-service-ref="customUserDetailsService">
+			<password-encoder hash="md5">
+				<salt-source user-property="username" />
+			</password-encoder>
 		</authentication-provider>
 	</authentication-manager>
 </beans:beans>

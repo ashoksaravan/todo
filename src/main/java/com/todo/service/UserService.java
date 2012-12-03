@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todo.domain.User;
@@ -22,6 +24,7 @@ public class UserService {
 	public User create(User user) {
 		user.setId(UUID.randomUUID().toString());
 		user.getRole().setId(UUID.randomUUID().toString());
+		user.setPassword(passwordEncoder(user.getPassword(), user.getUsername()));
 
 		// We must save both separately since there is no cascading feature
 		// in Spring Data MongoDB (for now)
@@ -72,23 +75,33 @@ public class UserService {
 		userRepository.delete(existingUser);
 		return true;
 	}
-	
+
 	public Boolean updatePwd(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
 		if (existingUser == null) {
 			return false;
 		}
-		existingUser.setPassword(user.getPassword());
+		existingUser.setPassword(passwordEncoder(user.getPassword(), user.getUsername()));
 		userRepository.save(existingUser);
 		return true;
-		
+
 	}
-	
+
 	public Boolean checkPwd(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
-		if (existingUser.getPassword().equals(user.getPassword())) {
+		if (existingUser.getPassword().equals(passwordEncoder(user.getPassword(), user.getUsername()))) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * This method is used to encode the password using MD5.
+	 * @param password password
+	 * @return encodePassword
+	 */
+	private String passwordEncoder(String password, String salt) {
+		PasswordEncoder encoder = new Md5PasswordEncoder();
+		return encoder.encodePassword(password, salt);
 	}
 }
