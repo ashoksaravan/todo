@@ -3,6 +3,47 @@ var name = new String();
 var displayName = new Object();
 
 /**
+ * Load RefData Values.
+ */
+function loadRefData() {
+	$.post(urlHolder.refdataPriority, function(response) {
+		if (response) {
+			var listItems = "";
+			var searchListItems = "";
+			searchListItems = "<option value='" + "SELECT" + "'>" + "-Select-"
+					+ "</option>";
+			for ( var i = 0; i < response.priority.length; i++) {
+				listItems += "<option value='" + response.priority[i].value
+						+ "'>" + response.priority[i].desc + "</option>";
+				searchListItems += "<option value='"
+						+ response.priority[i].value + "'>"
+						+ response.priority[i].desc + "</option>";
+			}
+			$("#priorityOption").html(listItems);
+			$("#search-priority").html(searchListItems);
+		}
+	});
+
+	$.post(urlHolder.refdataTaskStatus, function(response) {
+		if (response) {
+			var listItems = "";
+			var searchListItems = "";
+			searchListItems = "<option value='" + "SELECT" + "'>" + "-Select-"
+					+ "</option>";
+			for ( var i = 0; i < response.taskStatus.length; i++) {
+				listItems += "<option value='" + response.taskStatus[i].value
+						+ "'>" + response.taskStatus[i].desc + "</option>";
+				searchListItems += "<option value='"
+						+ response.taskStatus[i].value + "'>"
+						+ response.taskStatus[i].desc + "</option>";
+			}
+			$("#statusOption").html(listItems);
+			$("#search-status").html(searchListItems);
+		}
+	});
+}
+
+/**
  * Login the user.
  */
 function submitAction() {
@@ -171,8 +212,8 @@ function editTask(task) {
 	$('#task-name').val(task.taskname);
 	$('#task-desc').val(task.taskdesc);
 	$('#created-user').val(task.createduser);
-	$('#priority option').eq(task.priorityindex).attr('selected', 'selected');
-	$('#status option').eq(task.statusindex).attr('selected', 'selected');
+	$('#priorityOption option').eq(task.priorityindex).attr('selected', 'selected');
+	$('#statusOption option').eq(task.statusindex).attr('selected', 'selected');
 	$('#task-assigned').val(task.username);
 	$('#cc-list').val(task.cclist);
 }
@@ -198,8 +239,8 @@ function resetTaskWindow() {
 	$('#task-name').val('');
 	$('#task-desc').val('');
 	$('#created-user').val(document.getElementById('task-created-user').value);
-	$('#priority option').eq(0).attr('selected', 'selected');
-	$('#status option').eq(0).attr('selected', 'selected');
+	$('#priorityOption option').eq(0).attr('selected', 'selected');
+	$('#statusOption option').eq(0).attr('selected', 'selected');
 	$('#task-assigned').val('');
 	$('#cc-list').val('');
 	$("#task-name").removeClass("error");
@@ -361,7 +402,3 @@ function resetSearchWindow(){
 	$('#search-task-assigned').val('');
 	$("#searchCriteria").hide();
 }
-
-$('#search-task-name').bind('keyup', function (event) {
-	alert('hi')
-});

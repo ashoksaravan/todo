@@ -19,9 +19,12 @@ import com.todo.command.ForgotPasswordCmd;
 import com.todo.domain.Role;
 import com.todo.domain.Task;
 import com.todo.domain.User;
+import com.todo.dto.PriorityListDTO;
 import com.todo.dto.TaskHistoryListDTO;
 import com.todo.dto.TaskListDTO;
+import com.todo.dto.TaskStatusListDTO;
 import com.todo.dto.UserListDTO;
+import com.todo.service.RefDataService;
 import com.todo.service.TaskService;
 import com.todo.service.UserService;
 
@@ -35,7 +38,10 @@ public class UserController {
 
 	@Autowired
 	private TaskService taskService;
-
+	
+	@Autowired
+	private RefDataService dataService;
+	
 	@Autowired
 	ForgotPasswordCmd forgotPasswordCmd;
 
@@ -180,6 +186,22 @@ public class UserController {
 	public @ResponseBody
 	List<Task> searchTask(@RequestBody Task searchTask) {
 		return taskService.search(searchTask);
+	}
+	
+	@RequestMapping(value = "/refdataPriority", method = RequestMethod.POST)
+	public @ResponseBody
+	PriorityListDTO priorityList() {
+		PriorityListDTO listDTO = new PriorityListDTO();
+		listDTO.setPriority(dataService.readPriority());
+		return listDTO;
+	}
+	
+	@RequestMapping(value = "/refdataTaskStatus", method = RequestMethod.POST)
+	public @ResponseBody
+	TaskStatusListDTO taskStatusList() {
+		TaskStatusListDTO listDTO = new TaskStatusListDTO();
+		listDTO.setTaskStatus(dataService.readTaskStatus());
+		return listDTO;
 	}
 
 }

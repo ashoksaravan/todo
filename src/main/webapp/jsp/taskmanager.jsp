@@ -7,6 +7,8 @@
 <c:url value="/users/addtask" var="addtaskUrl" />
 <c:url value="/users/records" var="recordsUrl" />
 <c:url value="/users/search" var="searchUrl" />
+<c:url value="/users/refdataPriority" var="refdataPriorityUrl" />
+<c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -43,96 +45,93 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.checkpwd = '${checkpwdUrl}';
 		urlHolder.records = '${recordsUrl}';
 		urlHolder.search = '${searchUrl}';
+		urlHolder.refdataPriority = '${refdataPriorityUrl}';
+		urlHolder.refdataTaskStatus = '${refdataTaskStatusUrl}';
 	});
 	
 	var availableTags = [];
-	$(document)
-			.ready(
-					function() {
-						$(".change-password-window").fancybox();
-						$('.refClass').fancybox();
-						$('#searchQuery').fancybox();
+	$(document).ready(function() {
+		$(".change-password-window").fancybox();
+		$('.refClass').fancybox();
+		$('#searchQuery').fancybox();
 
-						$
-								.post(
-										urlHolder.records,
-										function(response) {
-											if (response != null) {
-												for ( var i = 0; i < response.users.length; i++) {
-													var obj = {
-														id : i,
-														label : response.users[i].firstName
-																+ ','
-																+ response.users[i].lastName,
-														value : response.users[i].username
-													};
-													availableTags.push(obj);
-												}
-												$("#task-assigned")
-														.autocomplete(
-																{
-																	source : availableTags,
-																	autoFocus : true
-																});
-												$("#search-task-assigned")
-												.autocomplete(
-														{
-															source : availableTags,
-															autoFocus : true,
-															selectFirst: true
-														});
+		$.post(urlHolder.records, function(response) {
+			if (response != null) {
+				for ( var i = 0; i < response.users.length; i++) {
+					var obj = {
+						id : i,
+						label : response.users[i].firstName
+								+ ','
+								+ response.users[i].lastName,
+						value : response.users[i].username
+					};
+					availableTags.push(obj);
+				}
+				$("#task-assigned")
+						.autocomplete(
+								{
+									source : availableTags,
+									autoFocus : true
+								});
+				$("#search-task-assigned")
+				.autocomplete(
+						{
+							source : availableTags,
+							autoFocus : true,
+							selectFirst: true
+						});
 
-												$("#cc-list")
-														// don't navigate away from the field on tab when selecting an item
-														.bind(
-																"keydown",
-																function(event) {
-																	if (event.keyCode === $.ui.keyCode.TAB
-																			&& $(
-																					this)
-																					.data(
-																							"autocomplete").menu.active) {
-																		event
-																				.preventDefault();
-																	}
-																})
-														.autocomplete(
-																{
-																	minLength : 0,
-																	source : function(
-																			request,
-																			response) {
-																		// delegate back to autocomplete, but extract the last term
-																		response($.ui.autocomplete
-																				.filter(
-																						availableTags,
-																						extractLast(request.term)));
-																	},
-																	focus : function() {
-																		// prevent value inserted on focus
-																		return false;
-																	},
-																	select : function(
-																			event,
-																			ui) {
-																		var terms = split(this.value);
-																		// remove the current input
-																		terms
-																				.pop();
-																		// add the selected item
-																		terms
-																				.push(ui.item.value);
-																		// add placeholder to get the comma-and-space at the end
-																		terms
-																				.push("");
-																		this.value = terms
-																				.join(",");
-																		return false;
-																	}
-																});
-											}
-										});
-					});
+				$("#cc-list")
+						// don't navigate away from the field on tab when selecting an item
+						.bind(
+								"keydown",
+								function(event) {
+									if (event.keyCode === $.ui.keyCode.TAB
+											&& $(
+													this)
+													.data(
+															"autocomplete").menu.active) {
+										event
+												.preventDefault();
+									}
+								})
+						.autocomplete(
+								{
+									minLength : 0,
+									source : function(
+											request,
+											response) {
+										// delegate back to autocomplete, but extract the last term
+										response($.ui.autocomplete
+												.filter(
+														availableTags,
+														extractLast(request.term)));
+									},
+									focus : function() {
+										// prevent value inserted on focus
+										return false;
+									},
+									select : function(
+											event,
+											ui) {
+										var terms = split(this.value);
+										// remove the current input
+										terms
+												.pop();
+										// add the selected item
+										terms
+												.push(ui.item.value);
+										// add placeholder to get the comma-and-space at the end
+										terms
+												.push("");
+										this.value = terms
+												.join(",");
+										return false;
+									}
+								});
+			}
+		});
+	});
 
 	function split(val) {
 		return val.split(/,\s*/);
@@ -189,6 +188,7 @@ var ctx = "${pageContext.request.contextPath}";
 	});
 
 	window.onload = function() {
+		loadRefData();
 		$.post(urlHolder.task, function(response) {
 			if (response != null) {
 				createAddNotes(ctx);
@@ -232,22 +232,13 @@ var ctx = "${pageContext.request.contextPath}";
 			</tr>
 			<tr>
 				<td class="pwd-box-name" id="priority">Priority:</td>
-				<td><select id='priority' name="priority"
+				<td><select id='priorityOption' name="priority"
 					class="pwd_form-login">
-						<option value='L' selected="selected">Low</option>
-						<option value='M'>Medium</option>
-						<option value='H'>High</option>
-						<option value='HS'>Highest</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td class="pwd-box-name" id="status">Task Status:</td>
-				<td><select id='status' name="status" class="pwd_form-login">
-						<option value='NEW' selected="selected">New</option>
-						<option value='CANCEL'>Cancelled</option>
-						<option value='COMPLETED'>Completed</option>
-						<option value='DEV'>Development</option>
-						<option value='HOLD'>Hold</option>
+				<td><select id='statusOption' name="status" class="pwd_form-login">
 				</select></td>
 			</tr>
 			<tr>
@@ -289,23 +280,12 @@ var ctx = "${pageContext.request.contextPath}";
 				<td class="pwd-box-name" id="priority">Priority:</td>
 				<td><select id='search-priority' name="search-priority"
 					class="pwd_form-login">
-						<option value='SELECT' selected="selected">-Select-</option>
-						<option value='L'>Low</option>
-						<option value='M'>Medium</option>
-						<option value='H'>High</option>
-						<option value='HS'>Highest</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td class="pwd-box-name" id="status">Task Status:</td>
 				<td><select id='search-status' name="search-status"
 					class="pwd_form-login">
-						<option value='SELECT' selected="selected">-Select-</option>
-						<option value='NEW'>New</option>
-						<option value='CANCEL'>Cancelled</option>
-						<option value='COMPLETED'>Completed</option>
-						<option value='DEV'>Development</option>
-						<option value='HOLD'>Hold</option>
 				</select></td>
 			</tr>
 			<tr>
