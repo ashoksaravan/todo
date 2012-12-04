@@ -237,6 +237,9 @@ function submitNewTask(){
 	}
 }
 
+/**
+ * Modal Box.
+ */
 $(function() {
     var button = $('#loginButton');
     var box = $('#loginBox');
@@ -257,6 +260,9 @@ $(function() {
     });
 });
 
+/**
+ * Task Validation.
+ */
 function taskValidation(){
 	$("#task-name").removeClass("error");
 	$("#task-desc").removeClass("error");
@@ -276,16 +282,24 @@ function taskValidation(){
 	return true;
 }
 
+/**
+ * Load the history screen.
+ */
 function showTaskHistory(task){
 	var taskid = task.taskid;
 	window.location.href="/todo/jsp/taskscreen.jsp?task=" + taskid;
 }
 
+/**
+ * Back to task manager.
+ */
 function back(ctx){
 	window.location.href=ctx+"/jsp/taskmanager.jsp";
 };
 
-
+/**
+ * Search Task.
+ */
 function searchTask(){
 	
 	if($('#search-task-name').val() == ''&&
@@ -330,10 +344,16 @@ function searchTask(){
 	}
 }
 
+/**
+ * Refresh Task.
+ */
 function refreshTask(){
 	window.location.href="/todo/jsp/taskmanager.jsp";
 }
 
+/**
+ * Reset Search window.
+ */
 function resetSearchWindow(){
 	$('#search-task-name').val('');
 	$('#search-priority option').eq(0).attr('selected', 'selected');
@@ -341,3 +361,7 @@ function resetSearchWindow(){
 	$('#search-task-assigned').val('');
 	$("#searchCriteria").hide();
 }
+
+$('#search-task-name').bind('keyup', function (event) {
+	alert('hi')
+});

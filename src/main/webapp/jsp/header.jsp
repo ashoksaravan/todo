@@ -9,7 +9,8 @@
 <c:url value="/users/records" var="recordsUrl" />
 <html>
 <head>
-
+<link rel="icon" type="image/gif"
+	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif" />
 <script type="text/javascript">
 	$(function() {
 		urlHolder.changepwd = '${changepwdUrl}';

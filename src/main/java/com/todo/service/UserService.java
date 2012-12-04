@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.todo.domain.Role;
 import com.todo.domain.User;
 import com.todo.repository.RoleRepository;
 import com.todo.repository.UserRepository;
@@ -20,15 +22,19 @@ public class UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 
 	public User create(User user) {
+		Role role = null;
 		user.setId(UUID.randomUUID().toString());
-		user.getRole().setId(UUID.randomUUID().toString());
+		if (user.getRole().getRole() != null) {
+			role = roleRepository.findByRole(user.getRole().getRole());
+		}
+		user.getRole().setId(role.getId().toString());
 		user.setPassword(passwordEncoder(user.getPassword(), user.getUsername()));
 
-		// We must save both separately since there is no cascading feature
-		// in Spring Data MongoDB (for now)
-		roleRepository.save(user.getRole());
 		return userRepository.save(user);
 	}
 

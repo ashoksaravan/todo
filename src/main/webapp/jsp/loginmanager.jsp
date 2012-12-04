@@ -32,6 +32,26 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#forget-password").fancybox();
+		if ( $.browser.msie ) {
+			$('<div></div>').appendTo('body')
+            .html('<div><h6>Do you want to continue?</h6></div>')
+            .dialog({
+                modal: true, title: 'Unsupported browser', zIndex: 10000, autoOpen: true,
+                width: 'auto', resizable: false,
+                buttons: {
+                    Yes: function () {
+                        $(this).dialog("close");
+                    },
+                    No: function () {
+                    	window.close();
+                        $(this).dialog("close");
+                    }
+                },
+                close: function (event, ui) {
+                    $(this).remove();
+                }
+            });
+		}
 	});
 	$(function() {
 		urlHolder.login = '${loginUrl}';
