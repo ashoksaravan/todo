@@ -73,7 +73,7 @@
 	font-weight: bold;
 	padding: 3px 10px;
 }
-#tableUsers {
+.tableUsers {
 	border: 1px solid #e3e3e3;
 	background-color: #f2f2f2;
     width: 80%;
@@ -81,12 +81,12 @@
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
 }
-#tableUsers td, #tableUsers th {
+.tableUsers td, .tableUsers th {
 	padding: 5px;
 	color: #333;
 }
 
-#tableUsers th {
+.tableUsers th {
 	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
 	font-size: 17px;
 	line-height: 20px;
@@ -96,14 +96,14 @@
 	text-shadow: white 1px 1px 1px;
 }
 
-#tableUsers td {
+.tableUsers td {
 	line-height: 20px;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 14px;
 	border-bottom: 1px solid #fff;
 	border-top: 1px solid #fff;
 }
-#tableUsers td:hover {
+.tableUsers td:hover {
 	background-color: #fff;
 }
 #banner {

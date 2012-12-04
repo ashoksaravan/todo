@@ -20,6 +20,7 @@ import com.todo.domain.Role;
 import com.todo.domain.Task;
 import com.todo.domain.User;
 import com.todo.dto.PriorityListDTO;
+import com.todo.dto.ProjectListDTO;
 import com.todo.dto.TaskHistoryListDTO;
 import com.todo.dto.TaskListDTO;
 import com.todo.dto.TaskStatusListDTO;
@@ -201,6 +202,14 @@ public class UserController {
 	TaskStatusListDTO taskStatusList() {
 		TaskStatusListDTO listDTO = new TaskStatusListDTO();
 		listDTO.setTaskStatus(dataService.readTaskStatus());
+		return listDTO;
+	}
+	
+	@RequestMapping(value = "/refdataProject", method = RequestMethod.POST)
+	public @ResponseBody
+	ProjectListDTO projectList() {
+		ProjectListDTO listDTO = new ProjectListDTO();
+		listDTO.setProject(dataService.readProject());
 		return listDTO;
 	}
 

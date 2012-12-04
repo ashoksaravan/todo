@@ -9,6 +9,7 @@
 <c:url value="/users/search" var="searchUrl" />
 <c:url value="/users/refdataPriority" var="refdataPriorityUrl" />
 <c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
+<c:url value="/users/refdataProject" var="refdataProjectUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -47,6 +48,7 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.search = '${searchUrl}';
 		urlHolder.refdataPriority = '${refdataPriorityUrl}';
 		urlHolder.refdataTaskStatus = '${refdataTaskStatusUrl}';
+		urlHolder.refdataProject = '${refdataProjectUrl}';
 	});
 	
 	var availableTags = [];
@@ -203,11 +205,24 @@ var ctx = "${pageContext.request.contextPath}";
 <body>
 
 	<jsp:include page='/jsp/header.jsp' />
-	<div align="right" style="width: 100%">
-		<a href="#searchTask" id="searchQuery" style="width: 10%; padding-right: 3%" onclick="resetSearchWindow();">Search</a>
-		<a href="#" id="refreshQuery" onclick="refreshTask()" style="width: 10%;">Home</a>
+	<div style="width: 100%; padding-top: 1%">
+		<table style="width: 100%">
+			<tr>
+				<td><select id='projectOption' name="project"
+					style="width: 30%"></select></td>
+				<td align="right"><a href="#searchTask" id="searchQuery"
+					style="width: 10%; padding-right: 3%;"
+					onclick="resetSearchWindow();">Search</a> <a href="#"
+					id="refreshQuery" onclick="refreshTask()" style="width: 10%;">Home</a>
+				</td>
+			</tr>
+		</table>
 	</div>
 	<div><h5 style="color: red;" align="center" hidden="hidden" id="noresult" style="width: 80%">No search results found.</h5></div>
+	<div align="center" style="width: 100%;">
+		<ul class="single_sticky_notes" id="single_sticky_notes">
+		</ul>
+	</div>
 	<div id="addNewTask" hidden="hidden">
 		<h4 align="left" id="addEditHeading">Add Task</h4>
 		<table>

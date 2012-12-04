@@ -41,6 +41,17 @@ function loadRefData() {
 			$("#search-status").html(searchListItems);
 		}
 	});
+	
+	$.post(urlHolder.refdataProject, function(response) {
+		if (response) {
+			var listItems = "";
+			for ( var i = 0; i < response.project.length; i++) {
+				listItems += "<option value='" + response.project[i].projectId
+						+ "'>" + response.project[i].projectName + "</option>";
+			}
+			$("#projectOption").html(listItems);
+		}
+	});
 }
 
 /**

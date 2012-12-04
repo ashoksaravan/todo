@@ -122,10 +122,6 @@
 					</div>
 		</table>
 	</div>
-	<div align="center" style="width: 100%;">
-		<ul class="single_sticky_notes" id="single_sticky_notes">
-		</ul>
-	</div>
 	<div id="change-password-box" hidden="hidden">
 		<h5>Change Password</h5>
 		<div id="change-login-box">
