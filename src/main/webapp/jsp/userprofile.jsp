@@ -38,7 +38,6 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
 
-
 <title>User Profile</title>
 <script type='text/javascript'>
  
@@ -88,7 +87,7 @@ $(function() {
 				 
 				<label for='newFirstName'>First Name:</label>
 				<label for='firstName' class="userprofileLbl">${user.firstName} </label>
-				<input type='text' id="editfirstName" class='userprofileInpt' value="${user.firstName}"  />
+				<input type='text' id="editfirstName" required="required" title="Please Enter FirstName" name="firstName" class='userprofileInpt' value="${user.firstName}"  />
 				</div> 
 				
 				<hr color="silver">
@@ -96,7 +95,7 @@ $(function() {
 				 <div class="fieldgroup">
 				<label for='newLastName'>Last Name:</label>
 				<label for='lastName' class="userprofileLbl"  >${user.lastName}</label>
-				<input type='text' id="editlastName" class='userprofileInpt' value="${user.lastName}"  />
+				<input type='text' id="editlastName" required="required" title="Please Enter LastName" name="lastName" class='userprofileInpt' value="${user.lastName}"  />
 				 </div>
 				
 				<hr color="silver">
@@ -104,7 +103,7 @@ $(function() {
 				 <div class="fieldgroup">
 				<label for='newMailId'>EmailId:</label> 
 				<label for='mailId' class="userprofileLbl">${user.mailId}</label>
-				<input type='text' id="editEmailId" class='userprofileInpt' value="${user.mailId}"  />
+				<input type='text' id="editEmailId" name="email" required="required" title="Please Enter email!" class='userprofileInpt' value="${user.mailId}"  />
 				</div> 
 				
 				<hr color="silver">
