@@ -60,10 +60,6 @@ public class UserService {
 		existingUser.setFirstName(user.getFirstName());
 		existingUser.setLastName(user.getLastName());
 		existingUser.getRole().setRole(user.getRole().getRole());
-
-		// We must save both separately since there is no cascading feature
-		// in Spring Data MongoDB (for now)
-		roleRepository.save(existingUser.getRole());
 		userRepository.save(existingUser);
 		return existingUser;
 	}
@@ -74,10 +70,6 @@ public class UserService {
 		if (existingUser == null) {
 			return false;
 		}
-
-		// We must delete both separately since there is no cascading feature
-		// in Spring Data MongoDB (for now)
-		roleRepository.delete(existingUser.getRole());
 		userRepository.delete(existingUser);
 		return true;
 	}

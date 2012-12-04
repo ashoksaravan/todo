@@ -22,7 +22,6 @@ import com.todo.domain.User;
 import com.todo.dto.PriorityListDTO;
 import com.todo.dto.ProjectListDTO;
 import com.todo.dto.TaskHistoryListDTO;
-import com.todo.dto.TaskListDTO;
 import com.todo.dto.TaskStatusListDTO;
 import com.todo.dto.UserListDTO;
 import com.todo.service.RefDataService;
@@ -132,11 +131,12 @@ public class UserController {
 
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
 	public @ResponseBody
-	TaskListDTO task() {
-		TaskListDTO taskListDTO = new TaskListDTO();
-		taskListDTO.setTasks(taskService.readAll(SecurityContextHolder
-				.getContext().getAuthentication().getName()));
-		return taskListDTO;
+	List<Task> task(@RequestParam Integer projectId) {
+		Task task = new Task();
+		task.setProjectId(projectId);
+		task.setUsername(SecurityContextHolder
+				.getContext().getAuthentication().getName());
+		return taskService.loadTask(task);
 	}
 
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)

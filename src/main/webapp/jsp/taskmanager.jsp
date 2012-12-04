@@ -56,7 +56,7 @@ var ctx = "${pageContext.request.contextPath}";
 		$(".change-password-window").fancybox();
 		$('.refClass').fancybox();
 		$('#searchQuery').fancybox();
-
+		
 		$.post(urlHolder.records, function(response) {
 			if (response != null) {
 				for ( var i = 0; i < response.users.length; i++) {
@@ -133,6 +133,7 @@ var ctx = "${pageContext.request.contextPath}";
 								});
 			}
 		});
+		loadRefData();
 	});
 
 	function split(val) {
@@ -189,16 +190,9 @@ var ctx = "${pageContext.request.contextPath}";
 		});
 	});
 
-	window.onload = function() {
-		loadRefData();
-		$.post(urlHolder.task, function(response) {
-			if (response != null) {
-				createAddNotes(ctx);
-				for ( var i = 0; i < response.tasks.length; i++) {
-					createNotes(response.tasks[i],ctx);
-				}
-			}
-		});
+	function change(){
+		var index = $('select#projectOption option:selected').val();
+		loadTaskDetails();
 	}
 </script>
 </head>
@@ -209,7 +203,7 @@ var ctx = "${pageContext.request.contextPath}";
 		<table style="width: 100%">
 			<tr>
 				<td><select id='projectOption' name="project"
-					style="width: 30%"></select></td>
+					style="width: 30%" onchange="change()"></select></td>
 				<td align="right"><a href="#searchTask" id="searchQuery"
 					style="width: 10%; padding-right: 3%;"
 					onclick="resetSearchWindow();">Search</a> <a href="#"

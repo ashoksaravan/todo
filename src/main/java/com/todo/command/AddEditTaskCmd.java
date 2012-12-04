@@ -39,6 +39,7 @@ public class AddEditTaskCmd {
 		task.setUsername(addEditTask.getUsername());
 		task.setCreateduser(addEditTask.getCreateduser());
 		task.setEditor(addEditTask.getEditor());
+		task.setProjectId(addEditTask.getProjectId());
 		if (addEditTask.getCclist() != null
 				&& addEditTask.getCclist().length() > 0) {
 			task.setCclist(addEditTask.getCclist());

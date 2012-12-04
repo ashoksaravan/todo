@@ -50,8 +50,29 @@ function loadRefData() {
 						+ "'>" + response.project[i].projectName + "</option>";
 			}
 			$("#projectOption").html(listItems);
+			loadTaskDetails();
 		}
 	});
+}
+
+/**
+ * Load Task Details.
+ */
+function loadTaskDetails(){
+	$('.single_sticky_notes li').remove();
+	createAddNotes(ctx);
+
+	$.post(urlHolder.task, {
+	projectId : $('select#projectOption option:selected').val()
+	},
+	function(response) {
+		if (response != null) {
+			for ( var i = 0; i < response.length; i++) {
+				createNotes(response[i],ctx);
+			}
+		}
+	});
+	
 }
 
 /**
@@ -202,15 +223,13 @@ function createNotes(task, ctx) {
 	if(task.cclist == null){
 		task.cclist = '';
 	}
-	if(task.taskstatus != 'COMPLETED')
-	{
-		$('.single_sticky_notes').append(
-				'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
-				+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
-				+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'",cclist:"'+task.cclist+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + div
-						+'<div align=right>'+'<a href="#taskHistory" onclick=showTaskHistory({taskid:"'
-						+task.taskid+'"}) class='+historyClass+'><img src='+ctx +'/resources/css/images/arrow.png'+ '/></a></div>'+'</li>');
-	}
+	$("#noresult").hide();
+	$('.single_sticky_notes').append(
+			'<li class="'+ color + '"' + 'onclick = editTask({taskname:"'+tname+'",taskid:"'
+			+task.taskid+'",priorityindex:"'+task.priorityindex+'",statusindex:"'
+			+task.statusindex+'",username:"'+task.username+'",taskdesc:"'+tdesc+'",createduser:"'+task.createduser+'",cclist:"'+task.cclist+'"})>'+'<a href="#addNewTask" class=' + refClass + '>' + div
+					+'<div align=right>'+'<a href="#taskHistory" onclick=showTaskHistory({taskid:"'
+					+task.taskid+'"}) class='+historyClass+'><img src='+ctx +'/resources/css/images/arrow.png'+ '/></a></div>'+'</li>');
 }
 
 /**
@@ -264,10 +283,10 @@ function resetTaskWindow() {
  */
 function submitNewTask(){
 	var addEditTask = {"taskid":$('#task-id').val(),"taskname":$('#task-name').val(),
-			"taskdesc":$('#task-desc').val(),"priority":$('select#priority option:selected').val(),
-			"taskstatus":$('select#status option:selected').val(),"username":$('#task-assigned').val(),
-			"createduser":$('#created-user').val(),"cclist" : $('#cc-list').val(),"editor" : $('#task-editor').val()
-			};
+			"taskdesc":$('#task-desc').val(),"priority":$('select#priorityOption option:selected').val(),
+			"taskstatus":$('select#statusOption option:selected').val(),"username":$('#task-assigned').val(),
+			"createduser":$('#created-user').val(),"cclist" : $('#cc-list').val(),"editor" : $('#task-editor').val(),
+			"projectId":$('select#projectOption option:selected').val()};
 	if (taskValidation()) {
 		
 		$.ajax({
@@ -279,13 +298,14 @@ function submitNewTask(){
 
             success : function(response) {
             	if(response){
-            		window.location.href = "/todo/jsp/taskmanager.jsp";
+            		loadTaskDetails();
             	}
             },
             error : function(request, status, error) {
                    alert('Error: ' + error); 
             }
         });
+		parent.$.fancybox.close();
 	}
 }
 
@@ -370,7 +390,8 @@ function searchTask(){
 		var searchTask = {"taskname":$('#search-task-name').val(),
 			"priority":$('select#search-priority option:selected').val(),
 			"taskstatus":$('select#search-status option:selected').val(),
-			"username":$('#search-task-assigned').val()};
+			"username":$('#search-task-assigned').val(),
+			"projectId":$('select#projectOption option:selected').val()};
 		$.ajax({
 	        contentType : "application/json",
 	        dataType : 'json',

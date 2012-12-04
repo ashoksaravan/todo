@@ -18,7 +18,14 @@ public class Task {
 	private String createduser;
 	private String cclist;
 	private String editor;
+	private Integer projectId;
 	
+	public Integer getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
 	public String getEditor() {
 		return editor;
 	}

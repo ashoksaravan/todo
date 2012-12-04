@@ -1,5 +1,6 @@
 package com.todo.service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,8 +24,12 @@ public class TaskService {
 	@Autowired
 	private TaskHistoryRepository taskHistoryRepository;
 
-	 @Autowired
-	 private MongoTemplate mongoTemplate;
+	@Autowired
+	private MongoTemplate mongoTemplate;
+	
+	private static String NEW = "NEW";
+	private static String HOLD = "HOLD";
+	private static String DEV = "DEV";
 	
 	public List<Task> readAll(String username) {
 		return taskRepository.findTaskByUsername(username);
@@ -56,9 +61,17 @@ public class TaskService {
 	
 	public List<Task> search(Task task) {
 		Criteria criteria = null;
+		if (task.getProjectId() != null && task.getProjectId().intValue() > 0) {
+			criteria = Criteria.where("projectId").is(task.getProjectId());
+		}
 		if (task.getTaskname() != null
 				&& task.getTaskname().trim().length() > 0) {
-			criteria = Criteria.where("taskname").is(task.getTaskname());
+			criteria = criteria.and("taskname").is(task.getTaskname());
+		} else {
+			if (task.getTaskname() != null
+					&& task.getTaskname().trim().length() > 0) {
+				criteria = Criteria.where("taskname").is(task.getTaskname());
+			}
 		}
 		if (task.getPriority() != null
 				&& task.getPriority().trim().length() > 0 && criteria != null) {
@@ -90,5 +103,20 @@ public class TaskService {
 		}
 		List<Task> list = mongoTemplate.find(new Query(criteria), Task.class);
 		return list;
+	}
+	
+	public List<Task> loadTask(Task task) {
+		Criteria criteria = null;
+		if (task.getUsername() != null
+				&& task.getUsername().trim().length() > 0
+				&& task.getProjectId() != null && task.getProjectId().intValue() > 0) {
+			criteria = Criteria.where("username").is(task.getUsername())
+					.and("projectId").is(task.getProjectId()).and("taskstatus").in(NEW,DEV,HOLD);
+			List<Task> list = mongoTemplate.find(new Query(criteria),
+					Task.class);
+			return list;
+		}
+		return null;
+
 	}
 }
