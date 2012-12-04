@@ -63,6 +63,7 @@ $(function() {
 		
 		$('#saveProfile').click(function(event) {
 			event.preventDefault();
+			
 			saveUserProfile('${user.username}', '${user.role.role}');
 		});
 		$('#cnclProfile').click(function(event) {
@@ -103,7 +104,7 @@ $(function() {
 				 <div class="fieldgroup">
 				<label for='newMailId'>EmailId:</label> 
 				<label for='mailId' class="userprofileLbl">${user.mailId}</label>
-				<input type='text' id="editEmailId" name="email" required="required" title="Please Enter email!" class='userprofileInpt' value="${user.mailId}"  />
+				<input type='text' id="editEmailId"  name="email" required="required" title="Please Enter email!" class='userprofileInpt' value="${user.mailId}"  />
 				</div> 
 				
 				<hr color="silver">

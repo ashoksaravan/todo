@@ -170,17 +170,26 @@ function toggleCrudButtons(id) {
 }
 
 function saveUserProfile(username,role) {
-	$.post(urlHolder.edit, {
-		username : username,
-		firstName : $('#editfirstName').val(),
-		lastName : $('#editlastName').val(),
-		role : role,
-		mailId : $('#editEmailId').val()
-		
-	}, function(response) {
-		if (response != null) {
-			alert('Success! UserProfile has been edited.');
-			window.location.reload();
-		}
-	});
+	var firstName = $('#editfirstName').val();
+	var lastName = $('#editlastName').val();
+	var mailId = $('#editEmailId').val();
+	
+	if(firstName !="" && lastName!=""&& mailId !=""){
+		$.post(urlHolder.edit, {
+			username : username,
+			firstName : $('#editfirstName').val(),
+			lastName : $('#editlastName').val(),
+			role : role,
+			mailId : $('#editEmailId').val()
+			
+		}, function(response) {
+			if (response != null) {
+				alert('Success! UserProfile has been edited.');
+				window.location.reload();
+			}
+		});
+	}
+	else{
+		alert("Please enter the missing values!!!");
+	}
 }
