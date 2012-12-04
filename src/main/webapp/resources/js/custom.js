@@ -25,6 +25,20 @@ function loadTable() {
 		toggleForms('hide');
 		;
 	});
+	
+	$.post(urlHolder.refdataProject, function(response) {
+		if (response) {
+			for ( var i = 0; i < response.project.length; i++) {
+				var row = '<tr>';
+				row += '<td><input type="radio" name="index" id="index" value="'
+					+ i + '"></td>';
+				row += '<td>' + response.project[i].projectName + '</td>';
+				row += '<td>' + response.project[i].projectDesc + '</td>';
+				row += '</tr>';
+				$('#tableProjects').append(row);
+			}
+		}
+	});
 }
 
 function submitNewRecord() {
