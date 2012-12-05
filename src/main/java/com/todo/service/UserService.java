@@ -65,6 +65,7 @@ public class UserService {
 		existingUser.setFirstName(user.getFirstName());
 		existingUser.setLastName(user.getLastName());
 		existingUser.getRole().setRole(user.getRole().getRole());
+		existingUser.setReqNewPwd(user.getReqNewPwd());
 		userRepository.save(existingUser);
 		return existingUser;
 	}

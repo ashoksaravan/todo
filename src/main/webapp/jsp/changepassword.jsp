@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title>Login Page</title>
-<title>Login Box Task Manager</title>
+<title>Change Password</title>
 
 <link rel="icon" type="image/gif"
 	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif" />
@@ -30,30 +29,38 @@
 <body>
 	<div align="center" style="width: 100%; height: 100%; padding-top: 10%">
 		<div id="login-box">
-			<form action="changePassword" method="post">
-
-				<div id="login-box-name" style="margin-top: 20px;">Old
-					Password:</div>
-				<div id="login-box-field" style="margin-top: 20px;">
-					<input id="oldpwd" class="form-login" title="Old Password" value=""
-						name="oldpwd" size="30" maxlength="50" type="text" />
-				</div>
-
-				<div id="login-box-name">New Password:</div>
-				<div id="login-box-field">
-					<input id="newPwd" class="form-login" title="New Password"
-						name="newPwd" size="30" maxlength="50" type="password" />
-				</div>
-
-				<div id="login-box-name">Confirm Password:</div>
-				<div id="login-box-field">
-					<input id="confirmPwd" class="form-login" title="Confirm Password"
-						name="confirmPwd" size="30" maxlength="50" type="password" />
-				</div>
-
-				<br /> <br />
-				<button id="forgotBtn" style="color: white;"
-					onclick="forgotAction()">Change Password</button>
+			<form action="<%=request.getContextPath() %>/users/changePassword" method="post" onsubmit="return changePassword()">
+				<table style="padding: 10%" width="100%">
+					<tr>
+						<td colspan="2" align="center"><h3>Change Password</h3></td>
+					</tr>
+					<tr>
+						<td  style="padding: 2%">Old
+							Password:</td>
+						<td  style="padding: 2%"><input
+							id="oldPwd" class="form-login" value=""
+							name="oldPwd" size="30" maxlength="50" type="password" required="required"/></td>
+					</tr>
+					<tr>
+						<td  style="padding: 2%">New Password:</td>
+						<td  style="padding: 2%"><input id="newPwd"
+							class="form-login" required="required" name="newPwd" size="30"
+							maxlength="50" type="password" /></td>
+					</tr>
+					<tr>
+						<td  style="padding: 2%">Confirm Password:</td>
+						<td  style="padding: 2%"><input id="confirmPwd"
+							class="form-login" required="required" name="confirmPwd"
+							size="30" maxlength="50" type="password" /></td>
+					</tr>
+					<tr><td colspan="2" align="center"><div  style="color: #D69999;"
+					id="changepwdvalidation" hidden="hidden">New and Confirm Password must match!</div><div style="color: #D69999;">${message}</div></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"  style="padding: 2%"><button type="submit" id="changePwdBtn" style="color: white;"
+								>Change</button></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>

@@ -108,6 +108,14 @@ button#searchBtn {
 	border-radius:  9px 9px 9px 9px; 
 }
 
+button#changePwdBtn {
+	background-color: #1e4f8a;
+	width: 90px;
+	height:35px;
+	font: bold 16px "Calibri", Arial;
+	border-radius:  9px 9px 9px 9px; 
+}
+
 
 #forgotBtn {
 	background-color: #1e4f8a;

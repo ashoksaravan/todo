@@ -3,9 +3,13 @@ package com.todo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -238,5 +242,20 @@ public class UserController {
 		return service.edit(editProject);
 	}
 
+
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	public String changePassword(Model model, @ModelAttribute User user, @RequestParam String oldPwd, @RequestParam String newPwd) {
+		PasswordEncoder encoder = new Md5PasswordEncoder();
+		if (user.getPassword().equals(encoder.encodePassword(oldPwd, user.getUsername()))) {
+			user.setPassword(newPwd);
+			user.setReqNewPwd(Boolean.FALSE);
+			service.update(user);
+			model.addAttribute("message", "Password Changed Successfully");
+			return "redirect:/logout";
+		} else {
+			model.addAttribute("message", "Wrong Old Password!");
+			return "changepassword";
+		}
+	}
 
 }
