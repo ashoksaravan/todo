@@ -169,13 +169,17 @@
 
 <body>
 	<jsp:include page='/jsp/header.jsp' />
+	<img src="/todo/resources/css/images/Home.PNG" align="right"
+					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; padding-top:1mm;  padding-right:1mm;      vertical-align:middle; "/>
 	<div align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
+<!-- 			<div align="right" id='homeButton'> -->
+			
 			<div id="v-nav">
 				<ul>
-					<li tab="tab1" id="tab1" class="first current">Users
-						Information</li>
+					<li tab="tab1" id="tab1" class="first current">Manage
+						Users</li>
 					<li tab="tab2" id="tab2" class="last">Add Project</li>
 				</ul>
 				<div align="center" id="userRecords" class="tab-content">
@@ -199,9 +203,7 @@
 						<input type='button' value='New' id='newBtn' /> <input
 							type='button' value='Delete' id='deleteBtn' /> <input
 							type='button' value='Edit' id='editBtn' /> <input type='button'
-							value='Reload' id='reloadBtn' /> <input type='button'
-							value='Back to Tasks' id='backBtn'
-							onclick="back('<%=request.getContextPath()%>')" />
+							value='Reload' id='reloadBtn' />
 					</div>
 
 
