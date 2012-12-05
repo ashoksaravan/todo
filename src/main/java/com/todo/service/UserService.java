@@ -105,4 +105,12 @@ public class UserService {
 		PasswordEncoder encoder = new Md5PasswordEncoder();
 		return encoder.encodePassword(password, salt);
 	}
+	
+	public Boolean checkUsername(String userName){
+		User user = userRepository.findByUsername(userName);
+		if(user == null){
+			return false;
+		}
+		return true;
+	}
 }

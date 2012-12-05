@@ -6,6 +6,7 @@
 <c:url value="/users/delete" var="deleteUrl" />
 <c:url value="/users/task" var="taskUrl" />
 <c:url value="/users/refdataProject" var="refdataProjectUrl" />
+<c:url value="/users/getName" var="getNameUrl" />
 
 <html>
 <head>
@@ -62,6 +63,7 @@
 		urlHolder.del = '${deleteUrl}';
 		urlHolder.task = '${taskUrl}';
 		urlHolder.refdataProject = '${refdataProjectUrl}';
+		urlHolder.getName = '${getNameUrl}';
 		loadTable();
 
 		$('#newBtn').click(function() {
@@ -105,6 +107,18 @@
 		$('#closeEditForm').click(function() {
 			toggleForms('hide');
 			toggleCrudButtons('show');
+		});
+		
+		$("#newUsername").focusout(function(){
+			$.post(urlHolder.getName, {
+				username : $("#newUsername").val()
+			}, function(response) {
+				if (response == true) {
+					$("#newUsername").addClass("error");
+				}else{
+					$("#newUsername").removeClass("error");
+				}
+			});
 		});
 	});
 </script>

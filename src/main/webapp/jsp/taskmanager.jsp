@@ -207,7 +207,7 @@ var ctx = "${pageContext.request.contextPath}";
 				<td align="right"><a href="#searchTask" id="searchQuery"
 					style="width: 10%; padding-right: 3%;"
 					onclick="resetSearchWindow();">Search</a> <a href="#"
-					id="refreshQuery" onclick="refreshTask()" style="width: 10%;">Home</a>
+					id="refreshQuery" onclick="back('${pageContext.request.contextPath}')" style="width: 10%;">Home</a>
 				</td>
 			</tr>
 		</table>

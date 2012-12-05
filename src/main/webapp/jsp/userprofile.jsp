@@ -5,6 +5,7 @@
 <c:url value="/users/update" var="editUrl" />
 <c:url value="/users/delete" var="deleteUrl" />
 <c:url value="/users/task" var="taskUrl" />
+<c:url value="/users/refdataProject" var="refdataProjectUrl" />
 <html>
 <head>
 
@@ -46,6 +47,7 @@ $(function() {
 		urlHolder.records = '${recordsUrl}';
 		urlHolder.edit = '${editUrl}';
 		urlHolder.task = '${taskUrl}';
+		urlHolder.refdataProject = '${refdataProjectUrl}';
 		loadTable();
 		
 		$('.userprofileInpt').hide();

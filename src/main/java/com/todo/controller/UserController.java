@@ -65,10 +65,10 @@ public class UserController {
 		return userListDto;
 	}
 
-	@RequestMapping(value = "/get")
+	@RequestMapping(value = "/getName")
 	public @ResponseBody
-	User get(@RequestBody User user) {
-		return service.read(user);
+	Boolean get(@RequestParam String username) {
+		return service.checkUsername(username);
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)

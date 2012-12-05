@@ -366,7 +366,7 @@ function showTaskHistory(task){
  * Back to task manager.
  */
 function back(ctx){
-	window.location.href=ctx+"/jsp/taskmanager.jsp";
+	window.location.href=ctx;
 };
 
 /**
@@ -415,13 +415,6 @@ function searchTask(){
 	    });
 		parent.$.fancybox.close();
 	}
-}
-
-/**
- * Refresh Task.
- */
-function refreshTask(){
-	window.location.href="/todo/jsp/taskmanager.jsp";
 }
 
 /**

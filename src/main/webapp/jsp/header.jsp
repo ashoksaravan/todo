@@ -82,9 +82,9 @@
 			id="header">
 			<tr>
 				<td
-					style="border-right: 0px; border-left: 0px; border-bottom: 0px; vertical-align: top; padding-right: 0px"><img
+					style="border-right: 0px; border-left: 0px; border-bottom: 0px; vertical-align: top; padding-right: 0px;"><img
 					src="<%=request.getContextPath()%>/resources/images/ebixlogo.PNG"
-					align="top" height="70%" /></td>
+					align="top" height="70%" onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer;"/></td>
 				<td align="right"
 					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px; padding-top: 0px; padding-left: 0px;">
 					<div id="container">
