@@ -182,6 +182,7 @@
 					<table id='tableUsers' class='tableUsers'>
 						<caption align="top">
 							<b>Record System</b>
+							<br></br>
 						</caption>
 						<thead id='tableHead'>
 							<tr>
@@ -275,6 +276,7 @@
 					<table id='tableProjects' class='tableUsers'>
 						<caption align="top">
 							<b>Project Details</b>
+							<br></br>
 						</caption>
 						<thead id='tableHead'>
 							<tr>
