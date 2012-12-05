@@ -470,7 +470,6 @@ function resetSearchWindow() {
 
 function changePassword(){
 	if($('#newPwd').val() != $('#confirmPwd').val()){
-		alert('hi')
 		$('#changepwdvalidation').show();
 		return false;
 	}

@@ -24,10 +24,10 @@ public class UserService {
 
 	@Autowired
 	private RoleRepository roleRepository;
-	
+
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	
+
 	@Autowired
 	private ProjectRepository projectRepository;
 
@@ -66,6 +66,7 @@ public class UserService {
 		existingUser.setLastName(user.getLastName());
 		existingUser.getRole().setRole(user.getRole().getRole());
 		existingUser.setReqNewPwd(user.getReqNewPwd());
+		existingUser.setPassword(user.getPassword());
 		userRepository.save(existingUser);
 		return existingUser;
 	}
@@ -85,7 +86,7 @@ public class UserService {
 		if (existingUser == null) {
 			return false;
 		}
-		if(fromForgotPwd){
+		if (fromForgotPwd) {
 			existingUser.setReqNewPwd(Boolean.TRUE);
 		}
 		existingUser.setPassword(passwordEncoder(user.getPassword(), user.getUsername()));
@@ -104,24 +105,26 @@ public class UserService {
 
 	/**
 	 * This method is used to encode the password using MD5.
-	 * @param password password
+	 * 
+	 * @param password
+	 *            password
 	 * @return encodePassword
 	 */
 	private String passwordEncoder(String password, String salt) {
 		PasswordEncoder encoder = new Md5PasswordEncoder();
 		return encoder.encodePassword(password, salt);
 	}
-	
-	public Boolean checkUsername(String userName){
+
+	public Boolean checkUsername(String userName) {
 		User user = userRepository.findByUsername(userName);
-		if(user == null){
+		if (user == null) {
 			return false;
 		}
 		return true;
 	}
-	
-public Project add(Project project) {
-		
+
+	public Project add(Project project) {
+
 		project.setId(UUID.randomUUID().toString());
 		project.getProjectName();
 		project.getProjectDesc();
@@ -129,17 +132,17 @@ public Project add(Project project) {
 	}
 
 	public Project edit(Project project) {
-		
+
 		Project editProject = projectRepository.findByProjectName(project.getProjectName());
 
 		if (editProject == null) {
 			return null;
 		}
-		
+
 		editProject.setProjectName(project.getProjectName());
 		editProject.setProjectDesc(project.getProjectDesc());
 		projectRepository.save(editProject);
-		
+
 		return editProject;
 	}
 }

@@ -247,7 +247,7 @@ public class UserController {
 	public String changePassword(Model model, @ModelAttribute User user, @RequestParam String oldPwd, @RequestParam String newPwd) {
 		PasswordEncoder encoder = new Md5PasswordEncoder();
 		if (user.getPassword().equals(encoder.encodePassword(oldPwd, user.getUsername()))) {
-			user.setPassword(newPwd);
+			user.setPassword(encoder.encodePassword(newPwd, user.getUsername()));
 			user.setReqNewPwd(Boolean.FALSE);
 			service.update(user);
 			model.addAttribute("message", "Password Changed Successfully");

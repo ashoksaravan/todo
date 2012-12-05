@@ -38,7 +38,7 @@
 		$(".userroles").click(function() {
 			window.location = "/todo/jsp/userprofile.jsp";
 		});
-	
+
 		$(".admin").click(function() {
 			window.location = "/todo/jsp/admin/users.jsp";
 		});
@@ -84,7 +84,9 @@
 				<td
 					style="border-right: 0px; border-left: 0px; border-bottom: 0px; vertical-align: top; padding-right: 0px;"><img
 					src="<%=request.getContextPath()%>/resources/images/ebixlogo.PNG"
-					align="top" height="70%" onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer;"/></td>
+					align="top" height="70%"
+					onclick="back('${pageContext.request.contextPath}')"
+					style="cursor: pointer;" /></td>
 				<td align="right"
 					style="border-left: 0px; border-right: 0px; border-top: 0px; border-bottom: 0px; padding-top: 0px; padding-left: 0px;">
 					<div id="container">
@@ -100,15 +102,18 @@
 										<fieldset>
 											<label
 												style="font-size: 14px; text-align: left; font-weight: bold;">${user.firstName}&nbsp;<a
-												href="#" class="userroles" style="font-size: 10;">Edit
-													Profile</a>
+												href="#" class="userroles" style="font-size: 10;"><img
+													src="${pageContext.request.contextPath}/resources/images/edit.jpeg"
+													title="Edit Profile" /></a>
 											</label>
 										</fieldset>
 										<fieldset>
 											<label style="text-align: left;">${user.mailId}</label>
 										</fieldset>
 										<sec:authorize access="hasRole('ROLE_ADMIN')">
-											<a href="#" class="admin">Administration</a>
+											<a href="#" class="admin"><img
+													src="${pageContext.request.contextPath}/resources/images/admin-gear.jpeg"
+													title="Admin Settings" width="30px" height="30px"/></a>
 										</sec:authorize>
 										<input type="submit" id="login" value="Sign out" />
 									</fieldset>
