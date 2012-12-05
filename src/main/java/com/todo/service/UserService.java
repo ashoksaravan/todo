@@ -9,8 +9,10 @@ import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.todo.domain.Project;
 import com.todo.domain.Role;
 import com.todo.domain.User;
+import com.todo.repository.ProjectRepository;
 import com.todo.repository.RoleRepository;
 import com.todo.repository.UserRepository;
 
@@ -25,6 +27,9 @@ public class UserService {
 	
 	@Autowired
 	private MongoTemplate mongoTemplate;
+	
+	@Autowired
+	private ProjectRepository projectRepository;
 
 	public User create(User user) {
 		Role role = null;
@@ -112,5 +117,28 @@ public class UserService {
 			return false;
 		}
 		return true;
+	}
+	
+public Project add(Project project) {
+		
+		project.setId(UUID.randomUUID().toString());
+		project.getProjectName();
+		project.getProjectDesc();
+		return projectRepository.save(project);
+	}
+
+	public Project edit(Project project) {
+		
+		Project editProject = projectRepository.findByProjectName(project.getProjectName());
+
+		if (editProject == null) {
+			return null;
+		}
+		
+		editProject.setProjectName(project.getProjectName());
+		editProject.setProjectDesc(project.getProjectDesc());
+		projectRepository.save(editProject);
+		
+		return editProject;
 	}
 }

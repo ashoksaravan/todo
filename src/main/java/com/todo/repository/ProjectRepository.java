@@ -6,4 +6,5 @@ import com.todo.domain.Project;
 
 public interface ProjectRepository extends MongoRepository<Project, String>{
 
+	Project findByProjectName(String projectName);
 }

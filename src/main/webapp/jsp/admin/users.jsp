@@ -7,6 +7,8 @@
 <c:url value="/users/task" var="taskUrl" />
 <c:url value="/users/refdataProject" var="refdataProjectUrl" />
 <c:url value="/users/getName" var="getNameUrl" />
+<c:url value="/users/add" var="addProjUrl" />
+<c:url value="/users/edit" var="editProjUrl"/>
 
 <html>
 <head>
@@ -64,7 +66,12 @@
 		urlHolder.task = '${taskUrl}';
 		urlHolder.refdataProject = '${refdataProjectUrl}';
 		urlHolder.getName = '${getNameUrl}';
+		urlHolder.addProject = '${addProjUrl}';
+		urlHolder.editProject = '${editProjUrl}';
 		loadTable();
+		
+		$('#addnewProject').hide();
+		$('#editProject').hide();
 
 		$('#newBtn').click(function() {
 			toggleForms('new');
@@ -119,6 +126,42 @@
 					$("#newUsername").removeClass("error");
 				}
 			});
+		});
+		
+		//for Project Details
+		$('#projaddBtn').click(function() {
+			$('#addnewProject').show();
+			$('#editProject').hide();
+			$('#projeditBtn').attr('disabled', 'disabled');
+		});
+
+		$('#projeditBtn').click(function() {
+			if (hasSelected()) {
+				$('#addnewProject').hide();
+				$('#editProject').show();
+				$('#projaddBtn').attr('disabled', 'disabled');
+				fillProjectForm();
+			}
+ 		});
+		
+		$('#closeNewProject').click(function() {
+			$('#addnewProject').hide();
+			$('#projeditBtn').removeAttr('disabled');
+		});
+		
+		$('#closeEditProject').click(function() {
+			$('#editProject').hide();
+			$('#projaddBtn').removeAttr('disabled');
+		});
+		
+		$('#addnewProject').submit(function(event) {
+			event.preventDefault();
+			submitAddProjRecord();
+		});
+		
+		$('#editProject').submit(function(event) {
+			event.preventDefault();
+			submitEditProjRecord();
 		});
 	});
 </script>
@@ -241,6 +284,43 @@
 							</tr>
 						</thead>
 					</table>
+					
+					<div id='controlBar' style="width: 80%" align="left">
+							<input type='button' value='Add' id='projaddBtn' /> <input
+								type='button' value='Edit' id='projeditBtn' />
+					</div>
+					
+					<form id='addnewProject' class="newEditForm">
+						<div class="fieldgroup">
+							<label for='projName'>Project Name</label> <input type='text'
+								id='projName' />
+						</div>
+
+						<div class="fieldgroup">
+							<label for='projDesc'>Project Description</label> <input type='text'
+								id='projDesc' />
+						</div>
+						
+						<input type='button' value='Close' id='closeNewProject' /> <input
+							type='submit' value='Submit' />
+					</form>	
+					
+					
+					<form id='editProject' class="newEditForm">
+
+						<div class="fieldgroup">
+							<label for='editprojName'>Project Name</label> <input type='text'
+								id='editprojName' />
+						</div>
+						<div class="fieldgroup">
+							<label for='editprojDesc'>Project Description</label> <input type='text'
+								id='editprojDesc' />
+						</div>
+						
+						<input type='button' value='Close' id='closeEditProject' /> <input
+							type='submit' value='Submit' />
+					</form>	
+					
 				</div>
 			</div>
 		</section>

@@ -37,6 +37,7 @@ function loadTable() {
 				row += '</tr>';
 				$('#tableProjects').append(row);
 			}
+				$('#tableProjects').data('model', response.project);
 		}
 	});
 }
@@ -206,4 +207,34 @@ function saveUserProfile(username,role) {
 	else{
 		alert("Please enter the missing values!!!");
 	}
+}
+
+function submitAddProjRecord() {
+	$.post(urlHolder.addProject, {
+		projectName : $('#projName').val(),
+		projectDesc : $('#projDesc').val()
+	}, function(response) {
+		if (response != null) {
+			alert('Success! Record has been added.');
+			window.location.reload();
+		} 
+	});
+}
+
+function submitEditProjRecord() {
+	$.post(urlHolder.editProject, {
+		projectName : $('#editprojName').val(),
+		projectDesc : $('#editprojDesc').val()
+	}, function(response) {
+		if (response != null) {
+			alert('Success! Record has been edited.');
+			window.location.reload();
+		} 
+	});
+}
+
+function fillProjectForm() {
+	var selected = $('input:radio[name=index]:checked').val();
+	$('#editprojName').val($('#tableProjects').data('model')[selected].projectName);
+	$('#editprojDesc').val($('#tableProjects').data('model')[selected].projectDesc);
 }
