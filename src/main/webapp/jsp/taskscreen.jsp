@@ -63,6 +63,9 @@
 </script>
 <body>
 <jsp:include page="/jsp/header.jsp"/>
+<img src="/todo/resources/css/images/home.png" align="right"
+		onclick="back('${pageContext.request.contextPath}')"
+		style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; width: 34px; height: 27px; vertical-align: middle;" />
 <div style="width: 100%; height: 50%;" align="center" >
 	<div style="width: 80%;">
 		<table style="width: 100%; height: 100%;">
@@ -77,11 +80,6 @@
 			<tr>
 				<td align="right">
 				<br>
-					<button onclick="back('<%=request.getContextPath()%>')" id="backBtn">
-						<img
-							src="<%=request.getContextPath()%>/resources/css/images/arrow_left.png" />
-						Back to Tasks
-					</button>
 				</td>
 			</tr>
 		</table>

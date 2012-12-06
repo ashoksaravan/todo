@@ -194,7 +194,7 @@ var ctx = "${pageContext.request.contextPath}";
 		var index = $('select#projectOption option:selected').val();
 		loadTaskDetails();
 	}
-</script>
+</script>	
 </head>
 <body>
 
@@ -205,11 +205,11 @@ var ctx = "${pageContext.request.contextPath}";
 				<td><select id='projectOption' name="project"
 					style="width: 30%" onchange="change()"></select></td>
 				<td align="right">
-				<img src="<%=request.getContextPath()%>/resources/css/images/Home.PNG" align="right"
-					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:6%; padding-right:1mm;  vertical-align:middle; "/>
+				<img src="<%=request.getContextPath()%>/resources/css/images/home.png" align="right"
+					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px; padding-right:1mm;  vertical-align:middle; "/>
 				<a href="#searchTask" id="searchQuery" style="width: 10%; padding-right: 3%;"
-					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/Search.PNG" align="right"
-					   style="cursor: pointer;  padding-right:1mm;      vertical-align:middle; "/></a>
+					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search.png" align="right"
+					   style="cursor: pointer;  padding-right:1mm;  height:27px;      vertical-align:middle; "/></a>
 					 
 				</td>
 			</tr>
@@ -279,7 +279,7 @@ var ctx = "${pageContext.request.contextPath}";
 		</div>
 	</div>
 	<div id="searchTask" hidden="hidden">
-		<h4 align="left" id="addEditHeading">Search Task</h4>
+		<h4 align="left" id="searchHeading">Search Task</h4>
 		<table>
 			<tr>
 				<td class="pwd-box-name">Task Name:</td>

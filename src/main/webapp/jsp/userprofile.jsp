@@ -82,6 +82,9 @@ $(function() {
 
 
 	<jsp:include page='/jsp/header.jsp'/>
+	<img src="/todo/resources/css/images/home.png" align="right"
+		onclick="back('${pageContext.request.contextPath}')"
+		style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; width: 34px; height: 27px; vertical-align: middle;" />
 <div align="center"> 
 		<form class="profileEditForm">
 		
@@ -115,7 +118,6 @@ $(function() {
 				<div class="fieldgroup">
 				<input type='button' value='Edit' id='editProfile' /> 
 				<input type='submit' value='Save' id='saveProfile'/> 
-				<input type='button' value='Back to Tasks' id='backBtn' onclick="back('<%=request.getContextPath()%>')" />
 				<input type='button' value='Cancel' id='cnclProfile' /> 
 				</div>
 				

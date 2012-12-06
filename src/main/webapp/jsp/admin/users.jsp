@@ -169,7 +169,7 @@
 
 <body>
 	<jsp:include page='/jsp/header.jsp' />
-	<img src="/todo/resources/css/images/Home.PNG" align="right"
+	<img src="/todo/resources/css/images/home.png" align="right"
 					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; padding-top:1mm;  padding-right:1mm;      vertical-align:middle; "/>
 	<div align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
