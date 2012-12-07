@@ -1,7 +1,5 @@
 var urlHolder = new Object();
-var name = new String();
-var displayName = new Object();
-
+var taskDetails = [];
 /**
  * Load RefData Values.
  */
@@ -11,13 +9,13 @@ function loadRefData() {
 			var listItems = "";
 			var searchListItems = "";
 			searchListItems = "<option value='" + "SELECT" + "'>" + "-Select-"
-			+ "</option>";
+					+ "</option>";
 			for ( var i = 0; i < response.priority.length; i++) {
 				listItems += "<option value='" + response.priority[i].value
-				+ "'>" + response.priority[i].desc + "</option>";
+						+ "'>" + response.priority[i].desc + "</option>";
 				searchListItems += "<option value='"
-					+ response.priority[i].value + "'>"
-					+ response.priority[i].desc + "</option>";
+						+ response.priority[i].value + "'>"
+						+ response.priority[i].desc + "</option>";
 			}
 			$("#priorityOption").html(listItems);
 			$("#search-priority").html(searchListItems);
@@ -29,25 +27,25 @@ function loadRefData() {
 			var listItems = "";
 			var searchListItems = "";
 			searchListItems = "<option value='" + "SELECT" + "'>" + "-Select-"
-			+ "</option>";
+					+ "</option>";
 			for ( var i = 0; i < response.taskStatus.length; i++) {
 				listItems += "<option value='" + response.taskStatus[i].value
-				+ "'>" + response.taskStatus[i].desc + "</option>";
+						+ "'>" + response.taskStatus[i].desc + "</option>";
 				searchListItems += "<option value='"
-					+ response.taskStatus[i].value + "'>"
-					+ response.taskStatus[i].desc + "</option>";
+						+ response.taskStatus[i].value + "'>"
+						+ response.taskStatus[i].desc + "</option>";
 			}
 			$("#statusOption").html(listItems);
 			$("#search-status").html(searchListItems);
 		}
 	});
-
+	
 	$.post(urlHolder.refdataProject, function(response) {
 		if (response) {
 			var listItems = "";
 			for ( var i = 0; i < response.project.length; i++) {
 				listItems += "<option value='" + response.project[i].projectId
-				+ "'>" + response.project[i].projectName + "</option>";
+						+ "'>" + response.project[i].projectName + "</option>";
 			}
 			$("#projectOption").html(listItems);
 			loadTaskDetails();
@@ -58,20 +56,32 @@ function loadRefData() {
 /**
  * Load Task Details.
  */
-function loadTaskDetails() {
+function loadTaskDetails(){
 	$('.single_sticky_notes li').remove();
 	createAddNotes(ctx);
 
 	$.post(urlHolder.task, {
-		projectId : $('select#projectOption option:selected').val()
-	}, function(response) {
+	projectId : $('select#projectOption option:selected').val()
+	},
+	function(response) {
 		if (response != null) {
+			taskDetails = [];
 			for ( var i = 0; i < response.length; i++) {
-				createNotes(response[i], ctx);
+				formPrintData(response[i])
+				createNotes(response[i],ctx);
 			}
 		}
 	});
+	
+}
 
+function formPrintData(task){
+	var writeTask = {"taskid":task.taskid,"taskname":task.taskname,
+			"taskdesc":task.taskdesc,"priority":task.priority,
+			"taskstatus":task.taskstatus,"username":task.username,
+			"createduser":task.createduser,"cclist" : task.cclist,"editor" : task.editor,
+			"projectId":task.projectId};
+	taskDetails.push(writeTask);
 }
 
 /**
@@ -84,7 +94,7 @@ function submitAction() {
 		password : $('#login-box-password').val()
 	}, function(response) {
 		if (response) {
-			window.location.href = "/todo/jsp/taskmanager.jsp";
+			window.location.href="/todo/jsp/taskmanager.jsp";
 		} else {
 			document.getElementById('login-box-usrName').value = '';
 			document.getElementById('login-box-password').value = '';
@@ -107,7 +117,7 @@ function forgotAction() {
 				$("#forgot-login-box-usrName").removeClass("error");
 				document.getElementById('forgot-login-box-usrName').value = '';
 				alert("Shortly you will get a mail. \n")
-			} else {
+			}else{
 				alert("Enter the valid username. \n")
 			}
 			parent.$.fancybox.close();
@@ -120,7 +130,7 @@ function forgotAction() {
  */
 function changePasswordAction() {
 	if ($('#old-password').val() == '' || $('#new-password').val() == ''
-		|| $('#confirm-password').val() == '') {
+			|| $('#confirm-password').val() == '') {
 		if ($('#old-password').val() == '') {
 			$("#old-password").addClass("error");
 		}
@@ -151,18 +161,16 @@ function changePasswordAction() {
  * Creates the add sticky note.
  */
 function createAddNotes(ctx) {
-	var add = '<h5>' + 'Add Task' + '</h5>';
+	var add = '<h5>'+'Add Task'+'</h5>';
 	var refClass = 'refClass'
-		var addBtn = '<img src=' + ctx + '/resources/css/images/add.png ' + '/>';
+	var addBtn = '<img src='+ctx+'/resources/css/images/add.png '+ '/>';
 	var idBtn = 'createAddBtn';
 	var classBtn = 'createAddBtn';
 	var title = 'Please click the add symbol'
-		$('.single_sticky_notes')
-		.append(
-				'<a href="#addNewTask" class=' + refClass + '>'
-				+ '<li class="' + classBtn + '"id="' + idBtn
-				+ '" onclick = resetTaskWindow()>' + add + addBtn
-				+ '</li>');
+	$('.single_sticky_notes').append(
+			'<a href="#addNewTask" class='+refClass+'>'+
+			'<li class="' + classBtn
+					+ '"id="'+ idBtn +'" onclick = resetTaskWindow()>'+ add + addBtn + '</li>');
 }
 
 /**
@@ -170,11 +178,10 @@ function createAddNotes(ctx) {
  */
 function createNotes(task, ctx) {
 	var refClass = 'refClass'
-		var historyClass = 'historyClass';
+	var historyClass = 'historyClass';
 	var header = '<h5>' + task.taskname + '</h5>';
-	var desc = '<p style="text-overflow:ellipsis; overflow:hidden; height:50%">'
-		+ task.taskdesc + '</p>';
-	var div = '<div style="height:80%">' + header + desc + '</div>';
+	var desc = '<p style="text-overflow:ellipsis; overflow:hidden; height:50%">' + task.taskdesc + '</p>';
+	var div = '<div style="height:80%">'+header+desc+'</div>';
 	var color = null;
 	switch (task.priority) {
 	case "L":
@@ -195,10 +202,10 @@ function createNotes(task, ctx) {
 		break;
 	default:
 		color = 'blue';
-	task.priorityindex = 0;
-	break;
+		task.priorityindex = 0;
+		break;
 	}
-
+	
 	switch (task.taskstatus) {
 	case "NEW":
 		task.statusindex = 0;
@@ -217,12 +224,12 @@ function createNotes(task, ctx) {
 		break;
 	default:
 		task.statusindex = 0;
-	break;
+		break;
 	}
 	// need to change
-	var tname = task.taskname.replace(/ /g, '&nbsp;');
-	var tdesc = task.taskdesc.replace(/ /g, '&nbsp;');
-	if (task.cclist == null) {
+	var tname = task.taskname.replace(/ /g, '&nbsp;') ;
+	var tdesc = task.taskdesc.replace(/ /g, '&nbsp;') ;
+	if(task.cclist == null){
 		task.cclist = '';
 	}
 	$("#noresult").hide();
@@ -270,8 +277,7 @@ function editTask(task) {
 	$('#task-name').val(task.taskname);
 	$('#task-desc').val(task.taskdesc);
 	$('#created-user').val(task.createduser);
-	$('#priorityOption option').eq(task.priorityindex).attr('selected',
-	'selected');
+	$('#priorityOption option').eq(task.priorityindex).attr('selected', 'selected');
 	$('#statusOption option').eq(task.statusindex).attr('selected', 'selected');
 	$('#task-assigned').val(task.username);
 	$('#cc-list').val(task.cclist);
@@ -467,6 +473,13 @@ function resetSearchWindow() {
 	$("#searchCriteria").hide();
 }
 
+function exportTask(){
+	$.ajax({
+        contentType : "application/json",
+        dataType : 'json',
+        type : "POST",
+        url : urlHolder.write,
+        data : JSON.stringify(taskDetails),
 
 function changePassword(){
 	if($('#newPwd').val() != $('#confirmPwd').val()){

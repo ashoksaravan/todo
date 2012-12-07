@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
 <c:url value="/users/task" var="taskUrl" />
-<c:url value="/users/changepwd" var="changepwdUrl" />
 <c:url value="/users/checkpwd" var="checkpwdUrl" />
 <c:url value="/users/addtask" var="addtaskUrl" />
 <c:url value="/users/records" var="recordsUrl" />
@@ -10,6 +9,7 @@
 <c:url value="/users/refdataPriority" var="refdataPriorityUrl" />
 <c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
 <c:url value="/users/refdataProject" var="refdataProjectUrl" />
+<c:url value="/external/write" var="writeUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -41,7 +41,6 @@
 var ctx = "${pageContext.request.contextPath}";
 	$(function() {
 		urlHolder.task = '${taskUrl}';
-		urlHolder.changepwd = '${changepwdUrl}';
 		urlHolder.addtask = '${addtaskUrl}';
 		urlHolder.checkpwd = '${checkpwdUrl}';
 		urlHolder.records = '${recordsUrl}';
@@ -49,6 +48,7 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.refdataPriority = '${refdataPriorityUrl}';
 		urlHolder.refdataTaskStatus = '${refdataTaskStatusUrl}';
 		urlHolder.refdataProject = '${refdataProjectUrl}';
+		urlHolder.write = '${writeUrl}';
 	});
 	
 	var availableTags = [];
@@ -143,58 +143,10 @@ var ctx = "${pageContext.request.contextPath}";
 		return split(term).pop();
 	}
 
-	$(function() {
-		$(".changeBtn").click(function() {
-			if (changePasswordAction()) {
-				$.post(urlHolder.changepwd, {
-					username : '${user.username}',
-					confirmpass : $('#confirm-password').val()
-				}, function(response) {
-					if (response) {
-						alert('Successfully Changed');
-						resetChangePwdForm();
-					}
-					parent.$.fancybox.close();
-				});
-			}
-		});
-		$(".userroles").click(function() {
-			window.location = "/todo/jsp/users.jsp";
-		});
-
-		$("#old-password").focusout(function() {
-			$.post(urlHolder.checkpwd, {
-				username : '${user.username}',
-				pwd : $('#old-password').val()
-			}, function(response) {
-				if (response) {
-					$("#old-password").removeClass("error");
-				} else {
-					$("#old-password").addClass("error");
-				}
-			});
-		});
-		$("#new-password").focusout(function() {
-			if ($('#old-password').val() == $('#new-password').val()) {
-				$("#new-password").addClass("error");
-			} else {
-				$("#new-password").removeClass("error");
-			}
-		});
-		$("#confirm-password").focusout(function() {
-			if ($('#new-password').val() == $('#confirm-password').val()) {
-				$("#confirm-password").removeClass("error");
-			} else {
-				$("#confirm-password").addClass("error");
-			}
-		});
-	});
-
 	function change(){
-		var index = $('select#projectOption option:selected').val();
 		loadTaskDetails();
 	}
-</script>	
+</script>
 </head>
 <body>
 
