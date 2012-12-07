@@ -82,7 +82,7 @@ $(function() {
 
 
 	<jsp:include page='/jsp/header.jsp'/>
-	<img src="/todo/resources/css/images/home.png" align="right"
+	<img src="/todo/resources/css/images/home_btn.png" align="right"
 		onclick="back('${pageContext.request.contextPath}')"
 		style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; width: 34px; height: 27px; vertical-align: middle;" />
 <div align="center"> 
