@@ -157,11 +157,15 @@ var ctx = "${pageContext.request.contextPath}";
 				<td><select id='projectOption' name="project"
 					style="width: 30%" onchange="change()"></select></td>
 				<td align="right">
-				<img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png" align="right"
-					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px; padding-right:1mm;  vertical-align:middle; "/>
-				<a href="#searchTask" id="searchQuery" style="width: 10%; padding-right: 3%;"
-					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search_btn.png" align="right"
-					   style="cursor: pointer;  padding-right:1mm;  height:27px;      vertical-align:middle; "/></a>
+				
+				<a href="#searchTask" id="searchQuery" style="width: 10%;"
+					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
+					   style="cursor: pointer; height:27px; vertical-align:middle; "/></a>
+			   <a href="#" id="refreshQuery" onclick="back('${pageContext.request.contextPath}')" style="width: 10%;"><img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png"
+					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px;"/></a>
+					
+			   <a href="#" id="export" onclick="exportTask()" style="width: 10%;padding-right: 1%;"><img src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
+					   style="cursor: pointer; width:34px; height:27px;"/></a>
 					 
 				</td>
 			</tr>
