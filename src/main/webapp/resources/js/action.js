@@ -480,6 +480,16 @@ function exportTask(){
         type : "POST",
         url : urlHolder.write,
         data : JSON.stringify(taskDetails),
+        success : function(response) {
+        	if(response==true){
+        		alert("Excel File Exported")
+        	}
+        },
+        error : function(request, status, error) {
+               alert('Error: ' + error); 
+        }
+    });
+	}
 
 function changePassword(){
 	if($('#newPwd').val() != $('#confirmPwd').val()){
