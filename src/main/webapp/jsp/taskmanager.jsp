@@ -157,10 +157,10 @@ var ctx = "${pageContext.request.contextPath}";
 				<td><select id='projectOption' name="project"
 					style="width: 30%" onchange="change()"></select></td>
 				<td align="right">
-				<img src="<%=request.getContextPath()%>/resources/css/images/home.png" align="right"
+				<img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png" align="right"
 					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px; padding-right:1mm;  vertical-align:middle; "/>
 				<a href="#searchTask" id="searchQuery" style="width: 10%; padding-right: 3%;"
-					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search.png" align="right"
+					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search_btn.png" align="right"
 					   style="cursor: pointer;  padding-right:1mm;  height:27px;      vertical-align:middle; "/></a>
 					 
 				</td>
