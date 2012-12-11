@@ -1,5 +1,6 @@
 package com.todo.command;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -18,9 +19,11 @@ public class WriteExcelCmd {
 	
 
 	public void writeExcelFile(Task[] data, HashMap<String, String> map) {
+		OpenExcelCmd openExcelCmd = new OpenExcelCmd();
 		FileOutputStream fileOutputStream = null;
 		HSSFWorkbook workbook = null;
 		HSSFSheet sheet = null;
+		File file = null;
 		int index = 1;
 		try {
 			workbook = new HSSFWorkbook();
@@ -70,8 +73,13 @@ public class WriteExcelCmd {
 				dataRow.createCell(6).setCellValue(task.getUsername());
 				index++;
 			}
-			fileOutputStream = new FileOutputStream("C:\\Task.xls");
+			String string = System.getProperty("user.home");
+			file = new File(string, "Task.xls");
+			file.createNewFile();
+			System.out.println(file.getAbsolutePath());
+			fileOutputStream = new FileOutputStream(file);
 			workbook.write(fileOutputStream);
+			openExcelCmd.downloadExcel(file);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
@@ -83,7 +91,6 @@ public class WriteExcelCmd {
 				ex.printStackTrace();
 			}
 		}
-
 	}
 
 	private HSSFCellStyle setHeaderStyle(HSSFWorkbook workbook) {

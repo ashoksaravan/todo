@@ -73,14 +73,24 @@ var ctx = "${pageContext.request.contextPath}";
 						.autocomplete(
 								{
 									source : availableTags,
-									autoFocus : true
+									autoFocus : true,
+									change: function (event, ui) {
+								        if (!ui.item) {
+								            this.value = '';
+								        }
+								    }
 								});
 				$("#search-task-assigned")
 				.autocomplete(
 						{
 							source : availableTags,
 							autoFocus : true,
-							selectFirst: true
+							selectFirst: true,
+							change: function (event, ui) {
+						        if (!ui.item) {
+						            this.value = '';
+						        }
+						    }
 						});
 
 				$("#cc-list")
@@ -109,6 +119,11 @@ var ctx = "${pageContext.request.contextPath}";
 														availableTags,
 														extractLast(request.term)));
 									},
+									change: function (event, ui) {
+								        if (!ui.item) {
+								            this.value = '';
+								        }
+								    },
 									focus : function() {
 										// prevent value inserted on focus
 										return false;
