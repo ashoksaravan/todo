@@ -27,6 +27,7 @@ function loadTable() {
 	});
 	
 	$.post(urlHolder.refdataProject, function(response) {
+		$('#tableProjects').find('tbody').remove();
 		if (response) {
 			for ( var i = 0; i < response.project.length; i++) {
 				var row = '<tr>';

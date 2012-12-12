@@ -86,6 +86,10 @@
 			}
 		});
 
+		$('#reloadBtn').click(function() {
+			loadTable();
+		});
+
 		$('#deleteBtn').click(function() {
 			if (hasSelected()) {
 				submitDeleteRecord();
@@ -197,7 +201,8 @@
 					<div id='controlBar' style="width: 80%" align="left">
 						<input type='button' value='New' id='newBtn' /> <input
 							type='button' value='Delete' id='deleteBtn' /> <input
-							type='button' value='Edit' id='editBtn' />
+							type='button' value='Edit' id='editBtn' /> <input type='button'
+							value='Reload' id='reloadBtn' />
 					</div>
 
 
