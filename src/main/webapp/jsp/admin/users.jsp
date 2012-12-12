@@ -7,8 +7,8 @@
 <c:url value="/users/task" var="taskUrl" />
 <c:url value="/users/refdataProject" var="refdataProjectUrl" />
 <c:url value="/users/getName" var="getNameUrl" />
-<c:url value="/users/add" var="addProjUrl" />
-<c:url value="/users/edit" var="editProjUrl"/>
+<c:url value="/projects/add" var="addProjUrl" />
+<c:url value="/projects/edit" var="editProjUrl"/>
 
 <html>
 <head>

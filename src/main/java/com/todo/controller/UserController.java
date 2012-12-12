@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.todo.command.AddEditTaskCmd;
 import com.todo.command.EditTaskHistoryCmd;
 import com.todo.command.ForgotPasswordCmd;
-import com.todo.domain.Project;
 import com.todo.domain.Role;
 import com.todo.domain.Task;
 import com.todo.domain.User;
@@ -218,30 +217,6 @@ public class UserController {
 		return listDTO;
 	}
 	
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public @ResponseBody
-	Project add(@RequestParam String projectName, @RequestParam String projectDesc) {
-
-		Project newProject = new Project();
-		
-		newProject.setProjectName(projectName);
-		newProject.setProjectDesc(projectDesc);
-
-		return service.add(newProject);
-	}
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public @ResponseBody
-	Project edit(@RequestParam String projectName, @RequestParam String projectDesc) {
-
-		Project editProject = new Project();
-		
-		editProject.setProjectName(projectName);
-		editProject.setProjectDesc(projectDesc);
-
-		return service.edit(editProject);
-	}
-
 
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
 	public String changePassword(Model model, @ModelAttribute User user, @RequestParam String oldPwd, @RequestParam String newPwd) {
