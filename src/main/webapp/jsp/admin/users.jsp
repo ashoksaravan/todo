@@ -86,10 +86,6 @@
 			}
 		});
 
-		$('#reloadBtn').click(function() {
-			loadTable();
-		});
-
 		$('#deleteBtn').click(function() {
 			if (hasSelected()) {
 				submitDeleteRecord();
@@ -174,7 +170,6 @@
 	<div align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
-<!-- 			<div align="right" id='homeButton'> -->
 			
 			<div id="v-nav">
 				<ul>
@@ -202,8 +197,7 @@
 					<div id='controlBar' style="width: 80%" align="left">
 						<input type='button' value='New' id='newBtn' /> <input
 							type='button' value='Delete' id='deleteBtn' /> <input
-							type='button' value='Edit' id='editBtn' /> <input type='button'
-							value='Reload' id='reloadBtn' />
+							type='button' value='Edit' id='editBtn' />
 					</div>
 
 

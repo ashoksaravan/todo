@@ -40,6 +40,8 @@
 			taskid : '<%=request.getParameter("task")%>'
 		}, function(response) {
 			if (response != null) {
+				if(response.taskHistory.length > 0){
+					$("#errorConatainer").hide();
 				for ( var i = response.taskHistory.length - 1; i >= 0; i--) {
 					var row = '<table id="tableHistory" class="tableHistory">';
 					row += '<tr style="width: 100%;">';
@@ -54,6 +56,10 @@
 					row += '</table>';
 					$('#taskHistoryContainer').append(row);
 				}
+				}else{
+					$("#contain").hide();
+					$("#errorConatainer").show();
+				}
 			}else{
 				alert("Error");
 			}
@@ -66,7 +72,7 @@
 <img src="/todo/resources/css/images/home_btn.png" align="right"
 		onclick="back('${pageContext.request.contextPath}')"
 		style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; width: 34px; height: 27px; vertical-align: middle;" />
-<div style="width: 100%; height: 50%;" align="center" >
+<div style="width: 100%; height: 50%; padding-top: 10px;" align="center" id="contain">
 	<div style="width: 80%;">
 		<table style="width: 100%; height: 100%;">
 			<tr>
@@ -84,6 +90,9 @@
 			</tr>
 		</table>
 	</div>
+	</div>
+	<div id="errorConatainer" hidden="hidden" align="center">
+		<h5 style="color: red;">No History Found</h5>
 	</div>
 </body>
 </html>
