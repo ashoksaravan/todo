@@ -27,15 +27,28 @@ public class ProjectService {
 	private UserProjectRepository userProjectRepository;
 
 	/**
+	 * dataService.
+	 */
+	@Autowired
+	private RefDataService dataService;
+
+	/**
 	 * @param project
 	 * @return
 	 */
 	public Project add(Project project) {
 
 		project.setId(UUID.randomUUID().toString());
+		List<Project> projects = dataService.readProject();
+		if (projects != null && projects.size() > 0) {
+			project.setProjectId(projects.size() + 1);
+		} else {
+			project.setProjectId(1);
+		}
 		project.getProjectName();
 		project.getProjectDesc();
 		return projectRepository.save(project);
+
 	}
 
 	/**

@@ -9,12 +9,9 @@
 <c:url value="/users/getName" var="getNameUrl" />
 <c:url value="/projects/add" var="addProjUrl" />
 <c:url value="/projects/edit" var="editProjUrl"/>
-<<<<<<< HEAD
-=======
 <c:url value="/projects/assignedProj" var="assignedProjUrl"/>
 <c:url value="/projects/userProj" var="userProjUrl"/>
 <c:url value="/projects/addEditUserProj" var="addEditUserProjUrl"/>
->>>>>>> Associate Project to user and refactored the code.
 
 <html>
 <head>
