@@ -11,25 +11,34 @@ import org.springframework.stereotype.Service;
 
 import com.todo.domain.Role;
 import com.todo.domain.User;
-import com.todo.repository.ProjectRepository;
 import com.todo.repository.RoleRepository;
 import com.todo.repository.UserRepository;
 
 @Service
 public class UserService {
 
+	/**
+	 * userRepository.
+	 */
 	@Autowired
 	private UserRepository userRepository;
 
+	/**
+	 * roleRepository.
+	 */
 	@Autowired
 	private RoleRepository roleRepository;
 
+	/**
+	 * mongoTemplate.
+	 */
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	@Autowired
-	private ProjectRepository projectRepository;
-
+	/**
+	 * @param user
+	 * @return
+	 */
 	public User create(User user) {
 		Role role = null;
 		user.setId(UUID.randomUUID().toString());
@@ -42,18 +51,33 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
+	/**
+	 * @param user
+	 * @return
+	 */
 	public User read(User user) {
 		return userRepository.findByUsername(user.getUsername());
 	}
 
+	/**
+	 * @param userName
+	 * @return
+	 */
 	public User read(String userName) {
 		return userRepository.findByUsername(userName);
 	}
 
+	/**
+	 * @return
+	 */
 	public List<User> readAll() {
 		return userRepository.findAll();
 	}
 
+	/**
+	 * @param user
+	 * @return
+	 */
 	public User update(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
 
@@ -70,6 +94,10 @@ public class UserService {
 		return existingUser;
 	}
 
+	/**
+	 * @param user
+	 * @return
+	 */
 	public Boolean delete(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
 
@@ -80,6 +108,11 @@ public class UserService {
 		return true;
 	}
 
+	/**
+	 * @param user
+	 * @param fromForgotPwd
+	 * @return
+	 */
 	public Boolean updatePwd(User user, boolean fromForgotPwd) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
 		if (existingUser == null) {
@@ -94,6 +127,10 @@ public class UserService {
 
 	}
 
+	/**
+	 * @param user
+	 * @return
+	 */
 	public Boolean checkPwd(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
 		if (existingUser.getPassword().equals(passwordEncoder(user.getPassword(), user.getUsername()))) {
@@ -104,16 +141,22 @@ public class UserService {
 
 	/**
 	 * This method is used to encode the password using MD5.
-	 * 
+	 */
+
+	/**
 	 * @param password
-	 *            password
-	 * @return encodePassword
+	 * @param salt
+	 * @return
 	 */
 	private String passwordEncoder(String password, String salt) {
 		PasswordEncoder encoder = new Md5PasswordEncoder();
 		return encoder.encodePassword(password, salt);
 	}
 
+	/**
+	 * @param userName
+	 * @return
+	 */
 	public Boolean checkUsername(String userName) {
 		User user = userRepository.findByUsername(userName);
 		if (user == null) {

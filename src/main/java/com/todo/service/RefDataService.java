@@ -14,24 +14,42 @@ import com.todo.repository.TaskStatusRepository;
 
 @Service
 public class RefDataService {
-	
+
+	/**
+	 * priorityRepository.
+	 */
 	@Autowired
 	private PriorityRepository priorityRepository;
-	
+
+	/**
+	 * taskStatusRepository.
+	 */
 	@Autowired
 	private TaskStatusRepository taskStatusRepository;
-	
+
+	/**
+	 * projectRepository.
+	 */
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+
+	/**
+	 * @return
+	 */
 	public List<Priority> readPriority() {
 		return priorityRepository.findAll();
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public List<TaskStatus> readTaskStatus() {
 		return taskStatusRepository.findAll();
 	}
-	
+
+	/**
+	 * @return
+	 */
 	public List<Project> readProject() {
 		return projectRepository.findAll();
 	}

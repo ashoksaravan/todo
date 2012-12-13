@@ -24,7 +24,6 @@ import com.todo.domain.Role;
 import com.todo.domain.Task;
 import com.todo.domain.User;
 import com.todo.dto.PriorityListDTO;
-import com.todo.dto.ProjectListDTO;
 import com.todo.dto.TaskHistoryListDTO;
 import com.todo.dto.TaskStatusListDTO;
 import com.todo.dto.UserListDTO;
@@ -37,29 +36,45 @@ import com.todo.service.UserService;
 @SessionAttributes({ "user" })
 public class UserController {
 
+	/**
+	 * service.
+	 */
 	@Autowired
 	private UserService service;
 
+	/**
+	 * taskService.
+	 */
 	@Autowired
 	private TaskService taskService;
-	
+
+	/**
+	 * dataService.
+	 */
 	@Autowired
 	private RefDataService dataService;
-	
+
+	/**
+	 * forgotPasswordCmd.
+	 */
 	@Autowired
 	ForgotPasswordCmd forgotPasswordCmd;
 
+	/**
+	 * addEditTaskCmd.
+	 */
 	@Autowired
 	AddEditTaskCmd addEditTaskCmd;
 
+	/**
+	 * editTaskHistoryCmd.
+	 */
 	@Autowired
 	EditTaskHistoryCmd editTaskHistoryCmd;
-	
-	@RequestMapping
-	public String getUsersPage() {
-		return "users";
-	}
 
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = "/records")
 	public @ResponseBody
 	UserListDTO getUsers() {
@@ -69,18 +84,29 @@ public class UserController {
 		return userListDto;
 	}
 
+	/**
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/getName")
 	public @ResponseBody
 	Boolean get(@RequestParam String username) {
 		return service.checkUsername(username);
 	}
 
+	/**
+	 * @param username
+	 * @param password
+	 * @param firstName
+	 * @param lastName
+	 * @param role
+	 * @param mailID
+	 * @return
+	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	User create(@RequestParam String username, @RequestParam String password,
-			@RequestParam String firstName, @RequestParam String lastName,
-			@RequestParam Integer role,
-			@RequestParam String mailID) {
+	User create(@RequestParam String username, @RequestParam String password, @RequestParam String firstName,
+			@RequestParam String lastName, @RequestParam Integer role, @RequestParam String mailID) {
 
 		Role newRole = new Role();
 		newRole.setRole(role);
@@ -96,11 +122,19 @@ public class UserController {
 		return service.create(newUser);
 	}
 
+	/**
+	 * @param map
+	 * @param username
+	 * @param firstName
+	 * @param lastName
+	 * @param role
+	 * @param mailId
+	 * @return
+	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
 	User update(ModelMap map, @RequestParam String username, @RequestParam String firstName,
-			@RequestParam String lastName, @RequestParam Integer role, 
-			@RequestParam String mailId) {
+			@RequestParam String lastName, @RequestParam Integer role, @RequestParam String mailId) {
 
 		Role existingRole = new Role();
 		existingRole.setRole(role);
@@ -112,17 +146,20 @@ public class UserController {
 		existingUser.setMailId(mailId);
 		existingUser.setRole(existingRole);
 		existingUser.setReqNewPwd(Boolean.FALSE);
-		
+
 		service.update(existingUser);
 
-		if(SecurityContextHolder
-				.getContext().getAuthentication().getName().equals(existingUser.getUsername())){
+		if (SecurityContextHolder.getContext().getAuthentication().getName().equals(existingUser.getUsername())) {
 			map.addAttribute("user", existingUser);
 		}
 
 		return existingUser;
 	}
 
+	/**
+	 * @param username
+	 * @return
+	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean delete(@RequestParam String username) {
@@ -133,20 +170,24 @@ public class UserController {
 		return service.delete(existingUser);
 	}
 
+	//need to moved to task controller
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
 	public @ResponseBody
 	List<Task> task(@RequestParam Integer projectId) {
 		Task task = new Task();
 		task.setProjectId(projectId);
-		task.setUsername(SecurityContextHolder
-				.getContext().getAuthentication().getName());
+		task.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		return taskService.loadTask(task);
 	}
 
+	/**
+	 * @param username
+	 * @param confirmpass
+	 * @return
+	 */
 	@RequestMapping(value = "/changepwd", method = RequestMethod.POST)
 	public @ResponseBody
-	Boolean changepwd(@RequestParam String username,
-			@RequestParam String confirmpass) {
+	Boolean changepwd(@RequestParam String username, @RequestParam String confirmpass) {
 
 		User existingUser = new User();
 		existingUser.setUsername(username);
@@ -155,6 +196,11 @@ public class UserController {
 		return service.updatePwd(existingUser, false);
 	}
 
+	/**
+	 * @param username
+	 * @param pwd
+	 * @return
+	 */
 	@RequestMapping(value = "/checkpwd", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean checkpwd(@RequestParam String username, @RequestParam String pwd) {
@@ -165,7 +211,8 @@ public class UserController {
 
 		return service.checkPwd(existingUser);
 	}
-	
+
+	//need to moved to task controller
 	@RequestMapping(value = "/addtask", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean addEditTask(@RequestBody Task addEditTask) {
@@ -178,7 +225,8 @@ public class UserController {
 	Boolean forgotpwd(@RequestParam String username) {
 		return forgotPasswordCmd.forgotPassword(username);
 	}
-	
+
+	//need to moved to task controller
 	@RequestMapping(value = "/history", method = RequestMethod.POST)
 	public @ResponseBody
 	TaskHistoryListDTO taskHistory(@RequestParam String taskid) {
@@ -186,13 +234,17 @@ public class UserController {
 		historyListDTO.setTaskHistory(taskService.readTaskVersion(taskid));
 		return historyListDTO;
 	}
-	
+
+	//need to moved to task controller
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public @ResponseBody
 	List<Task> searchTask(@RequestBody Task searchTask) {
 		return taskService.search(searchTask);
 	}
-	
+	//need to moved to task controller
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = "/refdataPriority", method = RequestMethod.POST)
 	public @ResponseBody
 	PriorityListDTO priorityList() {
@@ -200,7 +252,11 @@ public class UserController {
 		listDTO.setPriority(dataService.readPriority());
 		return listDTO;
 	}
-	
+
+	//need to moved to task controller
+	/**
+	 * @return
+	 */
 	@RequestMapping(value = "/refdataTaskStatus", method = RequestMethod.POST)
 	public @ResponseBody
 	TaskStatusListDTO taskStatusList() {
@@ -209,17 +265,16 @@ public class UserController {
 		return listDTO;
 	}
 	
-	@RequestMapping(value = "/refdataProject", method = RequestMethod.POST)
-	public @ResponseBody
-	ProjectListDTO projectList() {
-		ProjectListDTO listDTO = new ProjectListDTO();
-		listDTO.setProject(dataService.readProject());
-		return listDTO;
-	}
-	
-
+	/**
+	 * @param model
+	 * @param user
+	 * @param oldPwd
+	 * @param newPwd
+	 * @return
+	 */
 	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
-	public String changePassword(Model model, @ModelAttribute User user, @RequestParam String oldPwd, @RequestParam String newPwd) {
+	public String changePassword(Model model, @ModelAttribute User user, @RequestParam String oldPwd,
+			@RequestParam String newPwd) {
 		PasswordEncoder encoder = new Md5PasswordEncoder();
 		if (user.getPassword().equals(encoder.encodePassword(oldPwd, user.getUsername()))) {
 			user.setPassword(encoder.encodePassword(newPwd, user.getUsername()));

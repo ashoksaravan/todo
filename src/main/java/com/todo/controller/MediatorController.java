@@ -14,15 +14,19 @@ import com.todo.service.UserService;
 @SessionAttributes({ "user" })
 public class MediatorController {
 
+	/**
+	 * service.
+	 */
 	@Autowired
 	private UserService service;
 
+	/**
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping
 	public String getHomePage(ModelMap model) {
-		model.addAttribute(
-				"user",
-				service.read(SecurityContextHolder.getContext()
-						.getAuthentication().getName()));
+		model.addAttribute("user", service.read(SecurityContextHolder.getContext().getAuthentication().getName()));
 		return "taskmanager";
 	}
 }

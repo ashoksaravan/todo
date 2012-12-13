@@ -24,6 +24,11 @@ public class SendMail {
 	 */
 	private final static String HOST = "192.168.32.9";
 
+	/**
+	 * @param message
+	 * @param map
+	 * @param subject
+	 */
 	public void sendMail(String message, HashMap<String, ArrayList<String>> map, String subject) {
 
 		// Collect the necessary information to send a simple message

@@ -19,11 +19,20 @@ import com.todo.domain.User;
 @Service
 public class TodoAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+	/**
+	 * target.
+	 */
 	private AuthenticationSuccessHandler target = new SavedRequestAwareAuthenticationSuccessHandler();
 
+	/**
+	 * service.
+	 */
 	@Autowired
 	UserService service;
 
+	/* (non-Javadoc)
+	 * @see org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler#onAuthenticationSuccess(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse, org.springframework.security.core.Authentication)
+	 */
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -37,6 +46,13 @@ public class TodoAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuc
 		}
 	}
 
+	/**
+	 * @param request
+	 * @param response
+	 * @param auth
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	public void proceed(HttpServletRequest request, HttpServletResponse response, Authentication auth)
 			throws IOException, ServletException {
 		target.onAuthenticationSuccess(request, response, auth);

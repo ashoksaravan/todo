@@ -5,7 +5,7 @@
 <c:url value="/users/update" var="editUrl" />
 <c:url value="/users/delete" var="deleteUrl" />
 <c:url value="/users/task" var="taskUrl" />
-<c:url value="/users/refdataProject" var="refdataProjectUrl" />
+<c:url value="/projects/refdataProject" var="refdataProjectUrl" />
 <html>
 <head>
 

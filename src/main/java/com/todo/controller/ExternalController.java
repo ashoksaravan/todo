@@ -20,28 +20,47 @@ import com.todo.service.RefDataService;
 @Controller
 @RequestMapping("/external")
 public class ExternalController {
-	
+
+	/**
+	 * dataService.
+	 */
 	@Autowired
 	private RefDataService dataService;
-	
+
+	/**
+	 * priorities.
+	 */
 	private List<Priority> priorities;
+	/**
+	 * project.
+	 */
 	private List<Project> project;
+	/**
+	 * map.
+	 */
 	private HashMap<String, String> map = new HashMap<String, String>();
 
+	/**
+	 * @param data
+	 * @return
+	 */
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public @ResponseBody
 	Boolean export(@RequestBody Task[] data) {
 		WriteExcelCmd writeExcelCmd = new WriteExcelCmd();
-		writeExcelCmd.writeExcelFile(data,getRefData());
+		writeExcelCmd.writeExcelFile(data, getRefData());
 		return true;
 	}
-	
-	private HashMap<String, String> getRefData(){
+
+	/**
+	 * @return
+	 */
+	private HashMap<String, String> getRefData() {
 		priorities = dataService.readPriority();
 		for (Iterator<Priority> iterator = priorities.iterator(); iterator.hasNext();) {
 			Priority priority = (Priority) iterator.next();
 			map.put(priority.getValue(), priority.getDesc());
-			
+
 		}
 		project = dataService.readProject();
 		for (Iterator<Project> iterator = project.iterator(); iterator.hasNext();) {
@@ -49,7 +68,7 @@ public class ExternalController {
 			map.put(project.getProjectId().toString(), project.getProjectDesc());
 		}
 		return map;
-		
+
 	}
 
 }

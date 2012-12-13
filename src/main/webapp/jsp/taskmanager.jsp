@@ -8,7 +8,8 @@
 <c:url value="/users/search" var="searchUrl" />
 <c:url value="/users/refdataPriority" var="refdataPriorityUrl" />
 <c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
-<c:url value="/users/refdataProject" var="refdataProjectUrl" />
+<c:url value="/projects/refdataProject" var="refdataProjectUrl" />
+<c:url value="/projects/refdataUserProject" var="refdataUserProjectUrl" />
 <c:url value="/external/write" var="writeUrl" />
 <html>
 <head>
@@ -48,6 +49,7 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.refdataPriority = '${refdataPriorityUrl}';
 		urlHolder.refdataTaskStatus = '${refdataTaskStatusUrl}';
 		urlHolder.refdataProject = '${refdataProjectUrl}';
+		urlHolder.refdataUserProject = '${refdataUserProjectUrl}';
 		urlHolder.write = '${writeUrl}';
 	});
 	

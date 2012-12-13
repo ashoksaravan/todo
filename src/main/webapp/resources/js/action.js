@@ -40,7 +40,7 @@ function loadRefData() {
 		}
 	});
 	
-	$.post(urlHolder.refdataProject, function(response) {
+	$.post(urlHolder.refdataUserProject, function(response) {
 		if (response) {
 			var listItems = "";
 			for ( var i = 0; i < response.project.length; i++) {

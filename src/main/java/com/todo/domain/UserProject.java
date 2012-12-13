@@ -4,15 +4,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Project {
+public class UserProject {
 	
 	@Id
 	private String id;
-
 	private Integer projectId;
-	private String projectName;
-	private String projectDesc;
-	private Boolean checked = Boolean.FALSE;
+	private String username;
+	private Boolean checked;
 	
 	public Boolean getChecked() {
 		return checked;
@@ -32,17 +30,11 @@ public class Project {
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
 	}
-	public String getProjectName() {
-		return projectName;
+	public String getUsername() {
+		return username;
 	}
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-	public String getProjectDesc() {
-		return projectDesc;
-	}
-	public void setProjectDesc(String projectDesc) {
-		this.projectDesc = projectDesc;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 }

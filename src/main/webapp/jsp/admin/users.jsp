@@ -5,10 +5,16 @@
 <c:url value="/users/update" var="editUrl" />
 <c:url value="/users/delete" var="deleteUrl" />
 <c:url value="/users/task" var="taskUrl" />
-<c:url value="/users/refdataProject" var="refdataProjectUrl" />
+<c:url value="/projects/refdataProject" var="refdataProjectUrl" />
 <c:url value="/users/getName" var="getNameUrl" />
 <c:url value="/projects/add" var="addProjUrl" />
 <c:url value="/projects/edit" var="editProjUrl"/>
+<<<<<<< HEAD
+=======
+<c:url value="/projects/assignedProj" var="assignedProjUrl"/>
+<c:url value="/projects/userProj" var="userProjUrl"/>
+<c:url value="/projects/addEditUserProj" var="addEditUserProjUrl"/>
+>>>>>>> Associate Project to user and refactored the code.
 
 <html>
 <head>
@@ -68,10 +74,14 @@
 		urlHolder.getName = '${getNameUrl}';
 		urlHolder.addProject = '${addProjUrl}';
 		urlHolder.editProject = '${editProjUrl}';
+		urlHolder.assignedProj = '${assignedProjUrl}';
+		urlHolder.userProj = '${userProjUrl}';
+		urlHolder.addEditUserProj = '${addEditUserProjUrl}';
 		loadTable();
 		
 		$('#addnewProject').hide();
 		$('#editProject').hide();
+		$('#assignProject').hide();
 
 		$('#newBtn').click(function() {
 			toggleForms('new');
@@ -83,6 +93,14 @@
 				toggleForms('edit');
 				toggleCrudButtons('hide');
 				fillEditForm();
+			}
+		});
+		
+		$('#assignBtn').click(function() {
+			if (hasSelected()) {
+				toggleForms('assign');
+				toggleCrudButtons('hide');
+				selectedUser();
 			}
 		});
 
@@ -105,6 +123,11 @@
 			event.preventDefault();
 			submitUpdateRecord('${user.mailId}');
 		});
+		
+		$('#editForm').submit(function(event) {
+			event.preventDefault();
+			submitUpdateRecord('${user.mailId}');
+		});
 
 		$('#closeNewForm').click(function() {
 			toggleForms('hide');
@@ -112,6 +135,11 @@
 		});
 
 		$('#closeEditForm').click(function() {
+			toggleForms('hide');
+			toggleCrudButtons('show');
+		});
+		
+		$('#closeAssignProject').click(function() {
 			toggleForms('hide');
 			toggleCrudButtons('show');
 		});
@@ -132,12 +160,14 @@
 		$('#projaddBtn').click(function() {
 			$('#addnewProject').show();
 			$('#editProject').hide();
+			$('#assignProject').hide();
 			$('#projeditBtn').attr('disabled', 'disabled');
 		});
 
 		$('#projeditBtn').click(function() {
 			if (hasSelected()) {
 				$('#addnewProject').hide();
+				$('#assignProject').hide();
 				$('#editProject').show();
 				$('#projaddBtn').attr('disabled', 'disabled');
 				fillProjectForm();
@@ -202,7 +232,8 @@
 						<input type='button' value='New' id='newBtn' /> <input
 							type='button' value='Delete' id='deleteBtn' /> <input
 							type='button' value='Edit' id='editBtn' /> <input type='button'
-							value='Reload' id='reloadBtn' />
+							value='Reload' id='reloadBtn' /><input type='button'
+							value='Assign Project' id='assignBtn' />
 					</div>
 
 
@@ -271,6 +302,23 @@
 						<input type='button' value='Close' id='closeEditForm' /> <input
 							type='submit' value='Submit' />
 					</form>
+
+					<div id='assignProject' class="tab-content">
+						<table id="assignProjectDetails" class='tableUsers'>
+							<caption align="top">
+								<b>Assign Projects</b> <br></br>
+							</caption>
+							<thead id='tableHead'>
+								<tr>
+									<th>Select</th>
+									<th>Project Name</th>
+									<th>Project Description</th>
+								</tr>
+							</thead>
+						</table>
+						<div id='controlBar' style="width: 80%" align="left"><input type='button' value='Close' id='closeAssignProject' /> <input
+							type='button' value='Save' onclick="associateProject()"/></div>
+					</div>
 				</div>
 				<div align="center" id="addProject" class="tab-content"
 					hidden="hidden">
@@ -287,7 +335,6 @@
 							</tr>
 						</thead>
 					</table>
-					
 					<div id='controlBar' style="width: 80%" align="left">
 							<input type='button' value='Add' id='projaddBtn' /> <input
 								type='button' value='Edit' id='projeditBtn' />
@@ -323,7 +370,6 @@
 						<input type='button' value='Close' id='closeEditProject' /> <input
 							type='submit' value='Submit' />
 					</form>	
-					
 				</div>
 			</div>
 		</section>
