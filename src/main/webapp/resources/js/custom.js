@@ -7,25 +7,8 @@ var tempProjectArr = [];
 
 function loadTable() {
 	$.get(urlHolder.records, function(response) {
-
-		$('#tableUsers').find('tbody').remove();
-
-		for ( var i = 0; i < response.users.length; i++) {
-			var row = '<tr>';
-			row += '<td><input type="radio" name="index" id="index" value="'
-				+ i + '"></td>';
-			row += '<td>' + response.users[i].username + '</td>';
-			row += '<td>' + response.users[i].firstName + '</td>';
-			row += '<td>' + response.users[i].lastName + '</td>';
-			row += '<td>' + getRole(response.users[i].role.role) + '</td>';
-			row += '<td>' + response.users[i].mailId + '</td>';
-			row += '</tr>';
-			$('#tableUsers').append(row);
-		}
-
-		$('#tableUsers').data('model', response.users);
-		toggleForms('hide');
-		;
+		buildUserTable(response);
+		
 	});
 	
 	$.post(urlHolder.refdataProject, function(response) {
@@ -43,6 +26,26 @@ function loadTable() {
 				$('#tableProjects').data('model', response.project);
 		}
 	});
+}
+
+function buildUserTable(response){
+	$('#tableUsers').find('tbody').remove();
+
+	for ( var i = 0; i < response.users.length; i++) {
+		var row = '<tr>';
+		row += '<td><input type="radio" name="index" id="index" value="'
+			+ i + '"></td>';
+		row += '<td>' + response.users[i].username + '</td>';
+		row += '<td>' + response.users[i].firstName + '</td>';
+		row += '<td>' + response.users[i].lastName + '</td>';
+		row += '<td>' + getRole(response.users[i].role.role) + '</td>';
+		row += '<td>' + response.users[i].mailId + '</td>';
+		row += '</tr>';
+		$('#tableUsers').append(row);
+	}
+
+	$('#tableUsers').data('model', response.users);
+	toggleForms('hide');
 }
 
 function submitNewRecord() {

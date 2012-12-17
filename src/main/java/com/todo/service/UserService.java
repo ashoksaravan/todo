@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -163,5 +165,37 @@ public class UserService {
 			return false;
 		}
 		return true;
+	}
+	
+	public List<User> searchUser(User user) {
+		Criteria criteria = null;
+		
+		if (user.getUsername() != null
+				&& user.getUsername().trim().length() > 0) {
+			criteria = Criteria.where("username").regex(user.getUsername());
+		}
+		
+		if (user.getFirstName() != null
+				&& user.getFirstName().trim().length() > 0 && criteria != null) {
+			criteria = criteria.and("firstName").regex(user.getFirstName());
+		} else {
+			if (user.getFirstName() != null
+					&& user.getFirstName().trim().length() > 0) {
+				criteria = Criteria.where("firstName").regex(user.getFirstName());
+			}
+		}
+		
+		if (user.getLastName() != null
+				&& user.getLastName().trim().length() > 0 && criteria != null) {
+			criteria = criteria.and("lastName").regex(user.getLastName());
+		} else {
+			if (user.getLastName() != null
+					&& user.getLastName().trim().length() > 0) {
+				criteria = Criteria.where("lastName").regex(user.getLastName());
+			}
+		}
+		List<User> list = mongoTemplate.find(new Query(criteria), User.class);
+		return list;
+		
 	}
 }

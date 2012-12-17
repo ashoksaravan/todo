@@ -97,31 +97,40 @@ public class TaskService {
 		if (task.getProjectId() != null && task.getProjectId().intValue() > 0) {
 			criteria = Criteria.where("projectId").is(task.getProjectId());
 		}
-		if (task.getTaskname() != null && task.getTaskname().trim().length() > 0) {
+		if (task.getTaskname() != null
+				&& task.getTaskname().trim().length() > 0 && criteria != null) {
 			criteria = criteria.and("taskname").is(task.getTaskname());
 		} else {
-			if (task.getTaskname() != null && task.getTaskname().trim().length() > 0) {
+			if (task.getTaskname() != null
+					&& task.getTaskname().trim().length() > 0) {
 				criteria = Criteria.where("taskname").is(task.getTaskname());
 			}
 		}
-		if (task.getPriority() != null && task.getPriority().trim().length() > 0 && criteria != null) {
+		if (task.getPriority() != null
+				&& task.getPriority().trim().length() > 0 && criteria != null) {
 			criteria = criteria.and("priority").is(task.getPriority());
 		} else {
-			if (task.getPriority() != null && task.getPriority().trim().length() > 0) {
+			if (task.getPriority() != null
+					&& task.getPriority().trim().length() > 0) {
 				criteria = Criteria.where("priority").is(task.getPriority());
 			}
 		}
-		if (task.getTaskstatus() != null && task.getTaskstatus().trim().length() > 0 && criteria != null) {
+		if (task.getTaskstatus() != null
+				&& task.getTaskstatus().trim().length() > 0 && criteria != null) {
 			criteria = criteria.and("taskstatus").is(task.getTaskstatus());
 		} else {
-			if (task.getTaskstatus() != null && task.getTaskstatus().trim().length() > 0) {
-				criteria = Criteria.where("taskstatus").is(task.getTaskstatus());
+			if (task.getTaskstatus() != null
+					&& task.getTaskstatus().trim().length() > 0) {
+				criteria = Criteria.where("taskstatus")
+						.is(task.getTaskstatus());
 			}
 		}
-		if (task.getUsername() != null && task.getUsername().trim().length() > 0 && criteria != null) {
+		if (task.getUsername() != null
+				&& task.getUsername().trim().length() > 0 && criteria != null) {
 			criteria = criteria.and("username").is(task.getUsername());
 		} else {
-			if (task.getUsername() != null && task.getUsername().trim().length() > 0) {
+			if (task.getUsername() != null
+					&& task.getUsername().trim().length() > 0) {
 				criteria = Criteria.where("username").is(task.getUsername());
 			}
 		}

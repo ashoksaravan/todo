@@ -8,10 +8,10 @@
 <c:url value="/projects/refdataProject" var="refdataProjectUrl" />
 <c:url value="/users/getName" var="getNameUrl" />
 <c:url value="/projects/add" var="addProjUrl" />
-<c:url value="/projects/edit" var="editProjUrl"/>
-<c:url value="/projects/assignedProj" var="assignedProjUrl"/>
-<c:url value="/projects/userProj" var="userProjUrl"/>
-<c:url value="/projects/addEditUserProj" var="addEditUserProjUrl"/>
+<c:url value="/projects/edit" var="editProjUrl" />
+<c:url value="/projects/assignedProj" var="assignedProjUrl" />
+<c:url value="/projects/userProj" var="userProjUrl" />
+<c:url value="/projects/addEditUserProj" var="addEditUserProjUrl" />
 
 <html>
 <head>
@@ -52,12 +52,13 @@
 	$(function() {
 		$('#v-nav>div.tab-content').hide().eq(0).show('medium');
 		var items = $('#v-nav>ul>li').each(
-		function() {
-			$(this).click(function() {
-				$('#v-nav>div.tab-content').hide().eq(
-						items.index($(this))).show('medium');
-			});
-		});
+				function() {
+					$(this).click(
+							function() {
+								$('#v-nav>div.tab-content').hide().eq(
+										items.index($(this))).show('medium');
+							});
+				});
 	});
 
 	$(function() {
@@ -75,10 +76,11 @@
 		urlHolder.userProj = '${userProjUrl}';
 		urlHolder.addEditUserProj = '${addEditUserProjUrl}';
 		loadTable();
-		
+
 		$('#addnewProject').hide();
 		$('#editProject').hide();
 		$('#assignProject').hide();
+		$('#searchUser').fancybox();
 
 		$('#newBtn').click(function() {
 			toggleForms('new');
@@ -92,7 +94,7 @@
 				fillEditForm();
 			}
 		});
-		
+
 		$('#assignBtn').click(function() {
 			if (hasSelected()) {
 				toggleForms('assign');
@@ -120,7 +122,7 @@
 			event.preventDefault();
 			submitUpdateRecord('${user.mailId}');
 		});
-		
+
 		$('#editForm').submit(function(event) {
 			event.preventDefault();
 			submitUpdateRecord('${user.mailId}');
@@ -135,24 +137,24 @@
 			toggleForms('hide');
 			toggleCrudButtons('show');
 		});
-		
+
 		$('#closeAssignProject').click(function() {
 			toggleForms('hide');
 			toggleCrudButtons('show');
 		});
-		
-		$("#newUsername").focusout(function(){
+
+		$("#newUsername").focusout(function() {
 			$.post(urlHolder.getName, {
 				username : $("#newUsername").val()
 			}, function(response) {
 				if (response == true) {
 					$("#newUsername").addClass("error");
-				}else{
+				} else {
 					$("#newUsername").removeClass("error");
 				}
 			});
 		});
-		
+
 		//for Project Details
 		$('#projaddBtn').click(function() {
 			$('#addnewProject').show();
@@ -169,50 +171,77 @@
 				$('#projaddBtn').attr('disabled', 'disabled');
 				fillProjectForm();
 			}
- 		});
-		
+		});
+
 		$('#closeNewProject').click(function() {
 			$('#addnewProject').hide();
 			$('#projeditBtn').removeAttr('disabled');
 		});
-		
+
 		$('#closeEditProject').click(function() {
 			$('#editProject').hide();
 			$('#projaddBtn').removeAttr('disabled');
 		});
-		
+
 		$('#addnewProject').submit(function(event) {
 			event.preventDefault();
 			submitAddProjRecord();
 		});
-		
+
 		$('#editProject').submit(function(event) {
 			event.preventDefault();
 			submitEditProjRecord();
 		});
 	});
+	
+	//for users search
+	function userSearchWindow() {
+		$('#search-user-name').val('');
+		$('#search-first-name').val('');
+		$('#search-last-name').val('');
+		$("#searchCriteria").hide();
+	}
+	
+	function searchUser() {
+			
+		$.post(urlHolder.records, {
+			userName : $("#search-user-name").val(),
+			firstName : $("#search-first-name").val(),
+			lastName : $("#search-last-name").val()
+		}, function(response) {
+			if (response) {
+				buildUserTable(response);
+			}
+			parent.$.fancybox.close();
+		});
+	}
+
 </script>
 </head>
 
 <body>
 	<jsp:include page='/jsp/header.jsp' />
-	<img src="/todo/resources/css/images/home_btn.png" align="right"
-					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; padding-top:1mm;  padding-right:1mm;      vertical-align:middle; "/>
+	<div align="right">
+		<a href="#searchUserDetails" id="searchUser"
+			style="width: 10%; padding-top: 20px;" onclick="userSearchWindow();">Search
+			Users</a> <img src="/todo/resources/css/images/home_btn.png"
+			align="right" onclick="back('${pageContext.request.contextPath}')"
+			style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" />
+			<div><h5 style="color: red;" align="center" hidden="hidden" id="noresult" style="width: 80%">No search results found.</h5></div>
+	</div>
 	<div align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
-			
+
 			<div id="v-nav">
 				<ul>
-					<li tab="tab1" id="tab1" class="first current">Manage
-						Users</li>
+					<li tab="tab1" id="tab1" class="first current">Manage Users</li>
 					<li tab="tab2" id="tab2" class="last">Add Project</li>
 				</ul>
 				<div align="center" id="userRecords" class="tab-content">
 					<table id='tableUsers' class='tableUsers'>
 						<caption align="top">
-							<b>Record System</b>
-							<br></br>
+							<b>Record System</b> <br></br>
 						</caption>
 						<thead id='tableHead'>
 							<tr>
@@ -313,16 +342,17 @@
 								</tr>
 							</thead>
 						</table>
-						<div id='controlBar' style="width: 80%" align="left"><input type='button' value='Close' id='closeAssignProject' /> <input
-							type='button' value='Save' onclick="associateProject()"/></div>
+						<div id='controlBar' style="width: 80%" align="left">
+							<input type='button' value='Close' id='closeAssignProject' /> <input
+								type='button' value='Save' onclick="associateProject()" />
+						</div>
 					</div>
 				</div>
 				<div align="center" id="addProject" class="tab-content"
 					hidden="hidden">
 					<table id='tableProjects' class='tableUsers'>
 						<caption align="top">
-							<b>Project Details</b>
-							<br></br>
+							<b>Project Details</b> <br></br>
 						</caption>
 						<thead id='tableHead'>
 							<tr>
@@ -333,10 +363,10 @@
 						</thead>
 					</table>
 					<div id='controlBar' style="width: 80%" align="left">
-							<input type='button' value='Add' id='projaddBtn' /> <input
-								type='button' value='Edit' id='projeditBtn' />
+						<input type='button' value='Add' id='projaddBtn' /> <input
+							type='button' value='Edit' id='projeditBtn' />
 					</div>
-					
+
 					<form id='addnewProject' class="newEditForm">
 						<div class="fieldgroup">
 							<label for='projName'>Project Name</label> <input type='text'
@@ -344,15 +374,15 @@
 						</div>
 
 						<div class="fieldgroup">
-							<label for='projDesc'>Project Description</label> <input type='text'
-								id='projDesc' />
+							<label for='projDesc'>Project Description</label> <input
+								type='text' id='projDesc' />
 						</div>
-						
+
 						<input type='button' value='Close' id='closeNewProject' /> <input
 							type='submit' value='Submit' />
-					</form>	
-					
-					
+					</form>
+
+
 					<form id='editProject' class="newEditForm">
 
 						<div class="fieldgroup">
@@ -360,13 +390,49 @@
 								id='editprojName' />
 						</div>
 						<div class="fieldgroup">
-							<label for='editprojDesc'>Project Description</label> <input type='text'
-								id='editprojDesc' />
+							<label for='editprojDesc'>Project Description</label> <input
+								type='text' id='editprojDesc' />
 						</div>
-						
+
 						<input type='button' value='Close' id='closeEditProject' /> <input
 							type='submit' value='Submit' />
-					</form>	
+					</form>
+				</div>
+
+				<div id="searchUserDetails" hidden="hidden">
+					<h4 align="left" id="searchHeading">Search User</h4>
+					<table>
+						<tr>
+							<td class="pwd-box-name">UserName:</td>
+							<td class="pwd-box-field"><input name="search-user-name"
+								type="text" class="pwd_form-login" id="search-user-name"
+								title="Please enter the user name" value="" size="30"
+								maxlength="2048" /></td>
+						</tr>
+						<tr>
+							<td class="pwd-box-name" id="priority">First Name:</td>
+							<td class="pwd-box-field"><input name="search-first-name"
+								type="text" class="pwd_form-login" id="search-first-name"
+								title="Please enter the first name" value="" size="30"
+								maxlength="2048" /></td>
+						</tr>
+						<tr>
+							<td class="pwd-box-name" id="priority">Last Name:</td>
+							<td class="pwd-box-field"><input name="search-last-name"
+								type="text" class="pwd_form-login" id="search-last-name"
+								title="Please enter the last name" value="" size="30"
+								maxlength="2048" /></td>
+						</tr>
+
+						<tr>
+							<td colspan="2"><h6 hidden="hidden" style="color: red;"
+									id="searchCriteria">Please enter atleast one search
+									criteria</h6></td>
+						</tr>
+					</table>
+					<div align="center">
+						<button id="searchBtn" class="searchBtn" style="color: white;" onclick="searchUser()">Search</button>
+					</div>
 				</div>
 			</div>
 		</section>

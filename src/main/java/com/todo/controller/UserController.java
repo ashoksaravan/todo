@@ -77,11 +77,25 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/records")
 	public @ResponseBody
-	UserListDTO getUsers() {
+	UserListDTO getUsers(@RequestParam(required = false) String userName,
+			@RequestParam(required = false) String firstName,
+			@RequestParam(required = false) String lastName) {
+		User user = new User();
+		user.setUsername(userName);
+		user.setFirstName(firstName);
+		user.setLastName(lastName);
+		if ((userName != null && userName.trim().length() > 0)
+				|| (firstName != null && firstName.trim().length() > 0)
+				|| (lastName != null && lastName.trim().length() > 0)) {
+			UserListDTO userListDto = new UserListDTO();
+			userListDto.setUsers(service.searchUser(user));
+			return userListDto;
+		} else {
+			UserListDTO userListDto = new UserListDTO();
+			userListDto.setUsers(service.readAll());
+			return userListDto;
 
-		UserListDTO userListDto = new UserListDTO();
-		userListDto.setUsers(service.readAll());
-		return userListDto;
+		}
 	}
 
 	/**
@@ -287,5 +301,4 @@ public class UserController {
 			return "changepassword";
 		}
 	}
-
 }
