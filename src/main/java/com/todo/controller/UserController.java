@@ -80,6 +80,7 @@ public class UserController {
 	UserListDTO getUsers(@RequestParam(required = false) String userName,
 			@RequestParam(required = false) String firstName,
 			@RequestParam(required = false) String lastName) {
+		UserListDTO userListDto;
 		User user = new User();
 		user.setUsername(userName);
 		user.setFirstName(firstName);
@@ -87,11 +88,12 @@ public class UserController {
 		if ((userName != null && userName.trim().length() > 0)
 				|| (firstName != null && firstName.trim().length() > 0)
 				|| (lastName != null && lastName.trim().length() > 0)) {
-			UserListDTO userListDto = new UserListDTO();
-			userListDto.setUsers(service.searchUser(user));
-			return userListDto;
+			userListDto = new UserListDTO();
+			List<User> users = service.searchUser(user);
+				userListDto.setUsers(users);
+				return userListDto;
 		} else {
-			UserListDTO userListDto = new UserListDTO();
+			userListDto = new UserListDTO();
 			userListDto.setUsers(service.readAll());
 			return userListDto;
 
@@ -119,8 +121,9 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody
-	User create(@RequestParam String username, @RequestParam String password, @RequestParam String firstName,
-			@RequestParam String lastName, @RequestParam Integer role, @RequestParam String mailID) {
+	User create(@RequestParam String username, @RequestParam String password,
+			@RequestParam String firstName, @RequestParam String lastName,
+			@RequestParam Integer role, @RequestParam String mailID) {
 
 		Role newRole = new Role();
 		newRole.setRole(role);
@@ -147,8 +150,9 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	User update(ModelMap map, @RequestParam String username, @RequestParam String firstName,
-			@RequestParam String lastName, @RequestParam Integer role, @RequestParam String mailId) {
+	User update(ModelMap map, @RequestParam String username,
+			@RequestParam String firstName, @RequestParam String lastName,
+			@RequestParam Integer role, @RequestParam String mailId) {
 
 		Role existingRole = new Role();
 		existingRole.setRole(role);
@@ -163,7 +167,8 @@ public class UserController {
 
 		service.update(existingUser);
 
-		if (SecurityContextHolder.getContext().getAuthentication().getName().equals(existingUser.getUsername())) {
+		if (SecurityContextHolder.getContext().getAuthentication().getName()
+				.equals(existingUser.getUsername())) {
 			map.addAttribute("user", existingUser);
 		}
 

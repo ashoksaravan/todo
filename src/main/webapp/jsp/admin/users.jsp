@@ -203,13 +203,20 @@
 	}
 	
 	function searchUser() {
-			
 		$.post(urlHolder.records, {
 			userName : $("#search-user-name").val(),
 			firstName : $("#search-first-name").val(),
 			lastName : $("#search-last-name").val()
 		}, function(response) {
-			if (response) {
+			if (response.users.length == 0) {
+				$('#noresult').show();
+				$('#tableUsers').hide();
+				$('#controlBar').hide();
+			}
+			else{
+				$('#noresult').hide();
+				$('#tableUsers').show();
+				$('#controlBar').show();
 				buildUserTable(response);
 			}
 			parent.$.fancybox.close();
@@ -222,14 +229,16 @@
 <body>
 	<jsp:include page='/jsp/header.jsp' />
 	<div align="right">
-		<a href="#searchUserDetails" id="searchUser"
-			style="width: 10%; padding-top: 20px;" onclick="userSearchWindow();">Search
-			Users</a> <img src="/todo/resources/css/images/home_btn.png"
-			align="right" onclick="back('${pageContext.request.contextPath}')"
+		<a href="#searchUserDetails" id="searchUser" title="Search Users"
+			style="width: 10%; padding-top: 20px;" onclick="userSearchWindow();"><img
+			src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
+			style="cursor: pointer; height: 27px; padding-top: 2mm;" /></a> <img
+			src="/todo/resources/css/images/home_btn.png" align="right" title="Home"
+			onclick="back('${pageContext.request.contextPath}')"
 			style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" />
-			<div><h5 style="color: red;" align="center" hidden="hidden" id="noresult" style="width: 80%">No search results found.</h5></div>
 	</div>
-	<div align="left" style="width: 90%; height: 75%">
+	
+	<div id="usersScreen" align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
 
@@ -239,6 +248,7 @@
 					<li tab="tab2" id="tab2" class="last">Add Project</li>
 				</ul>
 				<div align="center" id="userRecords" class="tab-content">
+				<div><h5 style="color: red;" align="center" hidden="hidden" id="noresult" style="width: 80%">No search results found.</h5></div>
 					<table id='tableUsers' class='tableUsers'>
 						<caption align="top">
 							<b>Record System</b> <br></br>
@@ -265,7 +275,7 @@
 
 
 
-					<form id='newForm' class="newEditForm">
+					<form id='newForm' class="newEditForm" >
 						<div class="fieldgroup">
 							<label for='newUsername'>UserName</label> <input type='text'
 								id='newUsername' />

@@ -179,13 +179,13 @@ var ctx = "${pageContext.request.contextPath}";
 					style="width: 30%" onchange="change()"></select></td>
 				<td align="right">
 				
-				<a href="#searchTask" id="searchQuery" style="width: 10%;"
+				<a href="#searchTask" id="searchQuery" title="SearchTask" style="width: 10%;"
 					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
 					   style="cursor: pointer; height:27px;"/></a>
-			   <a href="#" id="refreshQuery" onclick="back('${pageContext.request.contextPath}')" style="width: 10%;"><img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png"
+			   <a href="#" id="refreshQuery" onclick="back('${pageContext.request.contextPath}')" title="Home" style="width: 10%;"><img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png"
 					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px;"/></a>
 					
-			   <a href="#" id="export" onclick="exportTaskXls()" style="width: 10%;padding-right: 1%;"><img src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
+			   <a href="#" id="export" onclick="exportTaskXls()" title="Export Task" style="width: 10%;padding-right: 1%;"><img src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
 					   style="cursor: pointer; width:34px; height:27px;"/></a>
 					 
 				</td>
