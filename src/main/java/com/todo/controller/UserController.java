@@ -33,7 +33,7 @@ import com.todo.service.UserService;
 
 @Controller
 @RequestMapping("/users")
-@SessionAttributes({ "user" })
+@SessionAttributes({"user", "tasks"})
 public class UserController {
 
 	/**
@@ -187,11 +187,13 @@ public class UserController {
 	//need to moved to task controller
 	@RequestMapping(value = "/task", method = RequestMethod.POST)
 	public @ResponseBody
-	List<Task> task(@RequestParam Integer projectId) {
+	List<Task> task(ModelMap map, @RequestParam Integer projectId) {
 		Task task = new Task();
 		task.setProjectId(projectId);
 		task.setUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-		return taskService.loadTask(task);
+		List<Task> tasks = taskService.loadTask(task);
+		map.addAttribute("tasks", tasks);
+		return tasks;
 	}
 
 	/**
@@ -252,8 +254,10 @@ public class UserController {
 	//need to moved to task controller
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public @ResponseBody
-	List<Task> searchTask(@RequestBody Task searchTask) {
-		return taskService.search(searchTask);
+	List<Task> searchTask(ModelMap map, @RequestBody Task searchTask) {
+		List<Task> tasks = taskService.search(searchTask);
+		map.addAttribute("tasks", tasks);
+		return tasks;
 	}
 	//need to moved to task controller
 	/**

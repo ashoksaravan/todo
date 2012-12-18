@@ -1,9 +1,11 @@
 package com.todo.command;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -12,26 +14,37 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.springframework.web.servlet.view.document.AbstractExcelView;
 
 import com.todo.domain.Task;
 
-public class WriteExcelCmd {
-	
+public class WriteExcelCmd extends AbstractExcelView {
 
-	public void writeExcelFile(Task[] data, HashMap<String, String> map) {
-		OpenExcelCmd openExcelCmd = new OpenExcelCmd();
-		FileOutputStream fileOutputStream = null;
-		HSSFWorkbook workbook = null;
+	private HSSFCellStyle setHeaderStyle(HSSFWorkbook workbook) {
+		HSSFFont font = workbook.createFont();
+		font.setFontName(HSSFFont.FONT_ARIAL);
+		font.setColor(IndexedColors.BLUE.getIndex());
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		HSSFCellStyle cellStyle = workbook.createCellStyle();
+		cellStyle.setFont(font);
+		return cellStyle;
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	protected void buildExcelDocument(@SuppressWarnings("rawtypes") Map model, HSSFWorkbook workbook, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		
+		HttpSession session = request.getSession();
+		List<Task> tasks = (List<Task>) session.getAttribute("tasks");
 		HSSFSheet sheet = null;
-		File file = null;
 		int index = 1;
 		try {
-			workbook = new HSSFWorkbook();
 			sheet = workbook.createSheet("TaskDetails");
 
 			HSSFRow headerRow = sheet.createRow(0);
 			HSSFCellStyle cellStyle = setHeaderStyle(workbook);
-			if (data.length > 0) {
+			if (tasks.size() > 0) {
 				HSSFCell headerCell = headerRow.createCell(0);
 				headerCell.setCellStyle(cellStyle);
 				headerCell.setCellValue("ProjectId");
@@ -60,46 +73,22 @@ public class WriteExcelCmd {
 				headerCell6.setCellStyle(cellStyle);
 				headerCell6.setCellValue("AssignedTo");
 			}
+			for (Task task : tasks) {
 
-			for (int i = 0; i < data.length; i++) {
-				Task task = (Task) data[i];
 				HSSFRow dataRow = sheet.createRow(index);
-				dataRow.createCell(0).setCellValue(map.get(task.getProjectId().toString()));
+				dataRow.createCell(0).setCellValue(task.getProjectId());
 				dataRow.createCell(1).setCellValue(task.getTaskname());
 				dataRow.createCell(2).setCellValue(task.getTaskdesc());
 				dataRow.createCell(3).setCellValue(task.getTaskstatus());
-				dataRow.createCell(4).setCellValue(map.get(task.getPriority()));
+				dataRow.createCell(4).setCellValue(task.getPriority());
 				dataRow.createCell(5).setCellValue(task.getCreateduser());
 				dataRow.createCell(6).setCellValue(task.getUsername());
 				index++;
 			}
-			String string = System.getProperty("user.home");
-			file = new File(string, "Task.xls");
-			file.createNewFile();
-			System.out.println(file.getAbsolutePath());
-			fileOutputStream = new FileOutputStream(file);
-			workbook.write(fileOutputStream);
-			openExcelCmd.downloadExcel(file);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		} finally {
-			try {
-				if (fileOutputStream != null) {
-					fileOutputStream.close();
-				}
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
 		}
-	}
 
-	private HSSFCellStyle setHeaderStyle(HSSFWorkbook workbook) {
-		HSSFFont font = workbook.createFont();
-		font.setFontName(HSSFFont.FONT_ARIAL);
-		font.setColor(IndexedColors.BLUE.getIndex());
-		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
-		HSSFCellStyle cellStyle = workbook.createCellStyle();
-		cellStyle.setFont(font);
-		return cellStyle;
 	}
 }

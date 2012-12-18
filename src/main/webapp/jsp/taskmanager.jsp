@@ -10,10 +10,11 @@
 <c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
 <c:url value="/projects/refdataProject" var="refdataProjectUrl" />
 <c:url value="/projects/refdataUserProject" var="refdataUserProjectUrl" />
-<c:url value="/external/write" var="writeUrl" />
+<c:url value="/external/export" var="writeUrl" />
 <html>
 <head>
 <title>Task Manager</title>
+<meta http-equiv=Content-Type content="application/vnd.ms-excel;charset=ISO-8859-1">
 <link rel="icon" type="image/gif"
 	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
 <script type="text/javascript"
@@ -163,10 +164,13 @@ var ctx = "${pageContext.request.contextPath}";
 	function change(){
 		loadTaskDetails();
 	}
+
+	function exportTaskXls(){
+		window.location.href = ctx+'/external/export';
+	}
 </script>
 </head>
 <body>
-
 	<jsp:include page='/jsp/header.jsp' />
 	<div style="width: 100%; padding-top: 1%">
 		<table style="width: 100%">
@@ -181,7 +185,7 @@ var ctx = "${pageContext.request.contextPath}";
 			   <a href="#" id="refreshQuery" onclick="back('${pageContext.request.contextPath}')" style="width: 10%;"><img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png"
 					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px;"/></a>
 					
-			   <a href="#" id="export" onclick="exportTask()" style="width: 10%;padding-right: 1%;" hidden="hidden"><img src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
+			   <a href="#" id="export" onclick="exportTaskXls()" style="width: 10%;padding-right: 1%;"><img src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
 					   style="cursor: pointer; width:34px; height:27px;"/></a>
 					 
 				</td>

@@ -1,5 +1,4 @@
 var urlHolder = new Object();
-var taskDetails = [];
 /**
  * Load RefData Values.
  */
@@ -65,7 +64,6 @@ function loadTaskDetails(){
 	},
 	function(response) {
 		if (response != null) {
-			taskDetails = [];
 			for ( var i = 0; i < response.length; i++) {
 				formPrintData(response[i])
 				createNotes(response[i],ctx);
@@ -73,15 +71,6 @@ function loadTaskDetails(){
 		}
 	});
 	
-}
-
-function formPrintData(task){
-	var writeTask = {"taskid":task.taskid,"taskname":task.taskname,
-			"taskdesc":task.taskdesc,"priority":task.priority,
-			"taskstatus":task.taskstatus,"username":task.username,
-			"createduser":task.createduser,"cclist" : task.cclist,"editor" : task.editor,
-			"projectId":task.projectId};
-	taskDetails.push(writeTask);
 }
 
 /**
@@ -472,24 +461,6 @@ function resetSearchWindow() {
 	$('#search-task-assigned').val('');
 	$("#searchCriteria").hide();
 }
-
-function exportTask(){
-	$.ajax({
-        contentType : "application/json",
-        dataType : 'json',
-        type : "POST",
-        url : urlHolder.write,
-        data : JSON.stringify(taskDetails),
-        success : function(response) {
-        	if(response==true){
-        		alert("Excel File Exported")
-        	}
-        },
-        error : function(request, status, error) {
-               alert('Error: ' + error); 
-        }
-    });
-	}
 
 function changePassword(){
 	if($('#newPwd').val() != $('#confirmPwd').val()){
