@@ -58,7 +58,6 @@ function loadRefData() {
 function loadTaskDetails(){
 	$('.single_sticky_notes li').remove();
 	createAddNotes(ctx);
-	alert($('select#projectOption option:selected').val())
 	$.post(urlHolder.task, {
 	projectId : $('select#projectOption option:selected').val()
 	},
