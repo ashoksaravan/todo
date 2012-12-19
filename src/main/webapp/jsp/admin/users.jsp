@@ -195,6 +195,12 @@
 			event.preventDefault();
 			submitEditProjRecord();
 		});
+		$('#tab2').click(function() {
+			$('#searchUser').hide();
+		});
+		$('#tab1').click(function() {
+			$('#searchUser').show();
+		});
 	});
 	
 	//for users search
@@ -274,8 +280,6 @@
 							value='Reload' id='reloadBtn' /><input type='button'
 							value='Assign Project' id='assignBtn' />
 					</div>
-
-
 
 
 					<form id='newForm' class="newEditForm" >
