@@ -16,6 +16,10 @@ import com.todo.domain.User;
 import com.todo.repository.RoleRepository;
 import com.todo.repository.UserRepository;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class UserService {
 
@@ -39,7 +43,7 @@ public class UserService {
 
 	/**
 	 * @param user
-	 * @return
+	 * @return User
 	 */
 	public User create(User user) {
 		Role role = null;
@@ -55,7 +59,7 @@ public class UserService {
 
 	/**
 	 * @param user
-	 * @return
+	 * @return User
 	 */
 	public User read(User user) {
 		return userRepository.findByUsername(user.getUsername());
@@ -63,14 +67,14 @@ public class UserService {
 
 	/**
 	 * @param userName
-	 * @return
+	 * @return User
 	 */
 	public User read(String userName) {
 		return userRepository.findByUsername(userName);
 	}
 
 	/**
-	 * @return
+	 * @return List<User>
 	 */
 	public List<User> readAll() {
 		return userRepository.findAll();
@@ -78,7 +82,7 @@ public class UserService {
 
 	/**
 	 * @param user
-	 * @return
+	 * @return User
 	 */
 	public User update(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
@@ -98,7 +102,7 @@ public class UserService {
 
 	/**
 	 * @param user
-	 * @return
+	 * @return Boolean
 	 */
 	public Boolean delete(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
@@ -113,7 +117,7 @@ public class UserService {
 	/**
 	 * @param user
 	 * @param fromForgotPwd
-	 * @return
+	 * @return Boolean
 	 */
 	public Boolean updatePwd(User user, boolean fromForgotPwd) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
@@ -131,7 +135,7 @@ public class UserService {
 
 	/**
 	 * @param user
-	 * @return
+	 * @return Boolean
 	 */
 	public Boolean checkPwd(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
@@ -148,7 +152,7 @@ public class UserService {
 	/**
 	 * @param password
 	 * @param salt
-	 * @return
+	 * @return String
 	 */
 	private String passwordEncoder(String password, String salt) {
 		PasswordEncoder encoder = new Md5PasswordEncoder();
@@ -157,7 +161,7 @@ public class UserService {
 
 	/**
 	 * @param userName
-	 * @return
+	 * @return Boolean
 	 */
 	public Boolean checkUsername(String userName) {
 		User user = userRepository.findByUsername(userName);
@@ -167,6 +171,10 @@ public class UserService {
 		return true;
 	}
 	
+	/**
+	 * @param user
+	 * @return List<User>
+	 */
 	public List<User> searchUser(User user) {
 		Criteria criteria = null;
 		
@@ -196,6 +204,5 @@ public class UserService {
 		}
 		List<User> list = mongoTemplate.find(new Query(criteria), User.class);
 		return list;
-		
 	}
 }

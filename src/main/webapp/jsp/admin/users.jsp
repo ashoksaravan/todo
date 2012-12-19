@@ -4,9 +4,12 @@
 <c:url value="/users/create" var="addUrl" />
 <c:url value="/users/update" var="editUrl" />
 <c:url value="/users/delete" var="deleteUrl" />
-<c:url value="/users/task" var="taskUrl" />
-<c:url value="/projects/refdataProject" var="refdataProjectUrl" />
 <c:url value="/users/getName" var="getNameUrl" />
+
+<c:url value="/taskservice/task" var="taskUrl" />
+
+<c:url value="/metaData/readProjects" var="readProjectsUrl" />
+
 <c:url value="/projects/add" var="addProjUrl" />
 <c:url value="/projects/edit" var="editProjUrl" />
 <c:url value="/projects/assignedProj" var="assignedProjUrl" />
@@ -68,7 +71,7 @@
 		urlHolder.edit = '${editUrl}';
 		urlHolder.del = '${deleteUrl}';
 		urlHolder.task = '${taskUrl}';
-		urlHolder.refdataProject = '${refdataProjectUrl}';
+		urlHolder.readProjects = '${readProjectsUrl}';
 		urlHolder.getName = '${getNameUrl}';
 		urlHolder.addProject = '${addProjUrl}';
 		urlHolder.editProject = '${editProjUrl}';

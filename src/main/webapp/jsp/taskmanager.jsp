@@ -1,16 +1,19 @@
 <%@page import="com.todo.domain.User"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.*"%>
-<c:url value="/users/task" var="taskUrl" />
+
 <c:url value="/users/checkpwd" var="checkpwdUrl" />
-<c:url value="/users/addtask" var="addtaskUrl" />
 <c:url value="/users/records" var="recordsUrl" />
-<c:url value="/users/search" var="searchUrl" />
 <c:url value="/users/refdataPriority" var="refdataPriorityUrl" />
 <c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
-<c:url value="/projects/refdataProject" var="refdataProjectUrl" />
+
 <c:url value="/projects/refdataUserProject" var="refdataUserProjectUrl" />
+
 <c:url value="/external/export" var="writeUrl" />
+
+<c:url value="/taskservice/task" var="taskUrl" />
+<c:url value="/taskservice/addtask" var="addtaskUrl" />
+<c:url value="/taskservice/search" var="searchUrl" />
 <html>
 <head>
 <title>Task Manager</title>
@@ -49,7 +52,6 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.search = '${searchUrl}';
 		urlHolder.refdataPriority = '${refdataPriorityUrl}';
 		urlHolder.refdataTaskStatus = '${refdataTaskStatusUrl}';
-		urlHolder.refdataProject = '${refdataProjectUrl}';
 		urlHolder.refdataUserProject = '${refdataUserProjectUrl}';
 		urlHolder.write = '${writeUrl}';
 	});
@@ -151,7 +153,7 @@ var ctx = "${pageContext.request.contextPath}";
 								});
 			}
 		});
-		loadRefData();
+		loadTaskDetails();
 	});
 
 	function split(val) {
@@ -176,7 +178,11 @@ var ctx = "${pageContext.request.contextPath}";
 		<table style="width: 100%">
 			<tr>
 				<td><select id='projectOption' name="project"
-					style="width: 30%" onchange="change()"></select></td>
+					style="width: 30%" onchange="change()">
+					<c:forEach items="${projectList}" var="projectLst">
+						<option value="${projectLst.projectId}">${projectLst.projectDesc}</option>
+					</c:forEach>
+					</select></td>
 				<td align="right">
 				
 				<a href="#searchTask" id="searchQuery" title="SearchTask" style="width: 10%;"
@@ -223,11 +229,18 @@ var ctx = "${pageContext.request.contextPath}";
 				<td class="pwd-box-name" id="priority">Priority:</td>
 				<td><select id='priorityOption' name="priority"
 					class="pwd_form-login">
+					<c:forEach items="${priorityList}" var="priorityLst">
+						<option value="${priorityLst.value}">${priorityLst.desc}</option>
+					</c:forEach>
 				</select></td>
 			</tr>
-			<tr>
+			<tr hidden="hidden" id="hiddenStatus">
 				<td class="pwd-box-name" id="status">Task Status:</td>
-				<td><select id='statusOption' name="status" class="pwd_form-login">
+				<td><select id='statusOption' name="status"
+					class="pwd_form-login">
+						<c:forEach items="${taskStatusList}" var="taskStatusLst">
+							<option value="${taskStatusLst.value}">${taskStatusLst.desc}</option>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr>
@@ -269,12 +282,20 @@ var ctx = "${pageContext.request.contextPath}";
 				<td class="pwd-box-name" id="priority">Priority:</td>
 				<td><select id='search-priority' name="search-priority"
 					class="pwd_form-login">
+					<option value="SELECT">-Select-</option>
+					<c:forEach items="${priorityList}" var="priorityLst">
+						<option value="${priorityLst.value}">${priorityLst.desc}</option>
+					</c:forEach>
 				</select></td>
 			</tr>
 			<tr>
 				<td class="pwd-box-name" id="status">Task Status:</td>
 				<td><select id='search-status' name="search-status"
 					class="pwd_form-login">
+					<option value="SELECT">-Select-</option>
+					<c:forEach items="${taskStatusList}" var="taskStatusLst">
+							<option value="${taskStatusLst.value}">${taskStatusLst.desc}</option>
+						</c:forEach>
 				</select></td>
 			</tr>
 			<tr>

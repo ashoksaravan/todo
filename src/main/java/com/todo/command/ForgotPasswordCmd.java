@@ -11,16 +11,33 @@ import com.todo.controller.SendMail;
 import com.todo.domain.User;
 import com.todo.service.UserService;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class ForgotPasswordCmd {
 
+	/**
+	 * service.
+	 */
 	@Autowired
 	private UserService service;
 
+	/**
+	 * password.
+	 */
 	static String password = new String();
 
+	/**
+	 * map.
+	 */
 	private HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 
+	/**
+	 * @param username
+	 * @return Boolean
+	 */
 	public Boolean forgotPassword(String username) {
 		map = new HashMap<String, ArrayList<String>>();
 		User user = new User();

@@ -3,6 +3,9 @@ package com.todo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +26,10 @@ import com.todo.dto.ProjectListDTO;
 import com.todo.service.ProjectService;
 import com.todo.service.RefDataService;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Controller
 @RequestMapping("/projects")
 @SessionAttributes({ "user" })
@@ -53,20 +60,9 @@ public class ProjectController {
 	AddEditUserProjectCmd addEditUserProjectCmd;
 
 	/**
-	 * @return
-	 */
-	@RequestMapping(value = "/refdataProject", method = RequestMethod.POST)
-	public @ResponseBody
-	ProjectListDTO projectList() {
-		ProjectListDTO listDTO = new ProjectListDTO();
-		listDTO.setProject(dataService.readProject());
-		return listDTO;
-	}
-
-	/**
 	 * @param projectName
 	 * @param projectDesc
-	 * @return
+	 * @return Project
 	 */
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public @ResponseBody
@@ -82,7 +78,7 @@ public class ProjectController {
 	/**
 	 * @param projectName
 	 * @param projectDesc
-	 * @return
+	 * @return Project
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public @ResponseBody
@@ -97,7 +93,7 @@ public class ProjectController {
 
 	/**
 	 * @param username
-	 * @return
+	 * @return ProjectListDTO
 	 */
 	@RequestMapping(value = "/userProj", method = RequestMethod.POST)
 	public @ResponseBody
@@ -107,7 +103,7 @@ public class ProjectController {
 
 	/**
 	 * @param data
-	 * @return
+	 * @return Boolean
 	 */
 	@RequestMapping(value = "/addEditUserProj", method = RequestMethod.POST)
 	public @ResponseBody
@@ -117,15 +113,17 @@ public class ProjectController {
 
 	/**
 	 * @param user
-	 * @return
+	 * @return ProjectListDTO
 	 */
 	@RequestMapping(value = "/refdataUserProject", method = RequestMethod.POST)
 	public @ResponseBody
-	ProjectListDTO userProjectList(@ModelAttribute User user) {
+	ProjectListDTO userProjectList(@ModelAttribute User user,HttpServletRequest request) {
+		ServletContext context = request.getSession().getServletContext();
 		ProjectListDTO listDTO = new ProjectListDTO();
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		List<Project> result = new ArrayList<Project>();
-		List<Project> projects = dataService.readProject();
+		@SuppressWarnings("unchecked")
+		List<Project> projects = (List<Project>) context.getAttribute("projectList");
 		List<UserProject> useProjects = service.readProject(user.getUsername());
 		for (UserProject userProject : useProjects) {
 			list.add(userProject.getProjectId());

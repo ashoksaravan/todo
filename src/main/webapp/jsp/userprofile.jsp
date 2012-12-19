@@ -4,8 +4,8 @@
 <c:url value="/users/create" var="addUrl" />
 <c:url value="/users/update" var="editUrl" />
 <c:url value="/users/delete" var="deleteUrl" />
-<c:url value="/users/task" var="taskUrl" />
-<c:url value="/projects/refdataProject" var="refdataProjectUrl" />
+<c:url value="/taskservice/task" var="taskUrl" />
+<c:url value="/metaData/readProjects" var="readProjectsUrl" />
 <html>
 <head>
 
@@ -47,7 +47,7 @@ $(function() {
 		urlHolder.records = '${recordsUrl}';
 		urlHolder.edit = '${editUrl}';
 		urlHolder.task = '${taskUrl}';
-		urlHolder.refdataProject = '${refdataProjectUrl}';
+		urlHolder.readProjects = '${readProjectsUrl}';
 		loadTable();
 		
 		$('.userprofileInpt').hide();

@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Controller
 @RequestMapping("/external")
 public class ExternalController {
@@ -13,7 +17,7 @@ public class ExternalController {
 
 	/**
 	 * @param data
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping(value = "/export", method = RequestMethod.GET)
 	public @ResponseBody

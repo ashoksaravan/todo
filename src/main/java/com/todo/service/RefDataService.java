@@ -12,6 +12,10 @@ import com.todo.repository.PriorityRepository;
 import com.todo.repository.ProjectRepository;
 import com.todo.repository.TaskStatusRepository;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class RefDataService {
 
@@ -34,21 +38,21 @@ public class RefDataService {
 	private ProjectRepository projectRepository;
 
 	/**
-	 * @return
+	 * @return List<Priority>
 	 */
 	public List<Priority> readPriority() {
 		return priorityRepository.findAll();
 	}
 
 	/**
-	 * @return
+	 * @return List<TaskStatus>
 	 */
 	public List<TaskStatus> readTaskStatus() {
 		return taskStatusRepository.findAll();
 	}
 
 	/**
-	 * @return
+	 * @return List<Project>
 	 */
 	public List<Project> readProject() {
 		return projectRepository.findAll();

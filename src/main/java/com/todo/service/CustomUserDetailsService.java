@@ -20,10 +20,17 @@ import com.todo.repository.UserRepository;
  * A custom {@link UserDetailsService} where user information is retrieved from
  * a JPA repository
  */
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 
+	/**
+	 * userRepository.
+	 */
 	@Autowired
 	private UserRepository userRepository;
 

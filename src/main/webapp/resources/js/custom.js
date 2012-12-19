@@ -11,7 +11,7 @@ function loadTable() {
 		
 	});
 	
-	$.post(urlHolder.refdataProject, function(response) {
+	$.post(urlHolder.readProjects, function(response) {
 		$('#tableProjects').find('tbody').remove();
 		if (response) {
 			for ( var i = 0; i < response.project.length; i++) {

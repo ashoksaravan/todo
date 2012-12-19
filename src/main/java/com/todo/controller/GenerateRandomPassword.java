@@ -1,5 +1,9 @@
 package com.todo.controller;
 
+/**
+ * @author vinodkumara
+ *
+ */
 public class GenerateRandomPassword {
 	
 	/**
@@ -9,7 +13,7 @@ public class GenerateRandomPassword {
 
 	/**
 	 * @param len
-	 * @return
+	 * @return String
 	 */
 	public String getAlphaNumeric(int len) {
 		StringBuffer sb = new StringBuffer(len);

@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:url value="/users/history" var="historyUrl" />
+<c:url value="/taskservice/history" var="historyUrl" />
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

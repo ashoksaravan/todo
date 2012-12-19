@@ -12,21 +12,50 @@ import com.todo.domain.User;
 import com.todo.service.TaskService;
 import com.todo.service.UserService;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class AddEditTaskCmd {
 
+	/**
+	 * service.
+	 */
 	@Autowired
 	private UserService service;
+	/**
+	 * taskService.
+	 */
 	@Autowired
 	private TaskService taskService;
 
+	/**
+	 * map.
+	 */
 	private HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 
+	/**
+	 * NEW.
+	 */
 	private static String NEW = "NEW";
+	/**
+	 * CANCEL.
+	 */
 	private static String CANCEL = "CANCEL";
+	/**
+	 * HOLD.
+	 */
 	private static String HOLD = "HOLD";
+	/**
+	 * COMPLETED.
+	 */
 	private static String COMPLETED = "COMPLETED";
 
+	/**
+	 * @param addEditTask
+	 * @return Task
+	 */
 	public Task addEditTask(Task addEditTask) {
 		String subject = new String();
 		String desc = new String();

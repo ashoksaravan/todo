@@ -14,6 +14,10 @@ import com.todo.domain.TaskHistory;
 import com.todo.repository.TaskHistoryRepository;
 import com.todo.repository.TaskRepository;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class TaskService {
 
@@ -50,7 +54,7 @@ public class TaskService {
 
 	/**
 	 * @param username
-	 * @return
+	 * @return List<Task>
 	 */
 	public List<Task> readAll(String username) {
 		return taskRepository.findTaskByUsername(username);
@@ -58,7 +62,7 @@ public class TaskService {
 
 	/**
 	 * @param task
-	 * @return
+	 * @return Task
 	 */
 	public Task addEditTask(Task task) {
 		Task existingTask = taskRepository.findTaskByTaskid(task.getTaskid());
@@ -82,7 +86,7 @@ public class TaskService {
 
 	/**
 	 * @param taskid
-	 * @return
+	 * @return List<TaskHistory>
 	 */
 	public List<TaskHistory> readTaskVersion(String taskid) {
 		return taskHistoryRepository.findTaskByTaskid(taskid);
@@ -90,7 +94,7 @@ public class TaskService {
 
 	/**
 	 * @param task
-	 * @return
+	 * @return List<Task>
 	 */
 	public List<Task> search(Task task) {
 		Criteria criteria = null;
@@ -140,7 +144,7 @@ public class TaskService {
 
 	/**
 	 * @param task
-	 * @return
+	 * @return List<Task>
 	 */
 	public List<Task> loadTask(Task task) {
 		Criteria criteria = null;

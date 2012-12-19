@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 
 import com.todo.domain.User;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class TodoAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 

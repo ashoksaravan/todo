@@ -12,6 +12,10 @@ import com.todo.dto.ProjectListDTO;
 import com.todo.service.ProjectService;
 import com.todo.service.RefDataService;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class AssociateProjectCmd {
 
@@ -29,7 +33,7 @@ public class AssociateProjectCmd {
 
 	/**
 	 * @param username
-	 * @return
+	 * @return ProjectListDTO
 	 */
 	public ProjectListDTO associateUserProject(String username) {
 		ArrayList<Integer> projectIds = new ArrayList<Integer>();

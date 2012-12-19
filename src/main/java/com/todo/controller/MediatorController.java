@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.todo.service.UserService;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Controller
 @RequestMapping("/")
 @SessionAttributes({ "user" })
@@ -22,7 +26,7 @@ public class MediatorController {
 
 	/**
 	 * @param model
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping
 	public String getHomePage(ModelMap model) {

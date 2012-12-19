@@ -1,56 +1,4 @@
 var urlHolder = new Object();
-/**
- * Load RefData Values.
- */
-function loadRefData() {
-	$.post(urlHolder.refdataPriority, function(response) {
-		if (response) {
-			var listItems = "";
-			var searchListItems = "";
-			searchListItems = "<option value='" + "SELECT" + "'>" + "-Select-"
-					+ "</option>";
-			for ( var i = 0; i < response.priority.length; i++) {
-				listItems += "<option value='" + response.priority[i].value
-						+ "'>" + response.priority[i].desc + "</option>";
-				searchListItems += "<option value='"
-						+ response.priority[i].value + "'>"
-						+ response.priority[i].desc + "</option>";
-			}
-			$("#priorityOption").html(listItems);
-			$("#search-priority").html(searchListItems);
-		}
-	});
-
-	$.post(urlHolder.refdataTaskStatus, function(response) {
-		if (response) {
-			var listItems = "";
-			var searchListItems = "";
-			searchListItems = "<option value='" + "SELECT" + "'>" + "-Select-"
-					+ "</option>";
-			for ( var i = 0; i < response.taskStatus.length; i++) {
-				listItems += "<option value='" + response.taskStatus[i].value
-						+ "'>" + response.taskStatus[i].desc + "</option>";
-				searchListItems += "<option value='"
-						+ response.taskStatus[i].value + "'>"
-						+ response.taskStatus[i].desc + "</option>";
-			}
-			$("#statusOption").html(listItems);
-			$("#search-status").html(searchListItems);
-		}
-	});
-	
-	$.post(urlHolder.refdataUserProject, function(response) {
-		if (response) {
-			var listItems = "";
-			for ( var i = 0; i < response.project.length; i++) {
-				listItems += "<option value='" + response.project[i].projectId
-						+ "'>" + response.project[i].projectName + "</option>";
-			}
-			$("#projectOption").html(listItems);
-			loadTaskDetails();
-		}
-	});
-}
 
 /**
  * Load Task Details.
@@ -259,6 +207,7 @@ function createNotes(task, ctx) {
  */
 function editTask(task) {
 	resetTaskWindow();
+	$('#hiddenStatus').show();
 	$('#addEditHeading').text("Edit Task");
 	$('#task-id').val(task.taskid);
 	$('#task-name').val(task.taskname);
@@ -286,6 +235,7 @@ function resetChangePwdForm() {
  * Reset the Task Form.
  */
 function resetTaskWindow() {
+	$('#hiddenStatus').hide();
 	$('#addEditHeading').text("Add Task");
 	$('#task-id').val('')
 	$('#task-name').val('');

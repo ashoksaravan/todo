@@ -11,6 +11,10 @@ import com.todo.domain.UserProject;
 import com.todo.repository.ProjectRepository;
 import com.todo.repository.UserProjectRepository;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Service
 public class ProjectService {
 
@@ -34,7 +38,7 @@ public class ProjectService {
 
 	/**
 	 * @param project
-	 * @return
+	 * @return Project
 	 */
 	public Project add(Project project) {
 
@@ -53,7 +57,7 @@ public class ProjectService {
 
 	/**
 	 * @param project
-	 * @return
+	 * @return Project
 	 */
 
 	public Project edit(Project project) {
@@ -73,7 +77,7 @@ public class ProjectService {
 
 	/**
 	 * @param username
-	 * @return
+	 * @return List<UserProject>
 	 */
 	public List<UserProject> readProject(String username) {
 		return userProjectRepository.findUserProjectByUsername(username);

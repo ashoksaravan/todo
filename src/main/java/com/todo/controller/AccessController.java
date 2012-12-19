@@ -5,6 +5,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * @author vinodkumara
+ *
+ */
 @Controller
 @RequestMapping
 public class AccessController {
@@ -12,7 +16,7 @@ public class AccessController {
 	/**
 	 * @param model
 	 * @param message
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/login")
 	public String login(Model model, @RequestParam(required = false) String message) {
@@ -21,7 +25,7 @@ public class AccessController {
 	}
 
 	/**
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(value = "/denied")
 	public String denied() {
@@ -29,7 +33,7 @@ public class AccessController {
 	}
 
 	/**
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(value = "/login/failure")
 	public String loginFailure() {
@@ -39,7 +43,7 @@ public class AccessController {
 
 	/**
 	 * @param message
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(value = "/logout/success")
 	public String logoutSuccess(@RequestParam(required = false) String message) {
@@ -50,7 +54,7 @@ public class AccessController {
 	 * @param oldpwd
 	 * @param newPwd
 	 * @param confirmPwd
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(value = "/requestNewPwd")
 	public String changePassword(@RequestParam String oldpwd, @RequestParam String newPwd,

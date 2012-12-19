@@ -4,14 +4,27 @@ import java.util.List;
 
 import com.todo.domain.TaskStatus;
 
+/**
+ * @author vinodkumara
+ * 
+ */
 public class TaskStatusListDTO {
-	
-private List<TaskStatus> taskStatus;
-	
+
+	/**
+	 * taskStatus.
+	 */
+	private List<TaskStatus> taskStatus;
+
+	/**
+	 * @return the taskStatus
+	 */
 	public List<TaskStatus> getTaskStatus() {
 		return taskStatus;
 	}
 
+	/**
+	 * @param taskStatus the taskStatus to set
+	 */
 	public void setTaskStatus(List<TaskStatus> taskStatus) {
 		this.taskStatus = taskStatus;
 	}
