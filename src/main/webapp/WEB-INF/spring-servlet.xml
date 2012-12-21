@@ -12,6 +12,12 @@
 		</property>
 		<property name="order" value="0" />
 	</bean>
+	
+	<bean 
+  	class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" />
+  	
+  	<bean id="multipartResolver"
+	class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
 	<!-- Declare a view resolver -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 

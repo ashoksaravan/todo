@@ -1,4 +1,5 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:url value="/users/records" var="recordsUrl" />
 <c:url value="/users/create" var="addUrl" />
@@ -62,6 +63,7 @@
 <title>User Records</title>
 
 <script type='text/javascript'>
+	var ctx = "${pageContext.request.contextPath}";
 	$(function() {
 		$('#v-nav>div.tab-content').hide().eq(0).show('medium');
 		var items = $('#v-nav>ul>li').each(
@@ -94,6 +96,7 @@
 		$('#editProject').hide();
 		$('#assignProject').hide();
 		$('#searchUser').fancybox();
+		$('#importUser').fancybox();
 
 		$('#newBtn').click(function() {
 			toggleForms('new');
@@ -288,6 +291,9 @@
 		$('#search-last-name').val('');
 		$("#searchCriteria").hide();
 	}
+	function importUser() {
+		$('#import').show();
+	}
 
 	function searchUser() {
 		$.post(urlHolder.records, {
@@ -308,17 +314,17 @@
 			parent.$.fancybox.close();
 		});
 	}
+
 </script>
 </head>
 
 <body>
 	<jsp:include page='/jsp/header.jsp' />
-	<div align="right">
-		<a href="#searchUserDetails" id="searchUser" title="Search Users"
-			style="width: 10%; padding-top: 20px;" onclick="userSearchWindow();"><img
-			src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
-			style="cursor: pointer; height: 27px; padding-top: 2mm;" /></a> <img
-			src="/todo/resources/css/images/home_btn.png" align="right"
+	<div>${message}</div>
+	<div align="right" style="padding-top: 10px;">
+		<a href="#import"  id="importUser" title="Import Users"
+			style="width: 10%; padding-top: 30px;" onclick="importUser();">Import Users</a>
+			<img src="/todo/resources/css/images/home_btn.png" align="right"
 			title="Home" onclick="back('${pageContext.request.contextPath}')"
 			style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" />
 	</div>
@@ -326,6 +332,14 @@
 	<div id="usersScreen" align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
+			<div id="import" align="right" hidden="hidden" style="padding-top: 20px;">
+				<form:form action="${pageContext.request.contextPath}/upload/save.html" method="post" modelAttribute="uploadForm" enctype="multipart/form-data">
+					Please select a file to upload : <input type="file" name="file" />
+					<input type="submit" value="upload" /> <span>
+					</span>
+
+				</form:form>
+			</div>
 
 			<div id="v-nav">
 				<ul>
@@ -476,42 +490,6 @@
 					</form>
 				</div>
 
-				<div id="searchUserDetails" hidden="hidden">
-					<h4 align="left" id="searchHeading">Search User</h4>
-					<table>
-						<tr>
-							<td class="pwd-box-name">UserName:</td>
-							<td class="pwd-box-field"><input name="search-user-name"
-								type="text" class="pwd_form-login" id="search-user-name"
-								title="Please enter the user name" value="" size="30"
-								maxlength="2048" /></td>
-						</tr>
-						<tr>
-							<td class="pwd-box-name" id="priority">First Name:</td>
-							<td class="pwd-box-field"><input name="search-first-name"
-								type="text" class="pwd_form-login" id="search-first-name"
-								title="Please enter the first name" value="" size="30"
-								maxlength="2048" /></td>
-						</tr>
-						<tr>
-							<td class="pwd-box-name" id="priority">Last Name:</td>
-							<td class="pwd-box-field"><input name="search-last-name"
-								type="text" class="pwd_form-login" id="search-last-name"
-								title="Please enter the last name" value="" size="30"
-								maxlength="2048" /></td>
-						</tr>
-
-						<tr>
-							<td colspan="2"><h6 hidden="hidden" style="color: red;"
-									id="searchCriteria">Please enter atleast one search
-									criteria</h6></td>
-						</tr>
-					</table>
-					<div align="center">
-						<button id="searchBtn" class="searchBtn" style="color: white;"
-							onclick="searchUser()">Search</button>
-					</div>
-				</div>
 			</div>
 		</section>
 	</div>
