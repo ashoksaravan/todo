@@ -1,5 +1,6 @@
 package com.todo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import com.todo.service.UserService;
 
 /**
  * @author vinodkumara
- *
+ * 
  */
 @Controller
 @RequestMapping("/users")
@@ -55,25 +56,24 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/records")
 	public @ResponseBody
-	UserListDTO getUsers(@RequestParam(required = false) String userName,
-			@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName) {
-		UserListDTO userListDto;
-		User user = new User();
-		user.setUsername(userName);
-		user.setFirstName(firstName);
-		user.setLastName(lastName);
-		if ((userName != null && userName.trim().length() > 0) || (firstName != null && firstName.trim().length() > 0)
-				|| (lastName != null && lastName.trim().length() > 0)) {
-			userListDto = new UserListDTO();
-			List<User> users = service.searchUser(user);
-			userListDto.setUsers(users);
-			return userListDto;
+	UserListDTO getUsers(@RequestParam(required = false) Integer rows, @RequestParam(required = false) Integer page) {
+		UserListDTO userListDto = new UserListDTO();
+		List<User> users = service.readAll();
+		if (rows != null && rows != 0 && page != null && page != 0) {
+			List<User> viewRows = new ArrayList<User>();
+			for (int i = (rows * (page - 1)); i < (rows * page); i++) {
+				viewRows.add(users.get(i));
+				if (i == (users.size() - 1)) {
+					break;
+				}
+			}
+			userListDto.setRows(viewRows);
+			userListDto.setTotal((users.size() / rows) + 1);
 		} else {
-			userListDto = new UserListDTO();
-			userListDto.setUsers(service.readAll());
-			return userListDto;
-
+			userListDto.setRows(users);
 		}
+		userListDto.setRecords(users.size());
+		return userListDto;
 	}
 
 	/**
@@ -125,27 +125,46 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	User update(ModelMap map, @RequestParam String username, @RequestParam String firstName,
-			@RequestParam String lastName, @RequestParam Integer role, @RequestParam String mailId) {
+	User update(ModelMap map, @RequestParam(required = false) String username,
+			@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
+			@RequestParam(required = false, value = "role.role") Integer role,
+			@RequestParam(required = false) String mailId, @RequestParam String oper, @RequestParam String id) {
 
-		Role existingRole = new Role();
-		existingRole.setRole(role);
+		Role roleIn = new Role();
+		roleIn.setRole(role);
 
-		User existingUser = new User();
-		existingUser.setUsername(username);
-		existingUser.setFirstName(firstName);
-		existingUser.setLastName(lastName);
-		existingUser.setMailId(mailId);
-		existingUser.setRole(existingRole);
-		existingUser.setReqNewPwd(Boolean.FALSE);
-
-		service.update(existingUser);
-
-		if (SecurityContextHolder.getContext().getAuthentication().getName().equals(existingUser.getUsername())) {
-			map.addAttribute("user", existingUser);
+		if ("edit".equalsIgnoreCase(oper)) {
+			User existingUser = new User();
+			existingUser.setUsername(username);
+			existingUser.setFirstName(firstName);
+			existingUser.setLastName(lastName);
+			existingUser.setMailId(mailId);
+			existingUser.setRole(roleIn);
+			existingUser.setReqNewPwd(Boolean.FALSE);
+			service.update(existingUser);
+			if (SecurityContextHolder.getContext().getAuthentication().getName().equals(existingUser.getUsername())) {
+				map.addAttribute("user", existingUser);
+			}
+			return existingUser;
+		} else if ("add".equalsIgnoreCase(oper)) {
+			GenerateRandomPassword randomPassword = new GenerateRandomPassword();
+			String pwd = randomPassword.getAlphaNumeric(10);
+			User newUser = new User();
+			newUser.setUsername(username);
+			newUser.setPassword(pwd);
+			newUser.setFirstName(firstName);
+			newUser.setLastName(lastName);
+			newUser.setRole(roleIn);
+			newUser.setMailId(mailId);
+			return service.create(newUser);
+		} else if ("del".equalsIgnoreCase(oper)) {
+			User existingUser = new User();
+			existingUser.setUsername(id);
+			service.delete(existingUser);
+			return existingUser;
 		}
+		return null;
 
-		return existingUser;
 	}
 
 	/**

@@ -19,13 +19,13 @@
 <html>
 <head>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.8.23.custom.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.9.2.custom.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/css/stickystyle.css"></link>
 <link
-	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.8.23.custom.css"
+	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.9.2.custom.css"
 	rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/resources/css/login-box.css"
 	rel="stylesheet" type="text/css" />
@@ -48,6 +48,16 @@
 	rel="stylesheet" type="text/css" />
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/fancybox/jquery.fancybox.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href='<c:url value="/resources/css/ui.jqgrid.css" />' />
+
+<script src='<c:url value="/resources/js/grid.locale-en.js"/>'
+	type="text/javascript"></script>
+
+<script src='<c:url value="/resources/js/jquery.jqGrid.min.js"/>'
+	type="text/javascript"></script>
+
 
 <title>User Records</title>
 
@@ -202,7 +212,75 @@
 			$('#searchUser').show();
 		});
 	});
-	
+
+	$(function() {
+		var lastsel;
+		jQuery("#tableUsers").jqGrid(
+				{
+					url : urlHolder.records,
+					datatype : "json",
+					colNames : [ 'Username', 'First Name', 'Last Name', 'Role',
+							'MailId' ],
+					colModel : [ {
+						name : 'username',
+						index : 'username',
+						editable:true,
+						width : 150
+
+					}, {
+						name : 'firstName',
+						index : 'firstName',
+						editable:true,
+						width : 150
+					}, {
+						name : 'lastName',
+						index : 'lastName',
+						editable:true,
+						width : 150
+					}, {
+						name : 'role.role',
+						index : 'role',
+						editable:true,
+						edittype:"select",
+						editoptions:{value:"1:Admin;2:Regular"},
+						width : 100
+					}, {
+						name : 'mailId',
+						index : 'mailId',
+						editable:true,
+						width : 300
+					} ],
+					rowNum : 10,
+					rowList : [ 10, 20, 30 ],
+					pager : '#userPager',
+					sortname : 'username',
+					jsonReader : {
+						repeatitems : false,
+						id : "0"
+					},
+					
+					viewrecords : true,
+					sortorder : "asc",
+					height : '38%',
+					width : '100%',
+					onSelectRow : function(username) {
+						if (username && username !== lastsel) {
+							jQuery('#tableUsers').jqGrid('restoreRow', lastsel);
+							jQuery('#tableUsers').jqGrid('editRow', username, true);
+							lastsel = username;
+						}
+					},
+					editurl : urlHolder.edit,
+					caption: "Record System"
+				});
+		jQuery("#tableUsers").jqGrid('navGrid', '#userPager', {
+			edit : true,
+			add : true,
+			del : true
+		});
+		toggleForms('hide');
+	});
+
 	//for users search
 	function userSearchWindow() {
 		$('#search-user-name').val('');
@@ -210,7 +288,7 @@
 		$('#search-last-name').val('');
 		$("#searchCriteria").hide();
 	}
-	
+
 	function searchUser() {
 		$.post(urlHolder.records, {
 			userName : $("#search-user-name").val(),
@@ -221,8 +299,7 @@
 				$('#noresult').show();
 				$('#tableUsers').hide();
 				$('#controlBar').hide();
-			}
-			else{
+			} else {
 				$('#noresult').hide();
 				$('#tableUsers').show();
 				$('#controlBar').show();
@@ -231,7 +308,6 @@
 			parent.$.fancybox.close();
 		});
 	}
-
 </script>
 </head>
 
@@ -242,11 +318,11 @@
 			style="width: 10%; padding-top: 20px;" onclick="userSearchWindow();"><img
 			src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
 			style="cursor: pointer; height: 27px; padding-top: 2mm;" /></a> <img
-			src="/todo/resources/css/images/home_btn.png" align="right" title="Home"
-			onclick="back('${pageContext.request.contextPath}')"
+			src="/todo/resources/css/images/home_btn.png" align="right"
+			title="Home" onclick="back('${pageContext.request.contextPath}')"
 			style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" />
 	</div>
-	
+
 	<div id="usersScreen" align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
@@ -256,33 +332,17 @@
 					<li tab="tab1" id="tab1" class="first current">Manage Users</li>
 					<li tab="tab2" id="tab2" class="last">Add Project</li>
 				</ul>
-				<div align="center" id="userRecords" class="tab-content">
-				<div><h5 style="color: red;" align="center" hidden="hidden" id="noresult" style="width: 80%">No search results found.</h5></div>
-					<table id='tableUsers' class='tableUsers'>
-						<caption align="top">
-							<b>Record System</b> <br></br>
-						</caption>
-						<thead id='tableHead'>
-							<tr>
-								<th></th>
-								<th>Username</th>
-								<th>First Name</th>
-								<th>Last Name</th>
-								<th>Role</th>
-								<th>EmailId</th>
-							</tr>
-						</thead>
+				<div align="center" class="tab-content" style="padding-top: 5%;">
+					<table id="tableUsers">
 					</table>
+					<div id="userPager"></div>
 					<div id='controlBar' style="width: 80%" align="left">
-						<input type='button' value='New' id='newBtn' /> <input
-							type='button' value='Delete' id='deleteBtn' /> <input
-							type='button' value='Edit' id='editBtn' /> <input type='button'
-							value='Reload' id='reloadBtn' /><input type='button'
+						<input type='button'
 							value='Assign Project' id='assignBtn' />
 					</div>
 
 
-					<form id='newForm' class="newEditForm" >
+					<form id='newForm' class="newEditForm">
 						<div class="fieldgroup">
 							<label for='newUsername'>UserName</label> <input type='text'
 								id='newUsername' />
@@ -448,7 +508,8 @@
 						</tr>
 					</table>
 					<div align="center">
-						<button id="searchBtn" class="searchBtn" style="color: white;" onclick="searchUser()">Search</button>
+						<button id="searchBtn" class="searchBtn" style="color: white;"
+							onclick="searchUser()">Search</button>
 					</div>
 				</div>
 			</div>

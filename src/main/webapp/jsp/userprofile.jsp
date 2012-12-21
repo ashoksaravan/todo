@@ -10,13 +10,13 @@
 <head>
 
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.8.23.custom.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.9.2.custom.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/css/stickystyle.css"></link>
 <link
-	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.8.23.custom.css"
+	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.9.2.custom.css"
 	rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/resources/css/login-box.css"
 	rel="stylesheet" type="text/css" />

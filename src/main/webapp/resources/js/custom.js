@@ -6,10 +6,10 @@ var selectedProj = [];
 var tempProjectArr = [];
 
 function loadTable() {
-	$.get(urlHolder.records, function(response) {
+	/*$.get(urlHolder.records, function(response) {
 		buildUserTable(response);
 		
-	});
+	});*/
 	
 	$.post(urlHolder.readProjects, function(response) {
 		$('#tableProjects').find('tbody').remove();
@@ -28,7 +28,7 @@ function loadTable() {
 	});
 }
 
-function buildUserTable(response){
+/*function buildUserTable(response){
 	$('#tableUsers').find('tbody').remove();
 
 	for ( var i = 0; i < response.users.length; i++) {
@@ -46,7 +46,7 @@ function buildUserTable(response){
 
 	$('#tableUsers').data('model', response.users);
 	toggleForms('hide');
-}
+}*/
 
 function submitNewRecord() {
 	$.post(urlHolder.add, {

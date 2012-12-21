@@ -19,7 +19,7 @@ public class ExternalController {
 	 * @param data
 	 * @return ModelAndView
 	 */
-	@RequestMapping(value = "/export", method = RequestMethod.GET)
+	@RequestMapping(value = "/export.xls", method = RequestMethod.GET)
 	public @ResponseBody
 	ModelAndView export() {
 		return new ModelAndView("ExcelRevenueSummary");

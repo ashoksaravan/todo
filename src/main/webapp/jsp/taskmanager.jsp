@@ -21,13 +21,13 @@
 <link rel="icon" type="image/gif"
 	href="<%=request.getContextPath()%>/resources/images/Ebix-small.gif">
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.0.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.8.23.custom.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-ui-1.9.2.custom.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/css/stickystyle.css"></link>
 <link
-	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.8.23.custom.css"
+	href="<%=request.getContextPath()%>/resources/css/jquery-ui-1.9.2.custom.css"
 	rel="stylesheet" type="text/css" />
 <link href="<%=request.getContextPath()%>/resources/css/login-box.css"
 	rel="stylesheet" type="text/css" />
@@ -64,13 +64,13 @@ var ctx = "${pageContext.request.contextPath}";
 		
 		$.post(urlHolder.records, function(response) {
 			if (response != null) {
-				for ( var i = 0; i < response.users.length; i++) {
+				for ( var i = 0; i < response.rows.length; i++) {
 					var obj = {
 						id : i,
-						label : response.users[i].firstName
+						label : response.rows[i].firstName
 								+ ','
-								+ response.users[i].lastName,
-						value : response.users[i].username
+								+ response.rows[i].lastName,
+						value : response.rows[i].username
 					};
 					availableTags.push(obj);
 				}
@@ -168,7 +168,7 @@ var ctx = "${pageContext.request.contextPath}";
 	}
 
 	function exportTaskXls(){
-		window.location.href = ctx+'/external/export';
+		window.location.href = ctx+'/external/export.xls';
 	}
 </script>
 </head>
