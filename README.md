@@ -1,6 +1,6 @@
 This project is to manage internal tasks with in team.
 
-To import the project in Eclipse, follow the steps below
+To import the project into Eclipse, follow the steps below
 
     1. Ensure Maven is installed
     2. Open a command window (Windows) or a terminal (Linux/Mac)
