@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todo.controller.GenerateRandomPassword;
@@ -42,13 +44,14 @@ public class ForgotPasswordCmd {
 		map = new HashMap<String, ArrayList<String>>();
 		User user = new User();
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
+		PasswordEncoder encoder = new Md5PasswordEncoder();
 		user = service.read(username);
 		if (user != null) {
 			password = randomPassword.getAlphaNumeric(10);
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add(user.getMailId());
 			map.put("TO", ar);
-			user.setPassword(password);
+			user.setPassword(encoder.encodePassword(password, user.getUsername()));
 			Boolean pwdUpdate = service.updatePwd(user, true);
 			if (pwdUpdate) {
 				SendMail sms = new SendMail();

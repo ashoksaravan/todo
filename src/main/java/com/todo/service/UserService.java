@@ -86,6 +86,7 @@ public class UserService {
 	 */
 	public User update(User user) {
 		User existingUser = userRepository.findByUsername(user.getUsername());
+		Role role = null;
 
 		if (existingUser == null) {
 			return null;
@@ -93,7 +94,10 @@ public class UserService {
 
 		existingUser.setFirstName(user.getFirstName());
 		existingUser.setLastName(user.getLastName());
-		existingUser.getRole().setRole(user.getRole().getRole());
+		if (user.getRole().getRole() != null) {
+			role = roleRepository.findByRole(user.getRole().getRole());
+		}
+		existingUser.getRole().setId(role.getId().toString());
 		existingUser.setReqNewPwd(user.getReqNewPwd());
 		existingUser.setPassword(user.getPassword());
 		userRepository.save(existingUser);

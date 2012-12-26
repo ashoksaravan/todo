@@ -4,6 +4,7 @@
 var urlHolder = new Object();
 var selectedProj = [];
 var tempProjectArr = [];
+var user = new String();
 
 function loadTable() {
 	/*$.get(urlHolder.records, function(response) {
@@ -260,10 +261,10 @@ function fillProjectForm() {
 	$('#editprojDesc').val($('#tableProjects').data('model')[selected].projectDesc);
 }
 
-function selectedUser(){
-	var selected = $('input:radio[name=index]:checked').val();
+function selectedUser(name){
+	user = name;
 	$.post(urlHolder.userProj, {
-		username : $('#tableUsers').data('model')[selected].username
+		username : name
 	}, function(response) {
 		if (response) {
 			tempProjectArr = [];
@@ -300,7 +301,7 @@ function associateProject(){
 		dataType : 'json',
 		type : "POST",
 		url : urlHolder.addEditUserProj,
-		data : JSON.stringify({"username" : $('#tableUsers').data('model')[selected].username, "project": userProjArr}),
+		data : JSON.stringify({"username" : user, "project": userProjArr}),
 
 		success : function(response) {
 			if (response) {

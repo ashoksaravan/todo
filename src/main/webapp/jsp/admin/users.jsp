@@ -56,14 +56,15 @@
 <script src='<c:url value="/resources/js/grid.locale-en.js"/>'
 	type="text/javascript"></script>
 
-<script src='<c:url value="/resources/js/jquery.jqGrid.min.js"/>'
+<%-- <script src='<c:url value="/resources/js/jquery.jqGrid.min.js"/>'
+	type="text/javascript"></script> --%>
+<script src='<c:url value="/resources/js/jquery.jqGrid.src.js"/>'
 	type="text/javascript"></script>
 
 
 <title>User Records</title>
 
 <script type='text/javascript'>
-	var ctx = "${pageContext.request.contextPath}";
 	$(function() {
 		$('#v-nav>div.tab-content').hide().eq(0).show('medium');
 		var items = $('#v-nav>ul>li').each(
@@ -111,13 +112,13 @@
 			}
 		});
 
-		$('#assignBtn').click(function() {
+		/* $('#assignBtn').click(function() {
 			if (hasSelected()) {
 				toggleForms('assign');
 				toggleCrudButtons('hide');
 				selectedUser();
 			}
-		});
+		}); */
 
 		$('#reloadBtn').click(function() {
 			loadTable();
@@ -155,8 +156,8 @@
 		});
 
 		$('#closeAssignProject').click(function() {
-			toggleForms('hide');
-			toggleCrudButtons('show');
+			 $('#v-div').show();
+			 $('#assignProject').hide();
 		});
 
 		$("#newUsername").focusout(function() {
@@ -227,31 +228,31 @@
 					colModel : [ {
 						name : 'username',
 						index : 'username',
-						editable:true,
-						width : 150
+						autowidth : true
 
 					}, {
 						name : 'firstName',
 						index : 'firstName',
 						editable:true,
-						width : 150
+						autowidth : true
 					}, {
 						name : 'lastName',
 						index : 'lastName',
 						editable:true,
-						width : 150
+						autowidth : true
 					}, {
-						name : 'role.role',
+						name : 'role.desc',
 						index : 'role',
 						editable:true,
 						edittype:"select",
 						editoptions:{value:"1:Admin;2:Regular"},
-						width : 100
+						autowidth : false,
+						width : '85%'
 					}, {
 						name : 'mailId',
 						index : 'mailId',
 						editable:true,
-						width : 300
+						autowidth : true
 					} ],
 					rowNum : 10,
 					rowList : [ 10, 20, 30 ],
@@ -264,7 +265,7 @@
 					
 					viewrecords : true,
 					sortorder : "asc",
-					height : '38%',
+					height : '40%',
 					width : '100%',
 					onSelectRow : function(username) {
 						if (username && username !== lastsel) {
@@ -281,9 +282,22 @@
 			add : true,
 			del : true
 		});
+// 		jQuery("#tableUsers").jqGrid('searchGrid', {sopt:['cn','bw','lt','gt','ew']} );
 		toggleForms('hide');
+		
+		jQuery("#assignBtn").click(function() {
+			var id = jQuery("#tableUsers").jqGrid('getGridParam', 'selrow');
+			 if (id) {
+				 $('#v-div').hide();
+				 $('#assignProject').show();
+				 selectedUser(id);
+			} else {
+				alert("Please select row");
+			} 
+		});
 	});
-
+	
+	
 	//for users search
 	function userSearchWindow() {
 		$('#search-user-name').val('');
@@ -314,7 +328,6 @@
 			parent.$.fancybox.close();
 		});
 	}
-
 </script>
 </head>
 
@@ -346,11 +359,11 @@
 					<li tab="tab1" id="tab1" class="first current">Manage Users</li>
 					<li tab="tab2" id="tab2" class="last">Add Project</li>
 				</ul>
-				<div align="center" class="tab-content" style="padding-top: 5%;">
+				<div align="center" class="tab-content" style="padding-top: 5%;" id="v-div">
 					<table id="tableUsers">
 					</table>
 					<div id="userPager"></div>
-					<div id='controlBar' style="width: 80%" align="left">
+					<div id='controlBar' style="padding-top: 2%;width: 20%" align="left">
 						<input type='button'
 							value='Assign Project' id='assignBtn' />
 					</div>
@@ -420,7 +433,8 @@
 							type='submit' value='Submit' />
 					</form>
 
-					<div id='assignProject' class="tab-content">
+				</div>
+				<div id='assignProject' class="tab-content" hidden="hidden">
 						<table id="assignProjectDetails" class='tableUsers'>
 							<caption align="top">
 								<b>Assign Projects</b> <br></br>
@@ -438,7 +452,6 @@
 								type='button' value='Save' onclick="associateProject()" />
 						</div>
 					</div>
-				</div>
 				<div align="center" id="addProject" class="tab-content"
 					hidden="hidden">
 					<table id='tableProjects' class='tableUsers'>

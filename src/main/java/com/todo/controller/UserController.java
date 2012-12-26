@@ -18,10 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.todo.command.ForgotPasswordCmd;
+import com.todo.command.SearchUserCmd;
+import com.todo.command.UserCmd;
 import com.todo.domain.Role;
 import com.todo.domain.User;
 import com.todo.dto.UserListDTO;
-import com.todo.service.RefDataService;
 import com.todo.service.UserService;
 
 /**
@@ -40,26 +41,39 @@ public class UserController {
 	private UserService service;
 
 	/**
-	 * dataService.
-	 */
-	@Autowired
-	private RefDataService dataService;
-
-	/**
 	 * forgotPasswordCmd.
 	 */
 	@Autowired
 	ForgotPasswordCmd forgotPasswordCmd;
 
 	/**
+	 * searchUserCmd.
+	 */
+	@Autowired
+	SearchUserCmd searchUserCmd;
+
+	/**
+	 * userCmd.
+	 */
+	@Autowired
+	UserCmd userCmd;
+
+	/**
 	 * @return UserListDTO
 	 */
 	@RequestMapping(value = "/records")
 	public @ResponseBody
-	UserListDTO getUsers(@RequestParam(required = false) Integer rows, @RequestParam(required = false) Integer page) {
+	UserListDTO getUsers(@RequestParam(required = false) Integer rows, @RequestParam(required = false) Integer page,
+			@RequestParam(required = false) String searchField, @RequestParam(required = false) String searchOper,
+			@RequestParam(required = false) String searchString, @RequestParam(required = false) boolean _search) {
 		UserListDTO userListDto = new UserListDTO();
-		List<User> users = service.readAll();
-		if (rows != null && rows != 0 && page != null && page != 0) {
+		List<User> users = null;
+		if (_search) {
+			users = searchUserCmd.searchUsers(searchField, searchOper, searchString);
+		} else {
+			users = service.readAll();
+		}
+		if (rows != null && rows != 0 && page != null && page != 0 && users != null && users.size() > 0) {
 			List<User> viewRows = new ArrayList<User>();
 			for (int i = (rows * (page - 1)); i < (rows * page); i++) {
 				viewRows.add(users.get(i));
@@ -127,15 +141,16 @@ public class UserController {
 	public @ResponseBody
 	User update(ModelMap map, @RequestParam(required = false) String username,
 			@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-			@RequestParam(required = false, value = "role.role") Integer role,
+			@RequestParam(required = false, value = "role.desc") Integer role,
 			@RequestParam(required = false) String mailId, @RequestParam String oper, @RequestParam String id) {
 
 		Role roleIn = new Role();
 		roleIn.setRole(role);
 
 		if ("edit".equalsIgnoreCase(oper)) {
+			System.out.println(oper);
 			User existingUser = new User();
-			existingUser.setUsername(username);
+			existingUser.setUsername(id);
 			existingUser.setFirstName(firstName);
 			existingUser.setLastName(lastName);
 			existingUser.setMailId(mailId);
@@ -147,15 +162,13 @@ public class UserController {
 			}
 			return existingUser;
 		} else if ("add".equalsIgnoreCase(oper)) {
-			GenerateRandomPassword randomPassword = new GenerateRandomPassword();
-			String pwd = randomPassword.getAlphaNumeric(10);
 			User newUser = new User();
-			newUser.setUsername(username);
-			newUser.setPassword(pwd);
+			newUser.setUsername(userCmd.getUserName(mailId));
 			newUser.setFirstName(firstName);
 			newUser.setLastName(lastName);
 			newUser.setRole(roleIn);
 			newUser.setMailId(mailId);
+			newUser.setPassword(userCmd.getPassword(newUser));
 			return service.create(newUser);
 		} else if ("del".equalsIgnoreCase(oper)) {
 			User existingUser = new User();
