@@ -335,11 +335,13 @@
 	<jsp:include page='/jsp/header.jsp' />
 	<div>${message}</div>
 	<div align="right" style="padding-top: 10px;">
-		<a href="#import"  id="importUser" title="Import Users"
-			style="width: 10%; padding-top: 30px;" onclick="importUser();">Import Users</a>
 			<img src="/todo/resources/css/images/home_btn.png" align="right"
 			title="Home" onclick="back('${pageContext.request.contextPath}')"
 			style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" />
+			<a href="#import" id="importUser" title="Import Users"
+			style="width: 10%; padding-top: 30px;" onclick="importUser();"><img
+			src="/todo/resources/css/images/upload.png" align="right"
+			style="cursor: pointer; width:30px; height:30px; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" /></a> 
 	</div>
 
 	<div id="usersScreen" align="left" style="width: 90%; height: 75%">
