@@ -156,8 +156,8 @@
 		});
 
 		$('#closeAssignProject').click(function() {
-			 $('#v-div').show();
-			 $('#assignProject').hide();
+			$('#v-div').show();
+			$('#assignProject').hide();
 		});
 
 		$("#newUsername").focusout(function() {
@@ -210,94 +210,100 @@
 			submitEditProjRecord();
 		});
 		$('#tab2').click(function() {
-			$('#searchUser').hide();
+			$('#importUser').hide();
 		});
 		$('#tab1').click(function() {
-			$('#searchUser').show();
+			$('#importUser').show();
 		});
 	});
 
 	$(function() {
 		var lastsel;
-		jQuery("#tableUsers").jqGrid(
-				{
-					url : urlHolder.records,
-					datatype : "json",
-					colNames : [ 'Username', 'First Name', 'Last Name', 'Role',
-							'MailId' ],
-					colModel : [ {
-						name : 'username',
-						index : 'username',
-						autowidth : true
+		jQuery("#tableUsers")
+				.jqGrid(
+						{
+							url : urlHolder.records,
+							datatype : "json",
+							colNames : [ 'Username', 'First Name', 'Last Name',
+									'Role', 'MailId' ],
+							colModel : [ {
+								name : 'username',
+								index : 'username',
+								width : '100%',
+								sortable : false
+							}, {
+								name : 'firstName',
+								index : 'firstName',
+								width : '100%',
+								editable : true,
+								sortable : false
+							}, {
+								name : 'lastName',
+								index : 'lastName',
+								editable : true,
+								width : '100%',
+								sortable : false
+							}, {
+								name : 'role.desc',
+								index : 'role',
+								editable : true,
+								edittype : "select",
+								editoptions : {
+									value : "1:Admin;2:Regular"
+								},
+								width : '100%',
+								sortable : false
+							}, {
+								name : 'mailId',
+								index : 'mailId',
+								editable : true,
+								autowidth : true,
+								sortable : false
+							} ],
+							rowNum : 10,
+							rowList : [ 10, 20, 30 ],
+							pager : '#userPager',
+							sortname : 'username',
+							jsonReader : {
+								repeatitems : false,
+								id : "0"
+							},
 
-					}, {
-						name : 'firstName',
-						index : 'firstName',
-						editable:true,
-						autowidth : true
-					}, {
-						name : 'lastName',
-						index : 'lastName',
-						editable:true,
-						autowidth : true
-					}, {
-						name : 'role.desc',
-						index : 'role',
-						editable:true,
-						edittype:"select",
-						editoptions:{value:"1:Admin;2:Regular"},
-						autowidth : false,
-						width : '85%'
-					}, {
-						name : 'mailId',
-						index : 'mailId',
-						editable:true,
-						autowidth : true
-					} ],
-					rowNum : 10,
-					rowList : [ 10, 20, 30 ],
-					pager : '#userPager',
-					sortname : 'username',
-					jsonReader : {
-						repeatitems : false,
-						id : "0"
-					},
-					
-					viewrecords : true,
-					sortorder : "asc",
-					height : '40%',
-					width : '100%',
-					onSelectRow : function(username) {
-						if (username && username !== lastsel) {
-							jQuery('#tableUsers').jqGrid('restoreRow', lastsel);
-							jQuery('#tableUsers').jqGrid('editRow', username, true);
-							lastsel = username;
-						}
-					},
-					editurl : urlHolder.edit,
-					caption: "Record System"
-				});
+							viewrecords : true,
+							sortorder : "asc",
+							height : '40%',
+							onSelectRow : function(username) {
+								if (username && username !== lastsel) {
+									jQuery('#tableUsers').jqGrid('restoreRow',
+											lastsel);
+									jQuery('#tableUsers').jqGrid('editRow',
+											username, true);
+									lastsel = username;
+								}
+							},
+							editurl : urlHolder.edit,
+							caption : "Record System"
+						});
 		jQuery("#tableUsers").jqGrid('navGrid', '#userPager', {
 			edit : true,
 			add : true,
 			del : true
 		});
-// 		jQuery("#tableUsers").jqGrid('searchGrid', {sopt:['cn','bw','lt','gt','ew']} );
+		// 		jQuery("#tableUsers").jqGrid('searchGrid', {sopt:['cn','bw','lt','gt','ew']} );
 		toggleForms('hide');
-		
+
 		jQuery("#assignBtn").click(function() {
 			var id = jQuery("#tableUsers").jqGrid('getGridParam', 'selrow');
-			 if (id) {
-				 $('#v-div').hide();
-				 $('#assignProject').show();
-				 selectedUser(id);
+			if (id) {
+				$('#v-div').hide();
+				$('#assignProject').show();
+				selectedUser(id);
 			} else {
 				alert("Please select row");
-			} 
+			}
 		});
 	});
-	
-	
+
 	//for users search
 	function userSearchWindow() {
 		$('#search-user-name').val('');
@@ -335,23 +341,27 @@
 	<jsp:include page='/jsp/header.jsp' />
 	<div>${message}</div>
 	<div align="right" style="padding-top: 10px;">
-			<img src="/todo/resources/css/images/home_btn.png" align="right"
+		<img src="/todo/resources/css/images/home_btn.png" align="right"
 			title="Home" onclick="back('${pageContext.request.contextPath}')"
 			style="cursor: pointer; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" />
-			<a href="#import" id="importUser" title="Import Users"
+		<a href="#import" id="importUser" title="Import Users"
 			style="width: 10%; padding-top: 30px;" onclick="importUser();"><img
 			src="/todo/resources/css/images/upload.png" align="right"
-			style="cursor: pointer; width:30px; height:30px; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" /></a> 
+			style="cursor: pointer; width: 30px; height: 30px; padding-top: 1mm; padding-right: 1mm; vertical-align: middle;" /></a>
 	</div>
 
 	<div id="usersScreen" align="left" style="width: 90%; height: 75%">
 		<section id="wrapper" class="wrapper" style="width: 100%;">
 			<h4 class="title">Administrator</h4>
-			<div id="import" align="right" hidden="hidden" style="padding-top: 20px;">
-				<form:form action="${pageContext.request.contextPath}/upload/save.html" method="post" modelAttribute="uploadForm" enctype="multipart/form-data">
+			<div id="import" align="right" hidden="hidden"
+				style="padding-top: 20px;">
+				<form:form
+					action="${pageContext.request.contextPath}/upload/save.html"
+					method="post" modelAttribute="uploadForm"
+					enctype="multipart/form-data">
 					Please select a file to upload : <input type="file" name="file" />
-					<input type="submit" value="upload" /> <span>
-					</span>
+					<input type="submit" value="upload" />
+					<span> </span>
 
 				</form:form>
 			</div>
@@ -361,82 +371,17 @@
 					<li tab="tab1" id="tab1" class="first current">Manage Users</li>
 					<li tab="tab2" id="tab2" class="last">Add Project</li>
 				</ul>
-				<div align="center" class="tab-content" style="padding-top: 5%;" id="v-div">
-					<table id="tableUsers">
-					</table>
-					<div id="userPager"></div>
-					<div id='controlBar' style="padding-top: 2%;width: 20%" align="left">
-						<input type='button'
-							value='Assign Project' id='assignBtn' />
+				<div align="center" class="tab-content" style="padding-top: 5%;">
+					<div id="v-div">
+						<table id="tableUsers">
+						</table>
+						<div id="userPager"></div>
+						<div id='controlBar' style="padding-top: 2%; width: 20%"
+							align="left">
+							<input type='button' value='Assign Project' id='assignBtn' />
+						</div>
 					</div>
-
-
-					<form id='newForm' class="newEditForm">
-						<div class="fieldgroup">
-							<label for='newUsername'>UserName</label> <input type='text'
-								id='newUsername' />
-						</div>
-
-						<div class="fieldgroup">
-							<label for='newPassword'>Password</label> <input type='password'
-								id='newPassword' />
-						</div>
-
-						<div class="fieldgroup">
-							<label for='newFirstName'>First Name</label> <input type='text'
-								id='newFirstName' />
-						</div>
-
-						<div class="fieldgroup">
-							<label for='newLastName'>Last Name</label> <input type='text'
-								id='newLastName' />
-						</div>
-
-						<div class="fieldgroup">
-							<label for='newMailId'>MailId</label> <input type='text'
-								id='newMailId' />
-						</div>
-
-						<div class="fieldgroup">
-							<label for='newRole'>Role</label> <select id='newRole'>
-								<option value='1'>Admin</option>
-								<option value='2' selected='selected'>Regular</option>
-							</select>
-						</div>
-
-						<div class="fieldgroup">
-							<input type='button' value='Close' id='closeNewForm' /> <input
-								type='submit' value='Submit' />
-						</div>
-					</form>
-
-
-					<form id='editForm' class="newEditForm">
-
-						<div class="fieldgroup">
-							<input type='hidden' id='editUsername' />
-						</div>
-						<div class="fieldgroup">
-							<label for='editFirstName'>First Name</label> <input type='text'
-								id='editFirstName' />
-						</div>
-						<div class="fieldgroup">
-							<label for='editLastName'>Last Name</label> <input type='text'
-								id='editLastName' />
-						</div>
-						<div class="fieldgroup">
-							<label for='editRole'>Role</label> <select id='editRole'>
-								<option value='1'>Admin</option>
-								<option value='2' selected='selected'>Regular</option>
-							</select>
-						</div>
-
-						<input type='button' value='Close' id='closeEditForm' /> <input
-							type='submit' value='Submit' />
-					</form>
-
-				</div>
-				<div id='assignProject' class="tab-content" hidden="hidden">
+					<div id='assignProject' class="tab-content" hidden="hidden">
 						<table id="assignProjectDetails" class='tableUsers'>
 							<caption align="top">
 								<b>Assign Projects</b> <br></br>
@@ -454,6 +399,8 @@
 								type='button' value='Save' onclick="associateProject()" />
 						</div>
 					</div>
+
+				</div>
 				<div align="center" id="addProject" class="tab-content"
 					hidden="hidden">
 					<table id='tableProjects' class='tableUsers'>
