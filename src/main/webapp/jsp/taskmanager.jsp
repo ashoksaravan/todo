@@ -4,13 +4,8 @@
 
 <c:url value="/users/checkpwd" var="checkpwdUrl" />
 <c:url value="/users/records" var="recordsUrl" />
-<c:url value="/users/refdataPriority" var="refdataPriorityUrl" />
-<c:url value="/users/refdataTaskStatus" var="refdataTaskStatusUrl" />
-
 <c:url value="/projects/refdataUserProject" var="refdataUserProjectUrl" />
-
 <c:url value="/external/export" var="writeUrl" />
-
 <c:url value="/taskservice/task" var="taskUrl" />
 <c:url value="/taskservice/addtask" var="addtaskUrl" />
 <c:url value="/taskservice/search" var="searchUrl" />
@@ -50,8 +45,6 @@ var ctx = "${pageContext.request.contextPath}";
 		urlHolder.checkpwd = '${checkpwdUrl}';
 		urlHolder.records = '${recordsUrl}';
 		urlHolder.search = '${searchUrl}';
-		urlHolder.refdataPriority = '${refdataPriorityUrl}';
-		urlHolder.refdataTaskStatus = '${refdataTaskStatusUrl}';
 		urlHolder.refdataUserProject = '${refdataUserProjectUrl}';
 		urlHolder.write = '${writeUrl}';
 	});
@@ -153,7 +146,7 @@ var ctx = "${pageContext.request.contextPath}";
 								});
 			}
 		});
-		loadTaskDetails();
+		loadRefData();
 	});
 
 	function split(val) {
@@ -178,23 +171,23 @@ var ctx = "${pageContext.request.contextPath}";
 		<table style="width: 100%">
 			<tr>
 				<td><select id='projectOption' name="project"
-					style="width: 30%" onchange="change()">
-					<c:forEach items="${projectList}" var="projectLst">
-						<option value="${projectLst.projectId}">${projectLst.projectDesc}</option>
-					</c:forEach>
-					</select></td>
-				<td align="right">
-				
-				<a href="#searchTask" id="searchQuery" title="SearchTask" style="width: 10%;"
-					onclick="resetSearchWindow();"><img src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
-					   style="cursor: pointer; height:27px;"/></a>
-			   <a href="#" id="refreshQuery" onclick="back('${pageContext.request.contextPath}')" title="Home" style="width: 10%;"><img src="<%=request.getContextPath()%>/resources/css/images/home_btn.png"
-					   onclick="back('${pageContext.request.contextPath}')" style="cursor: pointer; width:34px; height:27px;"/></a>
-					
-			   <a href="#" id="export" onclick="exportTaskXls()" title="Export Task" style="width: 10%;padding-right: 1%;"><img src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
-					   style="cursor: pointer; width:34px; height:27px;"/></a>
-					 
-				</td>
+					style="width: 30%" onchange="change()"></select></td>
+
+				<td align="right"><a href="#searchTask" id="searchQuery"
+					title="SearchTask" style="width: 10%;"
+					onclick="resetSearchWindow();"><img
+						src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"
+						style="cursor: pointer; height: 27px;" /></a> <a href="#"
+					id="refreshQuery"
+					onclick="back('${pageContext.request.contextPath}')" title="Home"
+					style="width: 10%;"><img
+						src="<%=request.getContextPath()%>/resources/css/images/home_btn.png"
+						onclick="back('${pageContext.request.contextPath}')"
+						style="cursor: pointer; width: 34px; height: 27px;" /></a> <a href="#"
+					id="export" onclick="exportTaskXls()" title="Export Task"
+					style="width: 10%; padding-right: 1%;"><img
+						src="<%=request.getContextPath()%>/resources/css/images/export_icon.png"
+						style="cursor: pointer; width: 34px; height: 27px;" /></a></td>
 			</tr>
 		</table>
 	</div>

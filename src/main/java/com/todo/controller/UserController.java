@@ -91,44 +91,6 @@ public class UserController {
 	}
 
 	/**
-	 * @param username
-	 * @return Boolean
-	 */
-	@RequestMapping(value = "/getName")
-	public @ResponseBody
-	Boolean get(@RequestParam String username) {
-		return service.checkUsername(username);
-	}
-
-	/**
-	 * @param username
-	 * @param password
-	 * @param firstName
-	 * @param lastName
-	 * @param role
-	 * @param mailID
-	 * @return User
-	 */
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody
-	User create(@RequestParam String username, @RequestParam String password, @RequestParam String firstName,
-			@RequestParam String lastName, @RequestParam Integer role, @RequestParam String mailID) {
-
-		Role newRole = new Role();
-		newRole.setRole(role);
-
-		User newUser = new User();
-		newUser.setUsername(username);
-		newUser.setPassword(password);
-		newUser.setFirstName(firstName);
-		newUser.setLastName(lastName);
-		newUser.setRole(newRole);
-		newUser.setMailId(mailID);
-
-		return service.create(newUser);
-	}
-
-	/**
 	 * @param map
 	 * @param username
 	 * @param firstName
@@ -178,20 +140,6 @@ public class UserController {
 		}
 		return null;
 
-	}
-
-	/**
-	 * @param username
-	 * @return Boolean
-	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.POST)
-	public @ResponseBody
-	Boolean delete(@RequestParam String username) {
-
-		User existingUser = new User();
-		existingUser.setUsername(username);
-
-		return service.delete(existingUser);
 	}
 
 	/**

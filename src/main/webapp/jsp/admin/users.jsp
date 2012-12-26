@@ -2,13 +2,8 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <c:url value="/users/records" var="recordsUrl" />
-<c:url value="/users/create" var="addUrl" />
 <c:url value="/users/update" var="editUrl" />
-<c:url value="/users/delete" var="deleteUrl" />
-<c:url value="/users/getName" var="getNameUrl" />
-
 <c:url value="/taskservice/task" var="taskUrl" />
-
 <c:url value="/metaData/readProjects" var="readProjectsUrl" />
 
 <c:url value="/projects/add" var="addProjUrl" />
@@ -80,12 +75,9 @@
 	$(function() {
 		// init
 		urlHolder.records = '${recordsUrl}';
-		urlHolder.add = '${addUrl}';
 		urlHolder.edit = '${editUrl}';
-		urlHolder.del = '${deleteUrl}';
 		urlHolder.task = '${taskUrl}';
 		urlHolder.readProjects = '${readProjectsUrl}';
-		urlHolder.getName = '${getNameUrl}';
 		urlHolder.addProject = '${addProjUrl}';
 		urlHolder.editProject = '${editProjUrl}';
 		urlHolder.assignedProj = '${assignedProjUrl}';
@@ -96,80 +88,11 @@
 		$('#addnewProject').hide();
 		$('#editProject').hide();
 		$('#assignProject').hide();
-		$('#searchUser').fancybox();
 		$('#importUser').fancybox();
-
-		$('#newBtn').click(function() {
-			toggleForms('new');
-			toggleCrudButtons('hide');
-		});
-
-		$('#editBtn').click(function() {
-			if (hasSelected()) {
-				toggleForms('edit');
-				toggleCrudButtons('hide');
-				fillEditForm();
-			}
-		});
-
-		/* $('#assignBtn').click(function() {
-			if (hasSelected()) {
-				toggleForms('assign');
-				toggleCrudButtons('hide');
-				selectedUser();
-			}
-		}); */
-
-		$('#reloadBtn').click(function() {
-			loadTable();
-		});
-
-		$('#deleteBtn').click(function() {
-			if (hasSelected()) {
-				submitDeleteRecord();
-			}
-		});
-
-		$('#newForm').submit(function(event) {
-			event.preventDefault();
-			submitNewRecord();
-		});
-
-		$('#editForm').submit(function(event) {
-			event.preventDefault();
-			submitUpdateRecord('${user.mailId}');
-		});
-
-		$('#editForm').submit(function(event) {
-			event.preventDefault();
-			submitUpdateRecord('${user.mailId}');
-		});
-
-		$('#closeNewForm').click(function() {
-			toggleForms('hide');
-			toggleCrudButtons('show');
-		});
-
-		$('#closeEditForm').click(function() {
-			toggleForms('hide');
-			toggleCrudButtons('show');
-		});
 
 		$('#closeAssignProject').click(function() {
 			$('#v-div').show();
 			$('#assignProject').hide();
-		});
-
-		$("#newUsername").focusout(function() {
-			$.post(urlHolder.getName, {
-				username : $("#newUsername").val()
-			}, function(response) {
-				if (response == true) {
-					$("#newUsername").addClass("error");
-				} else {
-					$("#newUsername").removeClass("error");
-				}
-			});
 		});
 
 		//for Project Details
@@ -289,8 +212,6 @@
 			add : true,
 			del : true
 		});
-		// 		jQuery("#tableUsers").jqGrid('searchGrid', {sopt:['cn','bw','lt','gt','ew']} );
-		toggleForms('hide');
 
 		jQuery("#assignBtn").click(function() {
 			var id = jQuery("#tableUsers").jqGrid('getGridParam', 'selrow');
@@ -304,35 +225,8 @@
 		});
 	});
 
-	//for users search
-	function userSearchWindow() {
-		$('#search-user-name').val('');
-		$('#search-first-name').val('');
-		$('#search-last-name').val('');
-		$("#searchCriteria").hide();
-	}
 	function importUser() {
 		$('#import').show();
-	}
-
-	function searchUser() {
-		$.post(urlHolder.records, {
-			userName : $("#search-user-name").val(),
-			firstName : $("#search-first-name").val(),
-			lastName : $("#search-last-name").val()
-		}, function(response) {
-			if (response.users.length == 0) {
-				$('#noresult').show();
-				$('#tableUsers').hide();
-				$('#controlBar').hide();
-			} else {
-				$('#noresult').hide();
-				$('#tableUsers').show();
-				$('#controlBar').show();
-				buildUserTable(response);
-			}
-			parent.$.fancybox.close();
-		});
 	}
 </script>
 </head>

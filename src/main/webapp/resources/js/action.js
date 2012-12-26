@@ -1,6 +1,24 @@
 var urlHolder = new Object();
 
 /**
+ * Load RefData Values.
+ */
+function loadRefData() {
+	$.post(urlHolder.refdataUserProject, function(response) {
+		if (response) {
+			var listItems = "";
+			for ( var i = 0; i < response.project.length; i++) {
+				listItems += "<option value='" + response.project[i].projectId
+						+ "'>" + response.project[i].projectName + "</option>";
+			}
+			$("#projectOption").html(listItems);
+			loadTaskDetails();
+		}
+	});
+}
+
+
+/**
  * Load Task Details.
  */
 function loadTaskDetails(){
@@ -17,25 +35,6 @@ function loadTaskDetails(){
 		}
 	});
 	
-}
-
-/**
- * Login the user.
- */
-function submitAction() {
-
-	$.post(urlHolder.login, {
-		username : $('#login-box-usrName').val(),
-		password : $('#login-box-password').val()
-	}, function(response) {
-		if (response) {
-			window.location.href="/todo/jsp/taskmanager.jsp";
-		} else {
-			document.getElementById('login-box-usrName').value = '';
-			document.getElementById('login-box-password').value = '';
-			$('#loginvalidation').show();
-		}
-	});
 }
 
 /**
