@@ -110,7 +110,6 @@ public class UserController {
 		roleIn.setRole(role);
 
 		if ("edit".equalsIgnoreCase(oper)) {
-			System.out.println(oper);
 			User existingUser = new User();
 			existingUser.setUsername(id);
 			existingUser.setFirstName(firstName);
