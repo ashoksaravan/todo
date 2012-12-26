@@ -98,6 +98,7 @@ public class UserService {
 		existingUser.getRole().setId(role.getId().toString());
 		existingUser.setReqNewPwd(user.getReqNewPwd());
 		existingUser.setPassword(user.getPassword());
+		existingUser.setMailId(user.getMailId());
 		userRepository.save(existingUser);
 		return existingUser;
 	}
