@@ -117,3 +117,24 @@ function associateProject(){
 	});
 	
 }
+
+function saveUserProfile(username, role) {
+	if ($('#editfirstName').val() != "" && $('#editlastName').val() != ""
+			&& $('#editEmailId').val() != "") {
+		$.post(urlHolder.edit, {
+			id : username,
+			firstName : $('#editfirstName').val(),
+			lastName : $('#editlastName').val(),
+			mailId : $('#editEmailId').val(),
+			oper : 'edit'
+
+		}, function(response) {
+			if (response != null) {
+				alert('Success! UserProfile has been edited.');
+				window.location.reload();
+			}
+		});
+	} else {
+		alert("Please enter the missing values!!!");
+	}
+}

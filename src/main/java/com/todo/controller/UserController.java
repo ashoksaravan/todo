@@ -67,7 +67,7 @@ public class UserController {
 			@RequestParam(required = false) String searchField, @RequestParam(required = false) String searchOper,
 			@RequestParam(required = false) String searchString, @RequestParam(required = false) boolean _search) {
 		UserListDTO userListDto = new UserListDTO();
-		List<User> users = null;
+		List<User> users = new ArrayList<User>();
 		if (_search) {
 			users = searchUserCmd.searchUsers(searchField, searchOper, searchString);
 		} else {
@@ -101,44 +101,52 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	public @ResponseBody
-	User update(ModelMap map, @RequestParam(required = false) String username,
+	String update(Model model, ModelMap map, @RequestParam(required = false) String username,
 			@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
 			@RequestParam(required = false, value = "role.desc") Integer role,
 			@RequestParam(required = false) String mailId, @RequestParam String oper, @RequestParam String id) {
 
 		Role roleIn = new Role();
 		roleIn.setRole(role);
-
-		if ("edit".equalsIgnoreCase(oper)) {
-			User existingUser = new User();
-			existingUser.setUsername(id);
-			existingUser.setFirstName(firstName);
-			existingUser.setLastName(lastName);
-			existingUser.setMailId(mailId);
-			existingUser.setRole(roleIn);
-			existingUser.setReqNewPwd(Boolean.FALSE);
-			service.update(existingUser);
-			if (SecurityContextHolder.getContext().getAuthentication().getName().equals(existingUser.getUsername())) {
-				map.addAttribute("user", existingUser);
+		try {
+			if (firstName == "" || lastName == "" || mailId == "") {
+				throw new Exception("Invalid Data. Please correct the data and proceed");
 			}
-			return existingUser;
-		} else if ("add".equalsIgnoreCase(oper)) {
-			User newUser = new User();
-			newUser.setUsername(userCmd.getUserName(mailId));
-			newUser.setFirstName(firstName);
-			newUser.setLastName(lastName);
-			newUser.setRole(roleIn);
-			newUser.setMailId(mailId);
-			newUser.setPassword(userCmd.getPassword(newUser));
-			return service.create(newUser);
-		} else if ("del".equalsIgnoreCase(oper)) {
-			User existingUser = new User();
-			existingUser.setUsername(id);
-			service.delete(existingUser);
-			return existingUser;
+
+			if ("edit".equalsIgnoreCase(oper)) {
+				User existingUser = new User();
+				existingUser.setUsername(id);
+				existingUser.setFirstName(firstName);
+				existingUser.setLastName(lastName);
+				existingUser.setMailId(mailId);
+				existingUser.setRole(roleIn);
+				existingUser.setReqNewPwd(Boolean.FALSE);
+				service.update(existingUser);
+				if (SecurityContextHolder.getContext().getAuthentication().getName().equals(existingUser.getUsername())) {
+					map.addAttribute("user", existingUser);
+				}
+				return "users";
+			} else if ("add".equalsIgnoreCase(oper)) {
+				User newUser = new User();
+				newUser.setUsername(userCmd.getUserName(mailId));
+				newUser.setFirstName(firstName);
+				newUser.setLastName(lastName);
+				newUser.setRole(roleIn);
+				newUser.setMailId(mailId);
+				newUser.setPassword(userCmd.getPassword(newUser));
+				service.create(newUser);
+				return "users";
+			} else if ("del".equalsIgnoreCase(oper)) {
+				User existingUser = new User();
+				existingUser.setUsername(id);
+				service.delete(existingUser);
+				return "users";
+			}
+
+		} catch(Exception exception){
+			return "users";
 		}
 		return null;
-
 	}
 
 	/**

@@ -15,5 +15,17 @@ public interface RoleRepository extends MongoRepository<Role, Integer> {
 	 * @return Role
 	 */
 	Role findByRole(Integer role);
+	
+	/**
+	 * @param desc
+	 * @return Role
+	 */
+	Role findByDesc(String desc);
+
+	/**
+	 * @param desc
+	 * @return Role
+	 */
+	Role findByDescLike(String desc);
 
 }

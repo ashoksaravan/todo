@@ -32,7 +32,6 @@ public class UserCmd {
 	 */
 	public String getUserName(String mailId) {
 		String[] str = mailId.split("@");
-		System.out.println(str[0]);
 		return str[0];
 	}
 
@@ -57,5 +56,4 @@ public class UserCmd {
 		return encoder.encodePassword(password, user.getUsername());
 
 	}
-
 }

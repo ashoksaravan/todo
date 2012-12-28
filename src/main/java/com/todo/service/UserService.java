@@ -94,10 +94,9 @@ public class UserService {
 		existingUser.setLastName(user.getLastName());
 		if (user.getRole().getRole() != null) {
 			role = roleRepository.findByRole(user.getRole().getRole());
+			existingUser.getRole().setId(role.getId().toString());
 		}
-		existingUser.getRole().setId(role.getId().toString());
 		existingUser.setReqNewPwd(user.getReqNewPwd());
-		existingUser.setPassword(user.getPassword());
 		existingUser.setMailId(user.getMailId());
 		userRepository.save(existingUser);
 		return existingUser;
