@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.todo.command.UserCmd;
 import com.todo.domain.Role;
 import com.todo.domain.UploadItem;
 import com.todo.domain.User;
@@ -33,7 +34,13 @@ public class UploadFormController {
 	 */
 	@Autowired
 	private UserService service;
-
+	
+	/**
+	 * userCmd.
+	 */
+	@Autowired
+	UserCmd userCmd;
+	
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public String displayForm() {
 		return "/admin/users";
@@ -68,31 +75,32 @@ public class UploadFormController {
 						
 						switch (cell.getColumnIndex()) {
 						case 0:
-							newUser.setUsername(cell.getStringCellValue());
-							break;
-						case 1:
 							newUser.setFirstName(cell.getStringCellValue());
 							break;
-						case 2:
+						case 1:
 							newUser.setLastName(cell.getStringCellValue());
 							break;
-						case 3:
+						case 2:
 							Role role = new Role();
 							role.setRole(cell.getStringCellValue() == "admin"? 1 : 2);
 							newUser.setRole(role);
 							break;
-						case 4:
+						case 3:
 							newUser.setMailId(cell.getStringCellValue());
 							break;
 						default:
 							break;
 						}
+						
 					}
+					newUser.setUsername(newUser.getMailId().substring(0,newUser.getMailId().indexOf("@")));
+					newUser.setPassword(userCmd.getPassword(newUser));
 					users.add(newUser);
 				}
 			}
 			if(users.size() > 0){
 				for (User user : users) {
+					
 					service.create(user);
 				}
 			}
@@ -103,5 +111,4 @@ public class UploadFormController {
 			return "/admin/users";
 		}
 	}
-	
 }
