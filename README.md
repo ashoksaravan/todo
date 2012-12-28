@@ -8,6 +8,22 @@ To import the project into Eclipse, follow the steps below
         
         mvn eclipse:eclipse -Dwtpversion=2.0
 
-To Install mongodb follow the below link 
+Preparing the data source
 
-  http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
+    1. To Install and Run MongoDB (see http://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/)
+    2. There's no need to create any collections because Spring will create them automatically
+    3. There's no need to populate the database with sample data because our InitMongoService will insert our sample data automatically
+
+
+Building and Running Application
+
+    1. Open a command window (Windows) or a terminal (Linux/Mac)
+    2. Run the following command:
+
+        mvn tomcat:run
+    
+    3. Open a browser
+    4. Enter the following URL (8080 is the default port for Tomcat):
+
+        http://localhost:8080/todo/
+        
