@@ -133,6 +133,7 @@ public class UserController {
 				newUser.setLastName(lastName);
 				newUser.setRole(roleIn);
 				newUser.setMailId(mailId);
+				newUser.setReqNewPwd(Boolean.TRUE);
 				newUser.setPassword(userCmd.getPassword(newUser));
 				service.create(newUser);
 				return "users";

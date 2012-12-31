@@ -96,6 +96,9 @@ public class UserService {
 			role = roleRepository.findByRole(user.getRole().getRole());
 			existingUser.getRole().setId(role.getId().toString());
 		}
+		if(user.getPassword() != null && user.getPassword().length() > 0){
+			existingUser.setPassword(user.getPassword());
+		}
 		existingUser.setReqNewPwd(user.getReqNewPwd());
 		existingUser.setMailId(user.getMailId());
 		userRepository.save(existingUser);

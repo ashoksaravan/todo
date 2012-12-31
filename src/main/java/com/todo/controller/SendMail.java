@@ -46,7 +46,7 @@ public class SendMail {
 		// before allowing the mail to be sent.
 
 		String messageText = message;
-		boolean sessionDebug = true;
+		boolean sessionDebug = false;
 		// Create some properties and get the default Session.
 		Properties props = System.getProperties();
 		props.put("mail.host", HOST);

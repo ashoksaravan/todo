@@ -6,8 +6,6 @@ package com.todo.command;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todo.controller.GenerateRandomPassword;
@@ -31,8 +29,8 @@ public class UserCmd {
 	 * @return String
 	 */
 	public String getUserName(String mailId) {
-		String[] str = mailId.split("@");
-		return str[0];
+		String str = mailId.substring(0,mailId.indexOf("@"));
+		return str;
 	}
 
 	/**
@@ -43,17 +41,16 @@ public class UserCmd {
 		String password = null;
 		map = new HashMap<String, ArrayList<String>>();
 		GenerateRandomPassword randomPassword = new GenerateRandomPassword();
-		PasswordEncoder encoder = new Md5PasswordEncoder();
 		if (user != null) {
 			password = randomPassword.getAlphaNumeric(10);
 			ArrayList<String> ar = new ArrayList<String>();
 			ar.add(user.getMailId());
 			map.put("TO", ar);
 			SendMail sms = new SendMail();
-			sms.sendMail("Password for user '" + user.getUsername() + "' is '" + password + "'.", map,
-					"Todo Project User Details");
+			sms.sendMail("You have been added into Todo"+"\n\n" + "Password for user '" + user.getUsername() + "' is '" + password + "'.", map,
+					"Welcome to Todo");
 		}
-		return encoder.encodePassword(password, user.getUsername());
+		return password;
 
 	}
 }
