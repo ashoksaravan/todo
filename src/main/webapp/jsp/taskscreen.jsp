@@ -49,6 +49,7 @@
 					row += '<td style="width: 88%;"><h5 style="width: 100%;font-weight: normal;">' +' TaskName : ' +response.taskHistory[i].taskname+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 					row += 'Assigned To : ' +response.taskHistory[i].username+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 					row += ' Editor : ' +response.taskHistory[i].editor+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+					row += ' LastUpdated : ' +response.taskHistory[i].lastUpdateDt+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 					row += ' Task Status : ' +response.taskHistory[i].taskstatus + '</h5></td></tr>';
 					row += '<tr style="width: 100%;">';
 					row += '<td><h5>' +'Description ' + '</h5></td>';

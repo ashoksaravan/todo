@@ -43,6 +43,23 @@ public class TaskHistory {
 	 * editor.
 	 */
 	private String editor;
+	
+	/**
+	 * lastUpdateDt.
+	 */
+	private String lastUpdateDt;
+	/**
+	 * @return the lastUpdateDt
+	 */
+	public String getLastUpdateDt() {
+		return lastUpdateDt;
+	}
+	/**
+	 * @param lastUpdateDt the lastUpdateDt to set
+	 */
+	public void setLastUpdateDt(String lastUpdateDt) {
+		this.lastUpdateDt = lastUpdateDt;
+	}
 	/**
 	 * @return the id
 	 */

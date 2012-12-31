@@ -1,5 +1,8 @@
 package com.todo.command;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +37,8 @@ public class EditTaskHistoryCmd{
 	 * @return Boolean
 	 */
 	public Boolean editTaskHistory(Task addEditTask) {
+		String pattern = "dd/MM/yyyy";
+		DateFormat format = new SimpleDateFormat(pattern);
 		int len = 1;
 		List<TaskHistory> list = taskService.readTaskVersion(addEditTask
 				.getTaskid());
@@ -49,6 +54,7 @@ public class EditTaskHistoryCmd{
 		history.setUsername(addEditTask.getUsername());
 		history.setEditor(addEditTask.getEditor());
 		history.setVersion(len);
+		history.setLastUpdateDt(format.format(new Date()));
 		repository.save(history);
 		return true;
 	}
