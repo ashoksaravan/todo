@@ -253,7 +253,11 @@ function resetTaskWindow() {
  * Add Task and Edit Task.
  */
 function submitNewTask() {
-	var addEditTask = {
+	if ($('select#projectOption option:selected').val() == null) {
+		alert("No project assigned for this user, Please contact your Admin to assign projects.");
+		parent.$.fancybox.close();
+	} else {
+		var addEditTask = {
 			"taskid" : $('#task-id').val(),
 			"taskname" : $('#task-name').val(),
 			"taskdesc" : $('#task-desc').val(),
@@ -264,29 +268,29 @@ function submitNewTask() {
 			"cclist" : $('#cc-list').val(),
 			"editor" : $('#task-editor').val(),
 			"projectId" : $('select#projectOption option:selected').val()
-	};
-	if (taskValidation()) {
+		};
+		if (taskValidation()) {
 
-		$.ajax({
-			contentType : "application/json",
-			dataType : 'json',
-			type : "POST",
-			url : urlHolder.addtask,
-			data : JSON.stringify(addEditTask),
+			$.ajax({
+				contentType : "application/json",
+				dataType : 'json',
+				type : "POST",
+				url : urlHolder.addtask,
+				data : JSON.stringify(addEditTask),
 
-			success : function(response) {
-				if (response) {
-					loadTaskDetails();
+				success : function(response) {
+					if (response) {
+						loadTaskDetails();
+					}
+				},
+				error : function(request, status, error) {
+					alert('Error: ' + error);
 				}
-			},
-			error : function(request, status, error) {
-				alert('Error: ' + error);
-			}
-		});
-		parent.$.fancybox.close();
+			});
+			parent.$.fancybox.close();
+		}
 	}
 }
-
 /**
  * Modal Box.
  */
@@ -353,48 +357,53 @@ function back(ctx) {
  */
 function searchTask() {
 
-	if ($('#search-task-name').val() == ''
-		&& $('select#search-priority option:selected').val() == 'SELECT'
-			&& $('select#search-status option:selected').val() == 'SELECT'
-				&& $('#search-task-assigned').val() == '') {
-		$("#searchCriteria").show();
+	if ($('select#projectOption option:selected').val() == null) {
+		alert("No project assigned for this user, Please contact your Admin to assign projects.");
+		parent.$.fancybox.close();
 	} else {
-		if ($('select#search-priority option:selected').val() == 'SELECT') {
-			$('select#search-priority option:selected').val('');
-		}
-		if ($('select#search-status option:selected').val() == 'SELECT') {
-			$('select#search-status option:selected').val('');
-		}
+		if ($('#search-task-name').val() == ''
+				&& $('select#search-priority option:selected').val() == 'SELECT'
+				&& $('select#search-status option:selected').val() == 'SELECT'
+				&& $('#search-task-assigned').val() == '') {
+			$("#searchCriteria").show();
+		} else {
+			if ($('select#search-priority option:selected').val() == 'SELECT') {
+				$('select#search-priority option:selected').val('');
+			}
+			if ($('select#search-status option:selected').val() == 'SELECT') {
+				$('select#search-status option:selected').val('');
+			}
 
-		var searchTask = {
+			var searchTask = {
 				"taskname" : $('#search-task-name').val(),
 				"priority" : $('select#search-priority option:selected').val(),
 				"taskstatus" : $('select#search-status option:selected').val(),
 				"username" : $('#search-task-assigned').val(),
 				"projectId" : $('select#projectOption option:selected').val()
-		};
-		$.ajax({
-			contentType : "application/json",
-			dataType : 'json',
-			type : "POST",
-			url : urlHolder.search,
-			data : JSON.stringify(searchTask),
+			};
+			$.ajax({
+				contentType : "application/json",
+				dataType : 'json',
+				type : "POST",
+				url : urlHolder.search,
+				data : JSON.stringify(searchTask),
 
-			success : function(response) {
-				$('.single_sticky_notes li').remove();
-				if (response.length > 0) {
-					for ( var i = 0; i < response.length; i++) {
-						createNotes(response[i], '/todo');
+				success : function(response) {
+					$('.single_sticky_notes li').remove();
+					if (response.length > 0) {
+						for ( var i = 0; i < response.length; i++) {
+							createNotes(response[i], '/todo');
+						}
+					} else {
+						$("#noresult").show();
 					}
-				} else {
-					$("#noresult").show();
+				},
+				error : function(request, status, error) {
+					alert('Error: ' + error);
 				}
-			},
-			error : function(request, status, error) {
-				alert('Error: ' + error);
-			}
-		});
-		parent.$.fancybox.close();
+			});
+			parent.$.fancybox.close();
+		}
 	}
 }
 
