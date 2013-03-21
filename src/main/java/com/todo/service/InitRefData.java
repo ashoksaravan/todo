@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.ServletContextAware;
 
+import com.todo.domain.Acf2Id;
 import com.todo.domain.Priority;
 import com.todo.domain.Project;
 import com.todo.domain.TaskStatus;
@@ -40,6 +41,11 @@ public class InitRefData implements ServletContextAware {
 	 */
 	private List<Project> projectList;
 	
+	/**
+	 * acf2IdList.
+	 */
+	private List<Acf2Id> acf2IdList;
+	
 	/* (non-Javadoc)
 	 * @see org.springframework.web.context.ServletContextAware#setServletContext(javax.servlet.ServletContext)
 	 */
@@ -54,6 +60,8 @@ public class InitRefData implements ServletContextAware {
 		projectList = dataService.readProject();
 		context.setAttribute("projectList", projectList);
 		
+		acf2IdList = dataService.readAcf2Id();
+		context.setAttribute("acf2IdList", acf2IdList);
 		
 	}
 }

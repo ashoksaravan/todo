@@ -7,4 +7,7 @@
 	   	class="com.todo.command.WriteExcelCmd">
 	</bean>
  
+ 	<bean id="ExcelRevenueSummary1"
+	   	class="com.todo.command.WriteTimeSheetExcelCmd">
+	</bean>
 </beans>

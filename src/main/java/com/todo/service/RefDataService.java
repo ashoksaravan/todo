@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.todo.domain.Acf2Id;
 import com.todo.domain.Priority;
 import com.todo.domain.Project;
 import com.todo.domain.TaskStatus;
+import com.todo.repository.Acf2IdRepository;
 import com.todo.repository.PriorityRepository;
 import com.todo.repository.ProjectRepository;
 import com.todo.repository.TaskStatusRepository;
@@ -36,6 +38,12 @@ public class RefDataService {
 	 */
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	/**
+	 * acf2IdRepository.
+	 */
+	@Autowired
+	private Acf2IdRepository acf2IdRepository;
 
 	/**
 	 * @return List<Priority>
@@ -56,6 +64,10 @@ public class RefDataService {
 	 */
 	public List<Project> readProject() {
 		return projectRepository.findAll();
+	}
+	
+	public List<Acf2Id> readAcf2Id() {
+		return acf2IdRepository.findAll();
 	}
 
 }

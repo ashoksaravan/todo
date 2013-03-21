@@ -26,7 +26,7 @@ public class SendMail {
 	/**
 	 * HOST.
 	 */
-	private final static String HOST = "192.168.32.9";
+	private final static String HOST = "mail2.ebix.com";
 
 	/**
 	 * @param message

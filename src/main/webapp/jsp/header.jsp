@@ -84,7 +84,7 @@
 				<td
 					style="border-right: 0px; border-left: 0px; border-bottom: 0px; vertical-align: top; padding-right: 0px;"><img
 					src="<%=request.getContextPath()%>/resources/images/ebixlogo.PNG"
-					align="top" height="70%"
+					align="top" height="50px"
 					onclick="back('${pageContext.request.contextPath}')"
 					style="cursor: pointer;" /></td>
 				<td align="right"

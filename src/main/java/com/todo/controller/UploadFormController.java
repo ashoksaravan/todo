@@ -82,7 +82,7 @@ public class UploadFormController {
 							break;
 						case 2:
 							Role role = new Role();
-							role.setRole(cell.getStringCellValue() == "admin"? 1 : 2);
+							role.setRole(cell.getStringCellValue().equalsIgnoreCase("Admin")? 1 : 2);
 							newUser.setRole(role);
 							break;
 						case 3:
@@ -95,6 +95,7 @@ public class UploadFormController {
 					}
 					newUser.setUsername(newUser.getMailId().substring(0,newUser.getMailId().indexOf("@")));
 					newUser.setPassword(userCmd.getPassword(newUser));
+					newUser.setReqNewPwd(Boolean.TRUE);
 					users.add(newUser);
 				}
 			}

@@ -173,7 +173,13 @@ var ctx = "${pageContext.request.contextPath}";
 				<td><select id='projectOption' name="project"
 					style="width: 30%" onchange="change()"></select></td>
 
-				<td align="right"><a href="#searchTask" id="searchQuery"
+				<td align="right">
+				<a href="#webTime" id="webTime"
+					title="WebTime" style="width: 10%;"
+					onclick="webtimeWindow();"><img
+						src="<%=request.getContextPath()%>/resources/images/webtime.png"
+						style="cursor: pointer; height: 27px;" /></a>
+				<a href="#searchTask" id="searchQuery"
 					title="SearchTask" style="width: 10%;"
 					onclick="resetSearchWindow();"><img
 						src="<%=request.getContextPath()%>/resources/css/images/search_btn.png"

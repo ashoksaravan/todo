@@ -132,7 +132,7 @@ public class UserService {
 		if (fromForgotPwd) {
 			existingUser.setReqNewPwd(Boolean.TRUE);
 		}
-		existingUser.setPassword(passwordEncoder(user.getPassword(), user.getUsername()));
+		existingUser.setPassword(user.getPassword());
 		userRepository.save(existingUser);
 		return true;
 
